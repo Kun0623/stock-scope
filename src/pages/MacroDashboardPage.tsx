@@ -6,7 +6,16 @@ export function MacroDashboardPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/macro_status.json?t=${new Date().getTime()}`);
+        // 👇 [핵심 수정] 아래 주소를 대표님의 깃허브 Raw URL로 교체해 주세요!
+        const GITHUB_RAW_URL = "https://raw.githubusercontent.com/Kun0623/6ff77031bd5979e9177a21272fac7018/raw/macro_status.json";
+        
+        // 캐싱 방지를 위해 파라미터를 붙여 항상 최신 데이터를 강제로 가져옵니다.
+        const response = await fetch(`${GITHUB_RAW_URL}?t=${new Date().getTime()}`);
+        
+        if (!response.ok) {
+          throw new Error("네트워크 응답이 정상이 아닙니다.");
+        }
+        
         const data = await response.json();
         setMacroData(data);
       } catch (error) {
