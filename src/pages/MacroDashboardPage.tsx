@@ -6,16 +6,13 @@ export function MacroDashboardPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 👇 [핵심 수정] 아래 주소를 대표님의 깃허브 Raw URL로 교체해 주세요!
+        // 대표님의 기존 깃허브 Gist 주소 유지
         const GITHUB_RAW_URL = "https://gist.githubusercontent.com/Kun0623/6ff77031bd5979e9177a21272fac7018/raw/macro_status.json";
-        
-        // 캐싱 방지를 위해 파라미터를 붙여 항상 최신 데이터를 강제로 가져옵니다.
         const response = await fetch(`${GITHUB_RAW_URL}?t=${new Date().getTime()}`);
         
         if (!response.ok) {
           throw new Error("네트워크 응답이 정상이 아닙니다.");
         }
-        
         const data = await response.json();
         setMacroData(data);
       } catch (error) {
@@ -29,7 +26,7 @@ export function MacroDashboardPage() {
     return <div style={{ padding: 20, textAlign: "center", color: "#888", background: "#0d0d0d", minHeight: "100vh" }}>데이터를 불러오는 중...</div>;
   }
 
-  // 위험 벌점 계산
+  // 위험 벌점 계산 (기존 로직 백업 유지)
   let dangerCount = 0;
   if (macroData.fear_greed?.value <= 25) dangerCount++;
   if (macroData.buffett_indicator?.value >= 180) dangerCount++;
@@ -44,6 +41,12 @@ export function MacroDashboardPage() {
   } else if (dangerCount >= 1) {
     shieldStatus = { title: "주의 구간 진입", desc: "분할 매수 전략 유지 — 추가 매수는 신호 확인 후 진행하세요", color: "#ffb800", bgColor: "#ffb80015", level: "yellow" };
   }
+
+  // 🚀 국면 점수화 가이드 매핑 연동
+  const riskScore = macroData.quant_risk_score ?? 50;
+  let scoreColor = "#00d26a";
+  if (riskScore >= 65) scoreColor = "#ff4d4d";
+  else if (riskScore >= 35) scoreColor = "#ffb800";
 
   return (
     <div style={{ minHeight: "100vh", background: "#0d0d0d", color: "#f5f5f5", fontFamily: "'Pretendard', sans-serif", paddingBottom: 140 }}>
@@ -67,6 +70,21 @@ export function MacroDashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* 🚀 [추가 연동 1] 1번 방향: 퀀트 기반 시장 리스크 모니터 계기판 */}
+      <div style={{ padding: "0 16px 6px" }}>
+        <div style={{ background: "#161616", border: "1px solid #252525", borderRadius: 16, padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#888" }}>통합 매크로 국면 점수 (Quant Score)</div>
+            <div style={{ fontSize: 12, color: "#555", marginTop: 4 }}>지표 5종의 가중치를 종합 연산한 위험 계수</div>
+          </div>
+          <div style={{ textAlign: "right" }}>
+            <span style={{ fontSize: 26, fontWeight: 900, color: scoreColor }}>{riskScore}</span>
+            <span style={{ fontSize: 14, color: "#555", fontWeight: 700 }}> / 100</span>
+          </div>
+        </div>
+      </div>
+
       <div style={{ padding: "0 20px 14px", textAlign: "right" }}>
         <span style={{ fontSize: 12, color: "#666", fontWeight: 500 }}>
           마지막 업데이트: {macroData.updated_at ? new Date(macroData.updated_at).toLocaleString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '-'}
@@ -168,27 +186,71 @@ export function MacroDashboardPage() {
         </div>
       </div>
 
-      {/* ── 글로벌 자금 흐름 ── */}
+      {/* 🚀 [추가 연동 2] 대표님 요청: AI & 클라우드 미래 성장 세부 트렌드 보드 */}
+      {macroData.tech_trends && (
+        <div style={{ padding: "12px 16px 0" }}>
+          <div style={{ background: "#1a1a1a", borderRadius: 16, padding: "18px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 14 }}>
+              <h3 style={{ fontSize: 15, fontWeight: 700, margin: 0, color: "#ffb800" }}>💡 AI & 클라우드 성장 딥다이브</h3>
+              <span style={{ fontSize: 11, color: "#666" }}>주도 트렌드 ETF 실시간 분석</span>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {macroData.tech_trends.map((trend: any) => {
+                const isPos = trend.change_pct >= 0;
+                return (
+                  <div key={trend.ticker} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 14px", background: "#222", borderRadius: 12 }}>
+                    <div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>{trend.name}</div>
+                      <div style={{ fontSize: 11, color: "#666", marginTop: 2 }}>테마 기호: {trend.ticker}</div>
+                    </div>
+                    <div style={{ fontSize: 15, fontWeight: 800, color: isPos ? "#ff4d4d" : "#4d94ff" }}>
+                      {isPos ? "+" : ""}{trend.change_pct}%
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── 글로벌 자금 흐름 (12개 상세 섹터 바둑판 그리드) ── */}
       <div style={{ padding: "12px 16px 0" }}>
-        <div style={{ background: "#1a1a1a", borderRadius: 16, padding: "18px 18px" }}>
-          <h3 style={{ fontSize: 15, fontWeight: 700, margin: "0 0 16px", color: "#f5f5f5" }}>🌍 글로벌 주도 섹터</h3>
-          {macroData.sectors && macroData.sectors.map((sector: any, index: number) => {
-            const isPos = sector.change_pct >= 0;
-            return (
-              <div key={sector.ticker} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10, padding: "14px 16px", background: "#222", borderRadius: 12 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                  <span style={{ fontSize: 14, fontWeight: 800, color: index === 0 ? "#ffb800" : "#888", width: 20, textAlign: "center" }}>{index + 1}</span>
-                  <div>
-                    <div style={{ fontSize: 15, fontWeight: 700, color: "#fff" }}>{sector.name}</div>
-                    <div style={{ fontSize: 12, color: "#888", marginTop: 2 }}>{sector.ticker}</div>
+        <div style={{ background: "#1a1a1a", borderRadius: 16, padding: "18px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 16 }}>
+            <h3 style={{ fontSize: 15, fontWeight: 700, margin: 0, color: "#f5f5f5" }}>🌍 글로벌 주도 섹터</h3>
+            <span style={{ fontSize: 11, color: "#888" }}>S&P 500 기준 12개 분류</span>
+          </div>
+          
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+            {macroData.sectors && macroData.sectors.map((sector: any, index: number) => {
+              const isPos = sector.change_pct >= 0;
+              const isTop3 = index < 3; 
+              
+              return (
+                <div key={sector.ticker} style={{ 
+                  display: "flex", flexDirection: "column", justifyContent: "center", 
+                  padding: "12px", background: isTop3 ? "#2a2a2a" : "#222", 
+                  borderRadius: 12, border: isTop3 ? "1px solid #444" : "1px solid transparent"
+                }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <span style={{ fontSize: 12, fontWeight: 800, color: isTop3 ? "#ffb800" : "#666" }}>
+                        {index + 1}
+                      </span>
+                      <span style={{ fontSize: 11, color: "#888" }}>{sector.ticker}</span>
+                    </div>
+                    <div style={{ fontSize: 14, fontWeight: 800, color: isPos ? "#ff4d4d" : "#4d94ff" }}>
+                      {isPos ? "+" : ""}{sector.change_pct}%
+                    </div>
+                  </div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    {sector.name}
                   </div>
                 </div>
-                <div style={{ fontSize: 16, fontWeight: 700, color: isPos ? "#ff4d4d" : "#4d94ff", background: `${isPos ? "#ff4d4d" : "#4d94ff"}15`, padding: "4px 10px", borderRadius: 8 }}>
-                  {isPos ? "+" : ""}{sector.change_pct}%
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -202,7 +264,7 @@ export function MacroDashboardPage() {
   );
 }
 
-// 2x2 그리드용 미니 경보 카드 컴포넌트
+// 미니 리스크 카드 컴포넌트
 function MiniRiskCard({ title, value, suffix, threshold, isLowerWorse, desc }: any) {
   if (value === null || value === undefined) return null;
   const isDanger = isLowerWorse ? value <= threshold : value >= threshold;
