@@ -2,8 +2,9 @@ name: 매시간 매크로 지표 업데이트
 
 on:
   schedule:
-    - cron: '0 * * * 1-5' # 평일 매시 정각 구동 (UTC 기준)
-  workflow_dispatch: # 수동 가동 버튼 활성화
+    # 정각 병목을 피해 매시 14분에 실행되도록 수정 (예: 1시 14분, 2시 14분...)
+    - cron: '14 * * * 1-5' 
+  workflow_dispatch: # 수동 트리거 허용
 
 jobs:
   update-data:
