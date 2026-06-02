@@ -177,12 +177,23 @@ def get_fx_data() -> dict:
 
 
 def get_sector_data() -> list:
+    # S&P 500 11개 공식 섹터 + 반도체(SMH) 추가
     sectors = {
-        "XLK": "기술 (Technology)", "XLF": "금융 (Financials)",
-        "XLV": "헬스케어 (Health Care)", "XLE": "에너지 (Energy)"
+        "XLK": "기술 (Tech)", 
+        "XLF": "금융 (Financials)",
+        "XLV": "헬스케어 (Health Care)", 
+        "XLE": "에너지 (Energy)",
+        "XLY": "임의소비재 (Discretionary)", 
+        "XLP": "필수소비재 (Staples)",
+        "XLI": "산업재 (Industrials)", 
+        "XLB": "소재 (Materials)",
+        "XLRE": "부동산 (Real Estate)", 
+        "XLU": "유틸리티 (Utilities)",
+        "XLC": "통신 (Communication)",
+        "SMH": "반도체 (Semiconductors)" # 시장 주도 섹터 별도 추가
     }
     results = []
-    print("🌍 글로벌 주도 섹터 수집 시작...")
+    print("🌍 글로벌 주도 상세 섹터 수집 시작...")
     for ticker, name in sectors.items():
         try:
             hist = yf.Ticker(ticker).history(period="2d")
@@ -192,7 +203,9 @@ def get_sector_data() -> list:
                 change_pct = ((curr_price - prev_price) / prev_price) * 100
                 results.append({"ticker": ticker, "name": name, "change_pct": round(change_pct, 2)})
         except Exception as e:
-            print(f"    [오류] {ticker} 수집 실패: {e}", file=sys.stderr)
+            print(f"    [오류] {ticker} 수집 실패: {e}")
+            
+    # 등락률이 높은 순서대로(내림차순) 정렬
     results.sort(key=lambda x: x["change_pct"], reverse=True)
     return results
 
