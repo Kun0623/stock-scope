@@ -24,7 +24,9 @@ jobs:
           pip install requests beautifulsoup4 yfinance
 
       - name: 🚀 데이터 수집 파이썬 실행
-        run: python collect_macro.py
+        run: |
+          mkdir -p public   # 👈 [치명적 오류 해결] public 폴더를 강제로 생성하여 FileNotFoundError 방지!
+          python collect_macro.py
 
       - name: 🌐 GitHub Gist로 최신 데이터 전송 (디커플링 배포)
         run: |
