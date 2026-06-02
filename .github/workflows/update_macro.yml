@@ -63,3 +63,5 @@ jobs:
         env:
           GIST_ID: ${{ secrets.GIST_ID }}
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+
+          # 스케줄러 기상용 더미 주석 2026-06-02
