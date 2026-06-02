@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-06-01T22:33:24+09:00",
+  "updated_at": "2026-06-02T15:51:00+09:00",
   "fear_greed": {
     "value": 59,
     "status": "Greed"
   },
   "buffett_indicator": {
-    "value": 237.8,
+    "value": 238.3,
     "status": "Strongly Overvalued"
   },
   "sahm_rule": {
@@ -13,42 +13,42 @@
     "status": "Normal"
   },
   "high_yield_spread": {
-    "value": 2.72,
+    "value": 2.74,
     "status": "Normal"
   },
   "yield_curve": {
-    "value": 0.47,
+    "value": 0.42,
     "status": "Normal"
   },
   "vix": {
-    "value": 15.98,
+    "value": 16.05,
     "status": "Stable"
   },
   "fx": {
-    "dxy": 99.23,
-    "usd_krw": 1513.1,
+    "dxy": 99.06,
+    "usd_krw": 1519.7,
     "status": "Normal"
   },
   "sectors": [
     {
-      "ticker": "XLE",
-      "name": "에너지 (Energy)",
-      "change_pct": 1.41
-    },
-    {
       "ticker": "XLK",
       "name": "기술 (Technology)",
-      "change_pct": 1.14
+      "change_pct": 2.48
+    },
+    {
+      "ticker": "XLE",
+      "name": "에너지 (Energy)",
+      "change_pct": 1.79
     },
     {
       "ticker": "XLF",
       "name": "금융 (Financials)",
-      "change_pct": -0.7
+      "change_pct": -0.29
     },
     {
       "ticker": "XLV",
       "name": "헬스케어 (Health Care)",
-      "change_pct": -0.73
+      "change_pct": -1.09
     }
   ]
 }
