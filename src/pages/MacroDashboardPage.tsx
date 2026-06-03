@@ -24,8 +24,8 @@ const GlobalStyles = () => (
     .tooltip-box { 
       position: absolute; 
       bottom: 100%; 
-      left: 0; /* 👈 컨테이너 밖으로 나가지 않도록 왼쪽 정렬(0)으로 고정 */
-      margin-bottom: 8px; /* 꼬리가 들어갈 여백 확보 */
+      left: 0; 
+      margin-bottom: 8px; 
       opacity: 0; 
       visibility: hidden; 
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
@@ -51,7 +51,7 @@ const GlobalStyles = () => (
       content: ''; 
       position: absolute; 
       top: 100%; 
-      left: 20px; /* 👈 말풍선 꼬리를 글자 윗쪽으로 자연스럽게 당겨옴 */
+      left: 20px; 
       margin-left: -5px; 
       border-width: 5px; 
       border-style: solid; 
@@ -65,7 +65,6 @@ const GlobalStyles = () => (
     .paywall-container { position: relative; border-radius: 16px; } 
     .paywall-blur { filter: blur(6px) brightness(0.6); pointer-events: none; user-select: none; }
     
-    /* 👈 부모의 overflow:hidden을 제거한 대신 오버레이에 직접 둥근 모서리(border-radius) 적용 */
     .paywall-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(10, 10, 10, 0.4); z-index: 10; padding: 20px; text-align: center; border-radius: 16px; }
   `}</style>
 );
@@ -191,7 +190,7 @@ function DashboardContent({ data, isPro }: { data: any, isPro: boolean }) {
           </div>
         </div>
 
-        {/* 🚀 퀀트 스코어 (PRO 전용 페이월 - minHeight 110px 추가로 텍스트 짤림 방지) */}
+        {/* 🚀 1. 퀀트 스코어 (PRO 전용 페이월) */}
         <div className="paywall-container glass-panel" style={{ minHeight: 110, display: "flex", flexDirection: "column", justifyContent: "center" }}>
           <div className={!isPro ? "paywall-blur" : ""} style={{ padding: "18px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
             <Tooltip label="통합 마켓 스코어" desc="5종의 매크로 지표 가중치를 연산한 위험 계수" />
@@ -200,11 +199,15 @@ function DashboardContent({ data, isPro }: { data: any, isPro: boolean }) {
               <span style={{ fontSize: 14, color: "#666", fontWeight: 700 }}> / 100</span>
             </div>
           </div>
+          
+          {/* 🔒 퀀트 스코어 가림막 통일 */}
           {!isPro && (
-            <div className="paywall-overlay" style={{ padding: "12px" }}>
-              <span style={{ fontSize: 22, marginBottom: 6 }}>🔒</span>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 4 }}>통합 퀀트 스코어 잠김</div>
-              <div style={{ fontSize: 12, color: "#aaa" }}>PRO 버전을 구독하고 시장 위험도를 수치로 확인하세요.</div>
+            <div className="paywall-overlay" style={{ background: "rgba(10, 10, 10, 0.75)", backdropFilter: "blur(2px)" }}>
+              <span style={{ fontSize: 28, marginBottom: 12 }}>🔒</span>
+              <div style={{ fontSize: 16, fontWeight: 800, color: "#fff", marginBottom: 6 }}>통합 퀀트 스코어 잠김</div>
+              <div style={{ fontSize: 13, color: "#aaa", marginBottom: 16, maxWidth: "80%", lineHeight: 1.5, letterSpacing: "-0.3px", wordBreak: "keep-all" }}>
+                PRO 버전을 구독하고 시장 위험도를 수치로 확인하세요.
+              </div>
             </div>
           )}
         </div>
@@ -216,46 +219,54 @@ function DashboardContent({ data, isPro }: { data: any, isPro: boolean }) {
         </div>
       </div>
 
-      {/* 🚀 [PRO 전용] AI 글로벌 뉴스 센티먼트 브리핑 */}
+      {/* 🚀 2. AI 글로벌 뉴스 브리핑 (PRO 전용 페이월) */}
       {data.ai_sentiment && (
-        <div className="paywall-container glass-panel" style={{ marginTop: 12 }}>
-          <div className={!isPro ? "paywall-blur" : ""} style={{ padding: "20px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 16 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 18 }}>🤖</span>
-                <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#fff" }}>AI 글로벌 뉴스 센티먼트</h3>
+        <div style={{ padding: "0 16px 12px" }}> 
+          <div className="paywall-container glass-panel">
+            <div className={!isPro ? "paywall-blur" : ""} style={{ padding: "22px 20px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <div style={{ width: 28, height: 28, borderRadius: 8, background: "linear-gradient(135deg, #3182ce, #805ad5)", display: "flex", justifyContent: "center", alignItems: "center", fontSize: 14, boxShadow: "0 2px 8px rgba(128, 90, 213, 0.4)" }}>
+                    ✨
+                  </div>
+                  <h3 style={{ fontSize: 16, fontWeight: 800, margin: 0, color: "#fff", letterSpacing: "-0.5px" }}>AI 마켓 센티먼트</h3>
+                </div>
+                
+                <div style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.05)", padding: "6px 12px", borderRadius: 20, border: "1px solid rgba(255,255,255,0.08)" }}>
+                  <span style={{ fontSize: 11, color: "#aaa", fontWeight: 600 }}>투심</span>
+                  <span style={{ 
+                    fontSize: 14, 
+                    fontWeight: 800, 
+                    color: data.ai_sentiment.sentiment_score >= 60 ? "#00d26a" : data.ai_sentiment.sentiment_score <= 40 ? "#ff4d4d" : "#ffb800" 
+                  }}>
+                    {data.ai_sentiment.sentiment_score}
+                  </span>
+                </div>
               </div>
-              {/* AI 센티먼트 스코어 뱃지 */}
-              <div style={{ fontSize: 12, fontWeight: 800, padding: "4px 10px", borderRadius: 12, background: data.ai_sentiment.sentiment_score >= 60 ? "rgba(0, 210, 106, 0.15)" : data.ai_sentiment.sentiment_score <= 40 ? "rgba(255, 77, 77, 0.15)" : "rgba(255, 184, 0, 0.15)", color: data.ai_sentiment.sentiment_score >= 60 ? "#00d26a" : data.ai_sentiment.sentiment_score <= 40 ? "#ff4d4d" : "#ffb800" }}>
-                시장 투심: {data.ai_sentiment.sentiment_score} / 100
-              </div>
-            </div>
-            
-            <div style={{ background: "rgba(0,0,0,0.3)", borderRadius: 12, padding: "16px", border: "1px solid rgba(255,255,255,0.05)" }}>
-              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 {data.ai_sentiment.summary.map((line: string, idx: number) => (
-                  <div key={idx} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                    <span style={{ fontSize: 13, color: "#ffb800", fontWeight: 900, lineHeight: 1.4 }}>✓</span>
-                    <p style={{ margin: 0, fontSize: 13, color: "#ddd", lineHeight: 1.5, wordBreak: "keep-all" }}>
-                      {line}
+                  <div key={idx} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#805ad5", marginTop: 7, flexShrink: 0, boxShadow: "0 0 8px rgba(128, 90, 213, 0.8)" }} />
+                    <p style={{ margin: 0, fontSize: 14, color: "#eee", lineHeight: 1.6, wordBreak: "keep-all", letterSpacing: "-0.3px" }}>
+                      {line.replace(/^[0-9]+\.\s*/, '')}
                     </p>
                   </div>
                 ))}
               </div>
             </div>
+            
+            {/* ✨ AI 뉴스 가림막 통일 */}
+            {!isPro && (
+              <div className="paywall-overlay" style={{ background: "rgba(10, 10, 10, 0.75)", backdropFilter: "blur(2px)" }}>
+                <span style={{ fontSize: 28, marginBottom: 12 }}>✨</span>
+                <div style={{ fontSize: 16, fontWeight: 800, color: "#fff", marginBottom: 6 }}>AI 모닝 브리핑 잠김</div>
+                <div style={{ fontSize: 13, color: "#aaa", marginBottom: 16, maxWidth: "80%", lineHeight: 1.5, letterSpacing: "-0.3px", wordBreak: "keep-all" }}>
+                  PRO 버전을 구독하고 AI가 읽어주는 월가 투심 요약을 확인하세요.
+                </div>
+              </div>
+            )}
           </div>
-          
-          {/* 무료 유저용 가림막 */}
-          {!isPro && (
-            <div className="paywall-overlay" style={{ background: "rgba(10, 10, 10, 0.75)" }}>
-              <span style={{ fontSize: 24, marginBottom: 8 }}>✨</span>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 4 }}>AI 모닝 브리핑 잠김</div>
-              <div style={{ fontSize: 12, color: "#aaa", marginBottom: 12 }}>PRO 버전을 구독하고 AI가 읽어주는 월가 투심 요약을 확인하세요.</div>
-              <button style={{ background: "#3182ce", color: "#fff", border: "none", padding: "8px 16px", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
-                AI 인사이트 언락하기
-              </button>
-            </div>
-          )}
         </div>
       )}
 
@@ -289,7 +300,7 @@ function DashboardContent({ data, isPro }: { data: any, isPro: boolean }) {
       {/* ── 주도 테마 & 섹터 ── */}
       <div style={{ padding: "0 16px 24px", display: "flex", flexDirection: "column", gap: 12 }}>
         
-        {/* 🚀 글로벌 테마 트렌드 (PRO 전용 페이월 - 내부 버튼 제거) */}
+        {/* 🚀 3. 글로벌 테마 트렌드 (PRO 전용 페이월) */}
         {data.theme_trends && (
           <div className="paywall-container glass-panel">
             <div className={!isPro ? "paywall-blur" : ""} style={{ padding: "20px" }}>
@@ -318,11 +329,15 @@ function DashboardContent({ data, isPro }: { data: any, isPro: boolean }) {
                 </div>
               </div>
             </div>
+            
+            {/* 💡 테마 매트릭스 가림막 통일 */}
             {!isPro && (
-              <div className="paywall-overlay" style={{ background: "rgba(10, 10, 10, 0.7)" }}>
-                <span style={{ fontSize: 24, marginBottom: 8 }}>💡</span>
-                <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 4 }}>글로벌 테마 흐름 분석 잠김</div>
-                <div style={{ fontSize: 12, color: "#aaa" }}>PRO 버전을 구독하고 시장의 거대한 자금 이동을 추적하세요.</div>
+              <div className="paywall-overlay" style={{ background: "rgba(10, 10, 10, 0.75)", backdropFilter: "blur(2px)" }}>
+                <span style={{ fontSize: 28, marginBottom: 12 }}>💡</span>
+                <div style={{ fontSize: 16, fontWeight: 800, color: "#fff", marginBottom: 6 }}>글로벌 테마 흐름 분석 잠김</div>
+                <div style={{ fontSize: 13, color: "#aaa", marginBottom: 16, maxWidth: "80%", lineHeight: 1.5, letterSpacing: "-0.3px", wordBreak: "keep-all" }}>
+                  PRO 버전을 구독하고 시장의 거대한 자금 이동을 추적하세요.
+                </div>
               </div>
             )}
           </div>
