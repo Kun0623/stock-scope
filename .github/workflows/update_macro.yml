@@ -24,12 +24,14 @@ jobs:
       - name: 📚 필요 라이브러리 설치
         run: |
           python -m pip install --upgrade pip
-          pip install requests beautifulsoup4 yfinance
+          pip install requests beautifulsoup4 yfinance feedparser google-generativeai
 
       - name: 🚀 데이터 수집 파이썬 실행
         run: |
           mkdir -p public   # 👈 [치명적 오류 해결] public 폴더를 강제로 생성하여 FileNotFoundError 방지!
           python collect_macro.py
+        env: # 👈 보안 처리된 Gemini API 키 주입
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: 🌐 GitHub Gist로 최신 데이터 전송 (디커플링 배포)
         run: |

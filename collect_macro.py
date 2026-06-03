@@ -1,3 +1,4 @@
+import os
 import json
 import re
 import sys
@@ -16,9 +17,11 @@ FRED_API_KEY = "***REMOVED***"
 FRED_BASE = "https://api.stlouisfed.org/fred/series/observations"
 OUTPUT_FILE = "public/macro_status.json"
 
-# 🚀 [추가] Gemini API 키 세팅 (구글 AI 스튜디오에서 발급받은 키로 반드시 교체하세요!)
-GEMINI_API_KEY = "AIzaSyDPp6rpQNDaROGRnibBApF_F0LRWAEgJ6k"
-genai.configure(api_key=GEMINI_API_KEY)
+# 🚀 [보안] 깃허브 Secrets에서 환경변수로 키를 가져옵니다.
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
@@ -214,17 +217,22 @@ def calculate_quant_risk_score(fg, vix, yc, sahm, hy) -> int:
     return round(score / weight_total) if weight_total > 0 else 50
 
 
-# 🚀 [추가] AI 뉴스 스크래핑 및 센티먼트 요약 함수
+# 🚀 [수정] AI 뉴스 스크래핑 및 센티먼트 요약 함수
 def get_ai_news_sentiment() -> dict:
-    if GEMINI_API_KEY == "여기에_GEMINI_API_KEY_입력":
-        print("⚠️ Gemini API 키가 설정되지 않았습니다. 기본값을 반환합니다.")
-        return {"sentiment_score": 50, "summary": ["AI 뉴스 분석을 위해 Gemini API 키 설정이 필요합니다.", "코드를 업데이트해 주세요.", ""]}
+    if not GEMINI_API_KEY:
+        print("⚠️ Gemini API 키가 설정되지 않았습니다.")
+        return {"sentiment_score": 50, "summary": ["AI 뉴스 분석을 위해 GitHub Secrets에 GEMINI_API_KEY 설정이 필요합니다.", "코드를 업데이트해 주세요.", ""]}
 
     print("📡 글로벌 경제 뉴스 RSS 수집 및 AI 분석 시작...")
     try:
-        rss_url = "https://finance.yahoo.com/news/rssindex"
+        # 1. 야후 대신 가장 안정적이고 빠른 구글 뉴스(미국 경제/기술) RSS로 교체
+        rss_url = "https://news.google.com/rss/search?q=stock+market+OR+technology+OR+economy&hl=en-US&gl=US&ceid=US:en"
         feed = feedparser.parse(rss_url)
         
+        # 데이터가 비어있는지 1차 방어
+        if not feed.entries:
+            raise ValueError("RSS 피드에서 뉴스를 가져오지 못했습니다. URL을 확인하세요.")
+            
         # 최근 20개 헤드라인 추출
         headlines = [entry.title for entry in feed.entries[:20]]
         news_text = "\n".join(headlines)
@@ -234,7 +242,7 @@ def get_ai_news_sentiment() -> dict:
         
         {news_text}
         
-        이 뉴스들을 분석해서 다음 JSON 형식으로만 완벽하게 대답해.
+        이 뉴스들을 분석해서 다음 JSON 형식으로만 완벽하게 대답해. 다른 인사말이나 설명은 절대 넣지 마.
         - sentiment_score: 시장의 긍정/부정 상태를 0(극단적 공포)에서 100(탐욕/상승장) 사이 정수로 평가해.
         - summary: 엔비디아(Nvidia), 아이온큐(IonQ), 포에트(Poet Technologies) 등 주요 혁신 기술주의 모멘텀 환경과 매크로 시황을 결합하여, 현재 시장을 관통하는 핵심 트렌드를 명확하고 간결하게 3줄로 요약해 (한국어 작성).
         
@@ -251,15 +259,21 @@ def get_ai_news_sentiment() -> dict:
         
         model = genai.GenerativeModel('gemini-1.5-flash')
         response = model.generate_content(prompt)
-        raw_text = response.text.replace("```json", "").replace("```", "").strip()
         
-        return json.loads(raw_text)
+        # 2. AI가 인사말을 섞더라도 순수 JSON만 뜯어내는 강력한 정규식(Regex) 방어
+        match = re.search(r'\{.*\}', response.text, re.DOTALL)
+        
+        if match:
+            raw_json = match.group(0)
+            return json.loads(raw_json)
+        else:
+            raise ValueError(f"AI 응답에서 JSON 형식을 찾을 수 없습니다. 원본: {response.text}")
         
     except Exception as e:
         print(f"❌ AI 센티먼트 분석 실패: {e}")
         return {
             "sentiment_score": 50,
-            "summary": ["현재 뉴스 데이터를 불러오거나 AI를 분석하는 중 오류가 발생했습니다.", "API 한도 초과이거나 네트워크 문제일 수 있습니다.", "잠시 후 다시 시도해 주세요."]
+            "summary": ["현재 글로벌 뉴스 데이터를 수집하거나 AI로 분석하는 중입니다.", "API 서버 트래픽 초과이거나 처리 중일 수 있습니다.", "다음 업데이트 주기(15분 후)에 다시 확인해 주세요."]
         }
 
 

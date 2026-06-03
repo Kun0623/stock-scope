@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 
 // ==========================================
-// 1. 글로벌 CSS
+// 1. 글로벌 CSS (툴팁 위치 및 오버플로우 버그 픽스)
 // ==========================================
 const GlobalStyles = () => (
   <style>{`
     @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+    
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
     
     .fade-in { animation: fadeIn 0.4s ease-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -13,17 +17,56 @@ const GlobalStyles = () => (
     .skeleton { background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 8px; }
     @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
+    /* 🚀 툴팁 위치 및 말풍선 꼬리 정렬 완벽 수정 */
     .tooltip-wrapper { position: relative; display: inline-flex; cursor: help; align-items: center; gap: 4px; }
-    .tooltip-wrapper:hover .tooltip-box { opacity: 1; visibility: visible; transform: translate(-50%, -4px); }
-    .tooltip-box { position: absolute; bottom: 100%; left: 50%; transform: translate(-50%, 0); opacity: 0; visibility: hidden; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(30, 30, 30, 0.95); border: 1px solid #444; backdrop-filter: blur(4px); padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 500; color: #eee; white-space: nowrap; z-index: 50; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
-    .tooltip-box::after { content: ''; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: rgba(30, 30, 30, 0.95) transparent transparent transparent; }
+    .tooltip-wrapper:hover .tooltip-box { opacity: 1; visibility: visible; transform: translateY(-4px); }
+    
+    .tooltip-box { 
+      position: absolute; 
+      bottom: 100%; 
+      left: 0; /* 👈 컨테이너 밖으로 나가지 않도록 왼쪽 정렬(0)으로 고정 */
+      margin-bottom: 8px; /* 꼬리가 들어갈 여백 확보 */
+      opacity: 0; 
+      visibility: hidden; 
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+      background: rgba(30, 30, 30, 0.95); 
+      border: 1px solid #444; 
+      backdrop-filter: blur(4px); 
+      padding: 10px 14px; 
+      border-radius: 8px; 
+      font-size: 12px; 
+      font-weight: 500; 
+      color: #eee; 
+      white-space: normal; 
+      word-break: keep-all; 
+      width: max-content;
+      max-width: 220px; 
+      z-index: 50; 
+      pointer-events: none; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5); 
+      line-height: 1.4;
+    }
+    
+    .tooltip-box::after { 
+      content: ''; 
+      position: absolute; 
+      top: 100%; 
+      left: 20px; /* 👈 말풍선 꼬리를 글자 윗쪽으로 자연스럽게 당겨옴 */
+      margin-left: -5px; 
+      border-width: 5px; 
+      border-style: solid; 
+      border-color: rgba(30, 30, 30, 0.95) transparent transparent transparent; 
+    }
 
     .glass-panel { background: #161616; border: 1px solid #262626; border-radius: 16px; transition: transform 0.2s, box-shadow 0.2s; }
     .glass-panel:hover { border-color: #333; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
 
-    .paywall-container { position: relative; overflow: hidden; border-radius: 16px; }
+    /* 🚀 오버플로우 숨김 해제 (툴팁 짤림 원천 차단) */
+    .paywall-container { position: relative; border-radius: 16px; } 
     .paywall-blur { filter: blur(6px) brightness(0.6); pointer-events: none; user-select: none; }
-    .paywall-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(10, 10, 10, 0.4); z-index: 10; padding: 20px; text-align: center; }
+    
+    /* 👈 부모의 overflow:hidden을 제거한 대신 오버레이에 직접 둥근 모서리(border-radius) 적용 */
+    .paywall-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(10, 10, 10, 0.4); z-index: 10; padding: 20px; text-align: center; border-radius: 16px; }
   `}</style>
 );
 
