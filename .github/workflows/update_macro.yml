@@ -4,6 +4,8 @@ on:
   schedule:
     # 매시간 14분, 29분, 44분, 59분에 실행 (15분 간격 딜레이 방지)
     - cron: '14,29,44,59 * * * 1-5'
+  repository_dispatch:
+    types: [force-macro-update] # 👈 외부 강제 호출(Webhook) 수신 기능 추가!
   workflow_dispatch: # 수동 트리거 허용
 
 jobs:

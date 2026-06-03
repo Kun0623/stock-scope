@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 // ==========================================
-// 1. 글로벌 CSS 주입 (애니메이션 & 툴팁 제어용)
+// 1. 글로벌 CSS
 // ==========================================
 const GlobalStyles = () => (
   <style>{`
@@ -10,19 +10,20 @@ const GlobalStyles = () => (
     .fade-in { animation: fadeIn 0.4s ease-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     
-    /* 스켈레톤 애니메이션 */
     .skeleton { background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 8px; }
     @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-    /* 고급 툴팁 (마우스 호버 시 노출) */
     .tooltip-wrapper { position: relative; display: inline-flex; cursor: help; align-items: center; gap: 4px; }
     .tooltip-wrapper:hover .tooltip-box { opacity: 1; visibility: visible; transform: translate(-50%, -4px); }
     .tooltip-box { position: absolute; bottom: 100%; left: 50%; transform: translate(-50%, 0); opacity: 0; visibility: hidden; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(30, 30, 30, 0.95); border: 1px solid #444; backdrop-filter: blur(4px); padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 500; color: #eee; white-space: nowrap; z-index: 50; pointer-events: none; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
     .tooltip-box::after { content: ''; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: rgba(30, 30, 30, 0.95) transparent transparent transparent; }
 
-    /* 글래스모피즘 패널 */
     .glass-panel { background: #161616; border: 1px solid #262626; border-radius: 16px; transition: transform 0.2s, box-shadow 0.2s; }
     .glass-panel:hover { border-color: #333; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+    .paywall-container { position: relative; overflow: hidden; border-radius: 16px; }
+    .paywall-blur { filter: blur(6px) brightness(0.6); pointer-events: none; user-select: none; }
+    .paywall-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(10, 10, 10, 0.4); z-index: 10; padding: 20px; text-align: center; }
   `}</style>
 );
 
@@ -31,6 +32,7 @@ const GlobalStyles = () => (
 // ==========================================
 export function MacroDashboardPage() {
   const [macroData, setMacroData] = useState<any>(null);
+  const [isPro, setIsPro] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,8 +41,6 @@ export function MacroDashboardPage() {
         const response = await fetch(`${GITHUB_RAW_URL}?t=${new Date().getTime()}`);
         if (!response.ok) throw new Error("네트워크 응답 오류");
         const data = await response.json();
-        
-        // 스켈레톤 UI를 체감할 수 있도록 아주 짧은 의도적 지연(UX) 부여
         setTimeout(() => setMacroData(data), 300);
       } catch (error) {
         console.error("데이터 로드 실패:", error);
@@ -50,9 +50,30 @@ export function MacroDashboardPage() {
   }, []);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0a0a0a", color: "#f5f5f5", fontFamily: "'Pretendard', sans-serif", paddingBottom: 140 }}>
+    <div style={{ minHeight: "100vh", background: "#0a0a0a", color: "#f5f5f5", fontFamily: "'Pretendard', sans-serif", paddingBottom: 160 }}>
       <GlobalStyles />
-      {!macroData ? <SkeletonLoadingUI /> : <DashboardContent data={macroData} />}
+      
+      {/* 🚀 상단 플로팅 내비게이션 바 (Sticky 적용) */}
+      <div style={{ 
+        position: "sticky", 
+        top: 0, 
+        zIndex: 100, 
+        padding: "12px 16px", 
+        background: "rgba(10, 10, 10, 0.85)", 
+        backdropFilter: "blur(12px)", 
+        WebkitBackdropFilter: "blur(12px)",
+        borderBottom: "1px solid rgba(255,255,255,0.08)", 
+        display: "flex", 
+        justifyContent: "space-between", 
+        alignItems: "center" 
+      }}>
+        <span style={{ fontSize: 13, color: "#888", fontWeight: 700 }}>개발자 테스트 모드</span>
+        <button onClick={() => setIsPro(!isPro)} style={{ background: isPro ? "#ffb800" : "#222", color: isPro ? "#000" : "#fff", border: isPro ? "none" : "1px solid #444", padding: "6px 14px", borderRadius: 20, fontSize: 12, fontWeight: 800, cursor: "pointer", transition: "all 0.2s" }}>
+          {isPro ? "👑 PRO 버전" : "🔒 무료 버전"}
+        </button>
+      </div>
+
+      {!macroData ? <SkeletonLoadingUI /> : <DashboardContent data={macroData} isPro={isPro} />}
     </div>
   );
 }
@@ -63,16 +84,10 @@ export function MacroDashboardPage() {
 function SkeletonLoadingUI() {
   return (
     <div style={{ padding: "20px 16px", display: "flex", flexDirection: "column", gap: 16 }}>
-      {/* 쉴드 배너 스켈레톤 */}
       <div className="skeleton" style={{ height: 110, borderRadius: 16 }} />
-      {/* 퀀트 스코어 스켈레톤 */}
       <div className="skeleton" style={{ height: 70, borderRadius: 16 }} />
-      {/* 게이지 차트 스켈레톤 */}
       <div className="skeleton" style={{ height: 180, borderRadius: 16 }} />
-      {/* 2x2 그리드 스켈레톤 */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-        <div className="skeleton" style={{ height: 90, borderRadius: 16 }} />
-        <div className="skeleton" style={{ height: 90, borderRadius: 16 }} />
         <div className="skeleton" style={{ height: 90, borderRadius: 16 }} />
         <div className="skeleton" style={{ height: 90, borderRadius: 16 }} />
       </div>
@@ -81,10 +96,9 @@ function SkeletonLoadingUI() {
 }
 
 // ==========================================
-// 4. 데이터 렌더링 본문 (Progressive Disclosure 적용)
+// 4. 데이터 렌더링 본문
 // ==========================================
-function DashboardContent({ data }: { data: any }) {
-  // 위험 벌점 계산
+function DashboardContent({ data, isPro }: { data: any, isPro: boolean }) {
   let dangerCount = 0;
   if (data.fear_greed?.value <= 25) dangerCount++;
   if (data.buffett_indicator?.value >= 180) dangerCount++;
@@ -93,11 +107,23 @@ function DashboardContent({ data }: { data: any }) {
   if (data.yield_curve?.value < 0) dangerCount++;
   if (data.vix?.value >= 25) dangerCount++;
 
-  let shield = { title: "안정 구간", desc: "적극적인 시장 참여가 가능한 환경입니다", color: "#00d26a", bg: "#00d26a10", level: "green" };
+  let shield = { 
+    title: "안정적 추세 구간", 
+    desc: "주요 거시 지표가 장기 평균치에 수렴하는 안정적인 흐름을 보이고 있습니다.", 
+    color: "#00d26a", bg: "#00d26a10", level: "green" 
+  };
   if (dangerCount >= 3) {
-    shield = { title: "위험 구간 진입", desc: "현금 비중을 늘리고 보수적으로 접근하세요", color: "#ff4d4d", bg: "#ff4d4d10", level: "red" };
+    shield = { 
+      title: "고변동성 국면 진입", 
+      desc: "과거 통계상 마켓 스트레스 지수가 상위 15%에 위치한 고위험 구간입니다.", 
+      color: "#ff4d4d", bg: "#ff4d4d10", level: "red" 
+    };
   } else if (dangerCount >= 1) {
-    shield = { title: "주의 구간 진입", desc: "분할 매수 전략 유지 — 신호 확인 후 추가 진입", color: "#ffb800", bg: "#ffb80010", level: "yellow" };
+    shield = { 
+      title: "추세 전환 모니터링", 
+      desc: "지표 간 디커플링으로 인해 단기 변동성 추세가 관측되는 구간입니다.", 
+      color: "#ffb800", bg: "#ffb80010", level: "yellow" 
+    };
   }
 
   const riskScore = data.quant_risk_score ?? 50;
@@ -105,13 +131,12 @@ function DashboardContent({ data }: { data: any }) {
 
   return (
     <div className="fade-in">
-      {/* ── 1. 마스터 쉴드 & 퀀트 스코어 ── */}
+      {/* ── 마스터 쉴드 (전체 공개) ── */}
       <div style={{ padding: "20px 16px 12px", display: "flex", flexDirection: "column", gap: 12 }}>
-        
         <div style={{ background: shield.bg, border: `1px solid ${shield.color}30`, borderRadius: 16, padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: shield.color, marginBottom: 8 }}>매크로 쉴드 가이드</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: shield.color, marginBottom: 8 }}>매크로 스트레스 가이드</div>
               <h2 style={{ fontSize: 22, fontWeight: 800, margin: "0 0 8px", color: "#fff" }}>{shield.title}</h2>
               <p style={{ fontSize: 14, color: "#aaa", margin: 0, wordBreak: "keep-all" }}>{shield.desc}</p>
             </div>
@@ -123,12 +148,22 @@ function DashboardContent({ data }: { data: any }) {
           </div>
         </div>
 
-        <div className="glass-panel" style={{ padding: "18px 20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Tooltip label="통합 마켓 스코어" desc="5종의 매크로 지표 가중치를 연산한 위험 계수" />
-          <div>
-            <span style={{ fontSize: 28, fontWeight: 900, color: scoreColor }}>{riskScore}</span>
-            <span style={{ fontSize: 14, color: "#666", fontWeight: 700 }}> / 100</span>
+        {/* 🚀 퀀트 스코어 (PRO 전용 페이월 - minHeight 110px 추가로 텍스트 짤림 방지) */}
+        <div className="paywall-container glass-panel" style={{ minHeight: 110, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          <div className={!isPro ? "paywall-blur" : ""} style={{ padding: "18px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+            <Tooltip label="통합 마켓 스코어" desc="5종의 매크로 지표 가중치를 연산한 위험 계수" />
+            <div>
+              <span style={{ fontSize: 28, fontWeight: 900, color: scoreColor }}>{riskScore}</span>
+              <span style={{ fontSize: 14, color: "#666", fontWeight: 700 }}> / 100</span>
+            </div>
           </div>
+          {!isPro && (
+            <div className="paywall-overlay" style={{ padding: "12px" }}>
+              <span style={{ fontSize: 22, marginBottom: 6 }}>🔒</span>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 4 }}>통합 퀀트 스코어 잠김</div>
+              <div style={{ fontSize: 12, color: "#aaa" }}>PRO 버전을 구독하고 시장 위험도를 수치로 확인하세요.</div>
+            </div>
+          )}
         </div>
         
         <div style={{ textAlign: "right", paddingRight: 4 }}>
@@ -138,23 +173,23 @@ function DashboardContent({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* ── 2. 심화 게이지 지표 ── */}
+      {/* ── 심화 게이지 지표 (전체 공개) ── */}
       <div style={{ padding: "0 16px 12px" }}>
         <div className="glass-panel" style={{ padding: "20px" }}>
           <GaugeRow title="공포탐욕 지수" tooltip="시장 참여자들의 심리 상태" value={data.fear_greed?.value} isReversed={true} />
           <div style={{ height: 24 }} />
-          <GaugeRow title="버핏 지표" tooltip="GDP 대비 시가총액 (180% 이상 위험)" value={data.buffett_indicator?.value} suffix="%" />
+          <GaugeRow title="버핏 지표" tooltip="GDP 대비 시가총액 (180% 이상 고평가 영역)" value={data.buffett_indicator?.value} suffix="%" />
           <div style={{ height: 24 }} />
-          <SeesawRow title="장단기 금리차" tooltip="마이너스 진입 시 경기 침체 전조 증상" value={data.yield_curve?.value} />
+          <SeesawRow title="장단기 금리차" tooltip="마이너스 진입 시 경기 침체 통계적 전조" value={data.yield_curve?.value} />
         </div>
       </div>
 
-      {/* ── 3. 미니 팩터 그리드 ── */}
+      {/* ── 미니 팩터 그리드 (전체 공개) ── */}
       <div style={{ padding: "0 16px 12px" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-          <GridCard title="숌 룰 지수" tooltip="실업률 기반 침체 확률 (0.5% 경계)" value={data.sahm_rule?.value} suffix="%" threshold={0.5} />
-          <GridCard title="하이일드" tooltip="기업 신용 경색 지표 (5.0% 경계)" value={data.high_yield_spread?.value} suffix="%" threshold={5.0} />
-          <GridCard title="VIX 지수" tooltip="S&P 500 변동성 (25 이상 공포)" value={data.vix?.value} suffix="" threshold={25} />
+          <GridCard title="숌 룰 지수" tooltip="실업률 기반 침체 확률 (0.5% 임계치)" value={data.sahm_rule?.value} suffix="%" threshold={0.5} />
+          <GridCard title="하이일드" tooltip="기업 신용 경색 지표 (5.0% 임계치)" value={data.high_yield_spread?.value} suffix="%" threshold={5.0} />
+          <GridCard title="VIX 지수" tooltip="S&P 500 변동성 (25 이상 고변동성)" value={data.vix?.value} suffix="" threshold={25} />
           <div className="glass-panel" style={{ padding: "16px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
             <Tooltip label="원/달러 환율" desc="DXY 달러 인덱스 연동" />
             <div style={{ marginTop: 12 }}>
@@ -165,43 +200,49 @@ function DashboardContent({ data }: { data: any }) {
         </div>
       </div>
 
-      {/* ── 4. 주도 테마 매트릭스 (메가 vs 이머징) ── */}
+      {/* ── 주도 테마 & 섹터 ── */}
       <div style={{ padding: "0 16px 24px", display: "flex", flexDirection: "column", gap: 12 }}>
         
+        {/* 🚀 글로벌 테마 트렌드 (PRO 전용 페이월 - 내부 버튼 제거) */}
         {data.theme_trends && (
-          <div className="glass-panel" style={{ padding: "20px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 20 }}>
-              <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#ffb800" }}>💡 글로벌 테마 트렌드</h3>
-              <span style={{ fontSize: 11, color: "#666" }}>메가 트렌드 vs 단기 모멘텀</span>
-            </div>
-
-            {/* 🚀 메가 트렌드 그룹 */}
-            <div style={{ marginBottom: 24 }}>
-              <div style={{ fontSize: 12, fontWeight: 800, color: "#888", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>
-                <span>🚀</span> 장기 구조적 주도 테마 (Mega)
+          <div className="paywall-container glass-panel">
+            <div className={!isPro ? "paywall-blur" : ""} style={{ padding: "20px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 20 }}>
+                <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#ffb800" }}>💡 글로벌 테마 매트릭스</h3>
+                <span style={{ fontSize: 11, color: "#666" }}>메가 트렌드 vs 단기 모멘텀</span>
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {data.theme_trends.mega?.map((t: any) => (
-                  <TrendRow key={t.ticker} item={t} badge="Mega" />
-                ))}
+              <div style={{ marginBottom: 24 }}>
+                <div style={{ fontSize: 12, fontWeight: 800, color: "#888", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>
+                  <span>🚀</span> 장기 구조적 주도 테마 (Mega)
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {data.theme_trends.mega?.map((t: any) => (
+                    <TrendRow key={t.ticker} item={t} badge="Mega" />
+                  ))}
+                </div>
               </div>
-            </div>
-
-            {/* 🔥 최근 모멘텀 그룹 */}
-            <div>
-              <div style={{ fontSize: 12, fontWeight: 800, color: "#888", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>
-                <span>🔥</span> 이머징 & 핫 모멘텀 테마 (Recent)
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {data.theme_trends.recent?.map((t: any) => (
-                  <TrendRow key={t.ticker} item={t} badge="Hot" />
-                ))}
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 800, color: "#888", marginBottom: 12, display: "flex", alignItems: "center", gap: 6 }}>
+                  <span>🔥</span> 이머징 & 핫 모멘텀 테마 (Recent)
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {data.theme_trends.recent?.map((t: any) => (
+                    <TrendRow key={t.ticker} item={t} badge="Hot" />
+                  ))}
+                </div>
               </div>
             </div>
+            {!isPro && (
+              <div className="paywall-overlay" style={{ background: "rgba(10, 10, 10, 0.7)" }}>
+                <span style={{ fontSize: 24, marginBottom: 8 }}>💡</span>
+                <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 4 }}>글로벌 테마 흐름 분석 잠김</div>
+                <div style={{ fontSize: 12, color: "#aaa" }}>PRO 버전을 구독하고 시장의 거대한 자금 이동을 추적하세요.</div>
+              </div>
+            )}
           </div>
         )}
 
-        {/* ── GICS 12개 상세 섹터 ── */}
+        {/* GICS 섹터 (전체 공개) */}
         <div className="glass-panel" style={{ padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 16 }}>
             <h3 style={{ fontSize: 14, fontWeight: 700, margin: 0, color: "#fff" }}>🌍 GICS 12개 상세 섹터</h3>
@@ -214,7 +255,14 @@ function DashboardContent({ data }: { data: any }) {
           </div>
         </div>
       </div>
-      
+
+      {/* 🚀 법적 면책 조항 (하단 고정 노출) */}
+      <div style={{ padding: "0 20px", textAlign: "justify" }}>
+        <p style={{ fontSize: 10, color: "#555", lineHeight: 1.5, margin: 0 }}>
+          <strong>면책 조항:</strong> 본 서비스가 제공하는 모든 매크로 점수 및 테마 등락률 정보는 오픈 API를 기반으로 연산된 단순 통계 데이터이며, 어떠한 경우에도 특정 자산의 매수/매도 권유 또는 투자 자문을 구성하지 않습니다. 모든 투자 결정의 최종 책임은 사용자 본인에게 있습니다.
+        </p>
+      </div>
+
     </div>
   );
 }
@@ -223,7 +271,6 @@ function DashboardContent({ data }: { data: any }) {
 // 5. 잘게 쪼갠 UI 하위 컴포넌트들
 // ==========================================
 
-// 정보 가림막(Progressive Disclosure) 툴팁 컴포넌트
 function Tooltip({ label, desc }: { label: string, desc: string }) {
   return (
     <div className="tooltip-wrapper">
@@ -234,12 +281,10 @@ function Tooltip({ label, desc }: { label: string, desc: string }) {
   );
 }
 
-// 공포탐욕 / 버핏 지표용 스펙트럼 게이지
 function GaugeRow({ title, tooltip, value, suffix = "", isReversed = false }: any) {
   if (value === undefined) return null;
   const isDanger = isReversed ? value <= 25 : value >= 180;
   let percent = isReversed ? value : Math.min(100, (value / 250) * 100);
-  
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 12 }}>
@@ -253,13 +298,11 @@ function GaugeRow({ title, tooltip, value, suffix = "", isReversed = false }: an
   );
 }
 
-// 장단기 금리차용 제로 베이스 시소 차트
 function SeesawRow({ title, tooltip, value }: any) {
   if (value === undefined) return null;
   const isInv = value < 0;
   const leftPos = isInv ? `${Math.max(0, 50 + value * 25)}%` : "50%";
   const barWidth = `${Math.min(50, Math.abs(value) * 25)}%`;
-
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 12 }}>
@@ -274,7 +317,6 @@ function SeesawRow({ title, tooltip, value }: any) {
   );
 }
 
-// 2x2 미니 그리드 카드
 function GridCard({ title, tooltip, value, suffix, threshold }: any) {
   if (value === undefined) return null;
   const isDanger = value >= threshold;
@@ -291,11 +333,8 @@ function GridCard({ title, tooltip, value, suffix, threshold }: any) {
   );
 }
 
-// 🛠️ TypeScript 에러 해결 및 뱃지 디자인이 추가된 TrendRow 컴포넌트
 function TrendRow({ item, badge }: { item: any; badge?: "Mega" | "Hot" }) {
   const isPos = item.change_pct >= 0;
-  
-  // 뱃지 타입별 테마 스타일링 (Mega = 퍼플 계열, Hot = 오렌지 계열)
   const badgeStyle = badge === "Mega"
     ? { background: "rgba(168, 85, 247, 0.15)", color: "#c084fc", border: "1px solid rgba(168, 85, 247, 0.3)" }
     : { background: "rgba(249, 115, 22, 0.15)", color: "#ff9d43", border: "1px solid rgba(249, 115, 22, 0.3)" };
@@ -303,14 +342,12 @@ function TrendRow({ item, badge }: { item: any; badge?: "Mega" | "Hot" }) {
   return (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 16px", background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.05)" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-        {/* 심볼 아이콘 영역 */}
         <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(255,255,255,0.06)", display: "flex", justifyContent: "center", alignItems: "center", fontSize: 12, fontWeight: 800, color: "#fff", border: "1px solid rgba(255,255,255,0.08)" }}>
           {item.ticker}
         </div>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <div style={{ fontSize: 14, fontWeight: 700, color: "#eee" }}>{item.name}</div>
-            {/* 🚀 전달받은 뱃지 텍스트를 컴포넌트 내부에 동적으로 렌더링 */}
             {badge && (
               <span style={{ fontSize: 10, fontWeight: 800, padding: "2px 6px", borderRadius: 6, ...badgeStyle }}>
                 {badge}
@@ -320,7 +357,6 @@ function TrendRow({ item, badge }: { item: any; badge?: "Mega" | "Hot" }) {
           <div style={{ fontSize: 12, color: "#666", marginTop: 4 }}>테마 주도 자산</div>
         </div>
       </div>
-      {/* 등락률 배경 라벨링 */}
       <div style={{ fontSize: 15, fontWeight: 800, color: isPos ? "#ff4d4d" : "#4d94ff", background: isPos ? "rgba(255,77,77,0.1)" : "rgba(77,148,255,0.1)", padding: "6px 12px", borderRadius: 8 }}>
         {isPos ? "+" : ""}{item.change_pct}%
       </div>
@@ -328,7 +364,6 @@ function TrendRow({ item, badge }: { item: any; badge?: "Mega" | "Hot" }) {
   );
 }
 
-// 🚀 수정 2. 상세 섹터 타일 (정렬 통일 및 비활성 색상 밝기 상향)
 function SectorTile({ item, rank }: { item: any, rank: number }) {
   const isPos = item.change_pct >= 0;
   const isTop = rank <= 3;
@@ -336,7 +371,6 @@ function SectorTile({ item, rank }: { item: any, rank: number }) {
     <div style={{ padding: "14px 12px", background: isTop ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.02)", borderRadius: 12, border: isTop ? "1px solid rgba(255,255,255,0.15)" : "1px solid rgba(255,255,255,0.04)" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          {/* 하위 순위 숫자 색상을 #555 -> #888 로 밝혀서 가독성 확보 */}
           <span style={{ fontSize: 14, fontWeight: 900, color: isTop ? "#ffb800" : "#888", width: 16 }}>{rank}</span>
           <span style={{ fontSize: 15, fontWeight: 800, color: "#fff" }}>{item.ticker}</span>
         </div>
@@ -344,7 +378,6 @@ function SectorTile({ item, rank }: { item: any, rank: number }) {
           {isPos ? "+" : ""}{item.change_pct}%
         </span>
       </div>
-      {/* 텍스트 줄맞춤을 위해 paddingLeft 적용 및 색상 밝기 상향 */}
       <div style={{ fontSize: 12, fontWeight: 600, color: "#aaa", paddingLeft: 24, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
         {item.name}
       </div>
