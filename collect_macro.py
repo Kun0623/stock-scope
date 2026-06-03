@@ -257,7 +257,8 @@ def get_ai_news_sentiment() -> dict:
         }}
         """
         
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        # 안정적인 최신 1.5 플래시 버전 명칭으로 변경 (또는 'gemini-pro' 사용 가능)
+        model = genai.GenerativeModel('gemini-1.5-flash-latest')
         response = model.generate_content(prompt)
         
         # 2. AI가 인사말을 섞더라도 순수 JSON만 뜯어내는 강력한 정규식(Regex) 방어
