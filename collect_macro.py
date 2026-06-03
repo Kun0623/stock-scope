@@ -116,24 +116,45 @@ def get_fx_data() -> dict:
     return {"dxy": None, "usd_krw": None}
 
 
-# 🚀 [고도화 2] AI & 클라우드 테마 트렌드 독자 수집 구조
-def get_tech_trends() -> list:
-    trends = {
-        "AIQ": "인공지능 (AI & Infrastructure)",
-        "SKYY": "클라우드 (Cloud Computing)"
+# 🚀 [고도화 2] 다각화된 테마 트렌드 수집 (메가 vs 최근)
+def get_theme_trends() -> dict:
+    themes = {
+        "mega": {
+            "AIQ": "인공지능 & 빅데이터",
+            "SKYY": "클라우드 컴퓨팅",
+            "CIBR": "사이버 보안",
+            "BOTZ": "로봇공학 & 자동화"
+        },
+        "recent": {
+            "BLOK": "웹 3.0 & 블록체인",
+            "QTUM": "양자컴퓨팅 & 차세대 통신",
+            "ITA": "우주항공 & 국방",
+            "URA": "우라늄 & 차세대 에너지"
+        }
     }
-    results = []
-    print("📡 AI 및 클라우드 세부 세부 트렌드 수집 시작...")
-    for ticker, name in trends.items():
-        try:
-            hist = yf.Ticker(ticker).history(period="2d")
-            if not hist.empty and len(hist) >= 2:
-                curr = float(hist['Close'].iloc[-1])
-                prev = float(hist['Close'].iloc[-2])
-                change = ((curr - prev) / prev) * 100
-                results.append({"ticker": ticker, "name": name, "change_pct": round(change, 2)})
-        except Exception as e:
-            print(f"    [오류] {ticker} 수집 실패: {e}")
+    
+    results = {"mega": [], "recent": []}
+    print("📡 글로벌 메가 & 이머징 테마 트렌드 수집 시작...")
+    
+    for category, etfs in themes.items():
+        for ticker, name in etfs.items():
+            try:
+                hist = yf.Ticker(ticker).history(period="2d")
+                if not hist.empty and len(hist) >= 2:
+                    curr = float(hist['Close'].iloc[-1])
+                    prev = float(hist['Close'].iloc[-2])
+                    change = ((curr - prev) / prev) * 100
+                    results[category].append({
+                        "ticker": ticker, 
+                        "name": name, 
+                        "change_pct": round(change, 2)
+                    })
+            except Exception as e:
+                print(f"    [오류] {ticker} 수집 실패: {e}")
+                
+        # 각 카테고리별로 등락률이 높은 순서대로 정렬
+        results[category].sort(key=lambda x: x["change_pct"], reverse=True)
+        
     return results
 
 
@@ -198,7 +219,7 @@ def main():
     vix = get_vix_index()
     fx = get_fx_data()
     
-    tech_trends = get_tech_trends() # AI, 클라우드 수집
+    theme_trends = get_theme_trends() # AI, 클라우드 수집
     sectors = get_sector_data()     # 12개 섹터 수집
     
     # 퀀트 스코어 계산
@@ -215,7 +236,7 @@ def main():
         "yield_curve": yield_curve,
         "vix": vix,
         "fx": fx,
-        "tech_trends": tech_trends,    # AI/클라우드 추가
+        "theme_trends": theme_trends,    # AI/클라우드 추가
         "sectors": sectors,
     }
 
