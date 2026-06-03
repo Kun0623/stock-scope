@@ -173,6 +173,49 @@ function DashboardContent({ data, isPro }: { data: any, isPro: boolean }) {
         </div>
       </div>
 
+      {/* 🚀 [PRO 전용] AI 글로벌 뉴스 센티먼트 브리핑 */}
+      {data.ai_sentiment && (
+        <div className="paywall-container glass-panel" style={{ marginTop: 12 }}>
+          <div className={!isPro ? "paywall-blur" : ""} style={{ padding: "20px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 18 }}>🤖</span>
+                <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#fff" }}>AI 글로벌 뉴스 센티먼트</h3>
+              </div>
+              {/* AI 센티먼트 스코어 뱃지 */}
+              <div style={{ fontSize: 12, fontWeight: 800, padding: "4px 10px", borderRadius: 12, background: data.ai_sentiment.sentiment_score >= 60 ? "rgba(0, 210, 106, 0.15)" : data.ai_sentiment.sentiment_score <= 40 ? "rgba(255, 77, 77, 0.15)" : "rgba(255, 184, 0, 0.15)", color: data.ai_sentiment.sentiment_score >= 60 ? "#00d26a" : data.ai_sentiment.sentiment_score <= 40 ? "#ff4d4d" : "#ffb800" }}>
+                시장 투심: {data.ai_sentiment.sentiment_score} / 100
+              </div>
+            </div>
+            
+            <div style={{ background: "rgba(0,0,0,0.3)", borderRadius: 12, padding: "16px", border: "1px solid rgba(255,255,255,0.05)" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {data.ai_sentiment.summary.map((line: string, idx: number) => (
+                  <div key={idx} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                    <span style={{ fontSize: 13, color: "#ffb800", fontWeight: 900, lineHeight: 1.4 }}>✓</span>
+                    <p style={{ margin: 0, fontSize: 13, color: "#ddd", lineHeight: 1.5, wordBreak: "keep-all" }}>
+                      {line}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          {/* 무료 유저용 가림막 */}
+          {!isPro && (
+            <div className="paywall-overlay" style={{ background: "rgba(10, 10, 10, 0.75)" }}>
+              <span style={{ fontSize: 24, marginBottom: 8 }}>✨</span>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 4 }}>AI 모닝 브리핑 잠김</div>
+              <div style={{ fontSize: 12, color: "#aaa", marginBottom: 12 }}>PRO 버전을 구독하고 AI가 읽어주는 월가 투심 요약을 확인하세요.</div>
+              <button style={{ background: "#3182ce", color: "#fff", border: "none", padding: "8px 16px", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+                AI 인사이트 언락하기
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* ── 심화 게이지 지표 (전체 공개) ── */}
       <div style={{ padding: "0 16px 12px" }}>
         <div className="glass-panel" style={{ padding: "20px" }}>

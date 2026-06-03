@@ -8,9 +8,17 @@ import requests
 from bs4 import BeautifulSoup
 import yfinance as yf
 
+# 🚀 [추가] AI 뉴스 분석용 라이브러리
+import feedparser
+import google.generativeai as genai
+
 FRED_API_KEY = "***REMOVED***"
 FRED_BASE = "https://api.stlouisfed.org/fred/series/observations"
 OUTPUT_FILE = "public/macro_status.json"
+
+# 🚀 [추가] Gemini API 키 세팅 (구글 AI 스튜디오에서 발급받은 키로 반드시 교체하세요!)
+GEMINI_API_KEY = "AIzaSyDPp6rpQNDaROGRnibBApF_F0LRWAEgJ6k"
+genai.configure(api_key=GEMINI_API_KEY)
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
@@ -116,7 +124,6 @@ def get_fx_data() -> dict:
     return {"dxy": None, "usd_krw": None}
 
 
-# 🚀 [고도화 2] 다각화된 테마 트렌드 수집 (메가 vs 최근)
 def get_theme_trends() -> dict:
     themes = {
         "mega": {
@@ -152,7 +159,6 @@ def get_theme_trends() -> dict:
             except Exception as e:
                 print(f"    [오류] {ticker} 수집 실패: {e}")
                 
-        # 각 카테고리별로 등락률이 높은 순서대로 정렬
         results[category].sort(key=lambda x: x["change_pct"], reverse=True)
         
     return results
@@ -181,32 +187,80 @@ def get_sector_data() -> list:
     return results
 
 
-# 🚀 [고도화 1] 시장 국면 점수화 엔진 (Quant Risk Score - 100점 만점 연산)
 def calculate_quant_risk_score(fg, vix, yc, sahm, hy) -> int:
     score = 0
     weight_total = 0
     
     if fg and fg.get("value") is not None:
-        score += (100 - fg["value"]) * 0.25 # 공포탐욕지수는 낮을수록 리스크 가중 (가중치 25%)
+        score += (100 - fg["value"]) * 0.25 
         weight_total += 0.25
     if vix and vix.get("value") is not None:
-        vix_risk = max(0, min(100, ((vix["value"] - 12) / (35 - 12)) * 100)) # VIX 12~35 구간 스케일링 (가중치 25%)
+        vix_risk = max(0, min(100, ((vix["value"] - 12) / (35 - 12)) * 100)) 
         score += vix_risk * 0.25
         weight_total += 0.25
     if yc and yc.get("value") is not None:
-        yc_risk = max(0, min(100, ((0.4 - yc["value"]) / 0.8) * 100)) # 금리차 역전폭 심화 측정 (가중치 20%)
+        yc_risk = max(0, min(100, ((0.4 - yc["value"]) / 0.8) * 100)) 
         score += yc_risk * 0.20
         weight_total += 0.20
     if sahm and sahm.get("value") is not None:
-        sahm_risk = max(0, min(100, (sahm["value"] / 0.6) * 100)) # 숌룰 임계치 접근도 측정 (가중치 15%)
+        sahm_risk = max(0, min(100, (sahm["value"] / 0.6) * 100)) 
         score += sahm_risk * 0.15
         weight_total += 0.15
     if hy and hy.get("value") is not None:
-        hy_risk = max(0, min(100, ((hy["value"] - 3.0) / 3.0) * 100)) # 하이일드 신용위험 스케일링 (가중치 15%)
+        hy_risk = max(0, min(100, ((hy["value"] - 3.0) / 3.0) * 100)) 
         score += hy_risk * 0.15
         weight_total += 0.15
 
     return round(score / weight_total) if weight_total > 0 else 50
+
+
+# 🚀 [추가] AI 뉴스 스크래핑 및 센티먼트 요약 함수
+def get_ai_news_sentiment() -> dict:
+    if GEMINI_API_KEY == "여기에_GEMINI_API_KEY_입력":
+        print("⚠️ Gemini API 키가 설정되지 않았습니다. 기본값을 반환합니다.")
+        return {"sentiment_score": 50, "summary": ["AI 뉴스 분석을 위해 Gemini API 키 설정이 필요합니다.", "코드를 업데이트해 주세요.", ""]}
+
+    print("📡 글로벌 경제 뉴스 RSS 수집 및 AI 분석 시작...")
+    try:
+        rss_url = "https://finance.yahoo.com/news/rssindex"
+        feed = feedparser.parse(rss_url)
+        
+        # 최근 20개 헤드라인 추출
+        headlines = [entry.title for entry in feed.entries[:20]]
+        news_text = "\n".join(headlines)
+        
+        prompt = f"""
+        너는 퀀트 애널리스트야. 다음은 방금 수집된 글로벌 경제 뉴스 헤드라인 20개야.
+        
+        {news_text}
+        
+        이 뉴스들을 분석해서 다음 JSON 형식으로만 완벽하게 대답해.
+        - sentiment_score: 시장의 긍정/부정 상태를 0(극단적 공포)에서 100(탐욕/상승장) 사이 정수로 평가해.
+        - summary: 엔비디아(Nvidia), 아이온큐(IonQ), 포에트(Poet Technologies) 등 주요 혁신 기술주의 모멘텀 환경과 매크로 시황을 결합하여, 현재 시장을 관통하는 핵심 트렌드를 명확하고 간결하게 3줄로 요약해 (한국어 작성).
+        
+        출력 형식:
+        {{
+            "sentiment_score": 75,
+            "summary": [
+                "1. 첫 번째 요약",
+                "2. 두 번째 요약",
+                "3. 세 번째 요약"
+            ]
+        }}
+        """
+        
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content(prompt)
+        raw_text = response.text.replace("```json", "").replace("```", "").strip()
+        
+        return json.loads(raw_text)
+        
+    except Exception as e:
+        print(f"❌ AI 센티먼트 분석 실패: {e}")
+        return {
+            "sentiment_score": 50,
+            "summary": ["현재 뉴스 데이터를 불러오거나 AI를 분석하는 중 오류가 발생했습니다.", "API 한도 초과이거나 네트워크 문제일 수 있습니다.", "잠시 후 다시 시도해 주세요."]
+        }
 
 
 def main():
@@ -219,16 +273,18 @@ def main():
     vix = get_vix_index()
     fx = get_fx_data()
     
-    theme_trends = get_theme_trends() # AI, 클라우드 수집
-    sectors = get_sector_data()     # 12개 섹터 수집
+    theme_trends = get_theme_trends()
+    sectors = get_sector_data()
     
-    # 퀀트 스코어 계산
+    # 🚀 [추가] AI 뉴스 분석 실행
+    ai_sentiment = get_ai_news_sentiment()
+    
     risk_score = calculate_quant_risk_score(fear_greed, vix, yield_curve, sahm, hy_spread)
     now_kst = datetime.now(KST).isoformat(timespec="seconds")
 
     result = {
         "updated_at": now_kst,
-        "quant_risk_score": risk_score, # 점수화 추가
+        "quant_risk_score": risk_score, 
         "fear_greed": fear_greed,
         "buffett_indicator": buffett,
         "sahm_rule": sahm,
@@ -236,8 +292,9 @@ def main():
         "yield_curve": yield_curve,
         "vix": vix,
         "fx": fx,
-        "theme_trends": theme_trends,    # AI/클라우드 추가
+        "theme_trends": theme_trends,
         "sectors": sectors,
+        "ai_sentiment": ai_sentiment, # 🚀 [추가] 결과 JSON에 결합
     }
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
