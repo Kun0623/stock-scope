@@ -185,16 +185,16 @@ def get_ai_news_sentiment(existing_data: dict) -> dict:
         prev_ai = existing_data["ai_sentiment"]
         last_timestamp = prev_ai.get("updated_timestamp", 0)
         
-        # 3600초(1시간)가 경과하지 않았다면, 기존 요약본 재사용 (실시간 수집 생략)
-        if current_timestamp - last_timestamp < 3600:
-            print("⚡ AI 분석 1시간 캐시 적용 (Gemini API 호출을 생략하여 비용을 절약합니다)")
+        # 3600초=1시간 or 900초=15분이 경과하지 않았다면, 기존 요약본 재사용 (실시간 수집 생략)
+        if current_timestamp - last_timestamp < 900:
+            print("⚡ AI 분석 15분 캐시 적용 (Gemini API 호출을 생략하여 비용을 절약합니다)")
             return prev_ai
 
     if not GEMINI_API_KEY:
         print("⚠️ Gemini API 키가 설정되지 않았습니다.")
         return {"sentiment_score": 50, "summary": ["API 키 오류"], "news_sources": [], "updated_timestamp": current_timestamp}
 
-    print("🤖 1시간 경과: 글로벌 뉴스 실시간 스크래핑 및 AI 요약 분석 실행 중...")
+    print("🤖 15분 경과: 글로벌 뉴스 실시간 스크래핑 및 AI 요약 분석 실행 중...")
     try:
         rss_url = "https://news.google.com/rss/search?q=stock+market+OR+technology+OR+economy&hl=en-US&gl=US&ceid=US:en"
         feed = feedparser.parse(rss_url)
