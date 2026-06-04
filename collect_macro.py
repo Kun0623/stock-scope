@@ -127,6 +127,47 @@ def get_fx_data() -> dict:
     return {"dxy": None, "usd_krw": None}
 
 
+# ✨ [추가] 3번 사안: 주요 핵심 지표 데이터 수집 (코스피, 나스닥 등)
+def get_major_indices() -> list:
+    indices = {
+        "^KS11": "KOSPI",
+        "^GSPC": "S&P 500",
+        "^IXIC": "NASDAQ",
+        "CL=F": "WTI 원유",
+        "GC=F": "금 (Gold)",
+        "^TNX": "미 10년물 국채"
+    }
+    results = []
+    print("📈 주요 핵심 지표 수집 시작...")
+    for ticker, name in indices.items():
+        try:
+            hist = yf.Ticker(ticker).history(period="2d")
+            if not hist.empty and len(hist) >= 2:
+                curr = float(hist['Close'].iloc[-1])
+                prev = float(hist['Close'].iloc[-2])
+                change = curr - prev
+                change_pct = (change / prev) * 100
+                results.append({
+                    "name": name,
+                    "value": round(curr, 2),
+                    "change": round(change, 2),
+                    "change_pct": round(change_pct, 2)
+                })
+            elif not hist.empty and len(hist) == 1:
+                # 주말 등 거래일이 아니어서 하루치 데이터만 있을 경우 방어 로직
+                curr = float(hist['Close'].iloc[-1])
+                results.append({
+                    "name": name,
+                    "value": round(curr, 2),
+                    "change": 0.0,
+                    "change_pct": 0.0
+                })
+        except Exception as e:
+            print(f"    [오류] {name} 수집 실패: {e}")
+            
+    return results
+
+
 def get_theme_trends() -> dict:
     themes = {
         "mega": {
@@ -190,7 +231,6 @@ def get_sector_data() -> list:
     return results
 
 
-# 🚀 [수정] AI 뉴스 스크래핑 및 센티먼트 요약 함수 (뉴스 출처 리스트 추가)
 def get_ai_news_sentiment() -> dict:
     if not GEMINI_API_KEY:
         print("⚠️ Gemini API 키가 설정되지 않았습니다.")
@@ -214,7 +254,6 @@ def get_ai_news_sentiment() -> dict:
         headlines = [entry.title for entry in feed.entries[:20]]
         news_text = "\n".join(headlines)
         
-        # ✨ 프롬프트 대대적 수정: news_sources 배열을 명시적으로 반환하도록 지시
         prompt = f"""
         너는 퀀트 애널리스트야. 다음은 방금 수집된 글로벌 경제 뉴스 헤드라인 20개야.
         
@@ -302,6 +341,9 @@ def main():
     vix = get_vix_index()
     fx = get_fx_data()
     
+    # ✨ 신규 지표 수집
+    major_indices = get_major_indices()
+    
     theme_trends = get_theme_trends()
     sectors = get_sector_data()
     
@@ -321,9 +363,10 @@ def main():
         "yield_curve": yield_curve,
         "vix": vix,
         "fx": fx,
+        "major_indices": major_indices,  # ✨ 수집한 지표를 결과에 추가
         "theme_trends": theme_trends,
         "sectors": sectors,
-        "ai_sentiment": ai_sentiment, # 🚀 결과 JSON에 결합 (news_sources 포함)
+        "ai_sentiment": ai_sentiment, 
     }
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:

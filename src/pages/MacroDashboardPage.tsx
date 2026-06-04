@@ -49,18 +49,26 @@ export function MacroDashboardPage() {
   const [activeTab, setActiveTab] = useState<string>("overview");
 
   useEffect(() => {
+    // ✨ 1번 사안: 데이터를 주기적으로 불러오는 함수
     const fetchData = async () => {
       try {
         const GITHUB_RAW_URL = "https://gist.githubusercontent.com/Kun0623/6ff77031bd5979e9177a21272fac7018/raw/macro_status.json";
         const response = await fetch(`${GITHUB_RAW_URL}?t=${new Date().getTime()}`);
         if (!response.ok) throw new Error("네트워크 응답 오류");
         const data = await response.json();
-        setTimeout(() => setMacroData(data), 300);
+        setMacroData(data);
       } catch (error) {
         console.error("데이터 로드 실패:", error);
       }
     };
-    fetchData();
+
+    fetchData(); // 컴포넌트가 켜질 때 최초 1회 즉시 실행
+    
+    // 60,000ms(1분)마다 fetchData를 백그라운드에서 다시 실행하여 자동 갱신
+    const intervalId = setInterval(fetchData, 60000); 
+
+    // 컴포넌트가 화면에서 사라질 때 타이머 청소
+    return () => clearInterval(intervalId);
   }, []);
 
   const updateTimeString = macroData?.updated_at 
@@ -151,24 +159,21 @@ function DashboardContent({ data, isPro, activeTab }: { data: any, isPro: boolea
   const riskScore = data.quant_risk_score ?? 50;
   const scoreColor = riskScore >= 65 ? "#ff4d4d" : riskScore >= 35 ? "#ffb800" : "#00d26a";
   
-  // ✨ 실제 데이터에서 뉴스를 찾고, 없으면 UI 확인을 위해 임시 더미 데이터를 주입합니다.
   const rawNews = data.ai_sentiment?.news_sources || data.ai_sentiment?.news || data.news;
   const newsSources = (rawNews && rawNews.length > 0) ? rawNews : [
-    { 
-      provider: "Bloomberg (예시)", 
-      title: "기술주 전반에 걸친 선별적 강세 지속", 
-      summary: "AI 모멘텀이 시장을 주도하는 가운데, 일부 기업의 실적 실망감이 공존하며 차별화 장세가 펼쳐지고 있습니다." 
-    },
-    { 
-      provider: "Reuters (예시)", 
-      title: "스페이스X 초대형 상장 추진... 시장 낙관론 강화", 
-      summary: "대어급 IPO 소식이 투자 심리를 긍정적으로 자극하고 있으나, S&P 500의 가파른 상승에 대한 경고 목소리도 커지고 있습니다." 
-    },
-    { 
-      provider: "WSJ (예시)", 
-      title: "중동 지정학적 긴장 고조, 증시 하방 압력", 
-      summary: "지속되는 불확실성으로 인해 거시경제 환경의 리스크가 커지고 있으며, 단기적인 시장 변동성이 확대될 수 있습니다." 
-    }
+    { provider: "Bloomberg", title: "기술주 전반에 걸친 선별적 강세 지속", summary: "AI 모멘텀이 시장을 주도하는 가운데 차별화 장세가 펼쳐지고 있습니다." },
+    { provider: "Reuters", title: "스페이스X 초대형 상장 추진... 시장 낙관론 강화", summary: "대어급 IPO 소식이 투자 심리를 긍정적으로 자극하고 있습니다." },
+    { provider: "WSJ", title: "중동 지정학적 긴장 고조, 증시 하방 압력", summary: "거시경제 환경의 리스크가 커지며 단기적인 시장 변동성이 확대될 수 있습니다." }
+  ];
+
+  // ✨ 3번 사안: 실제 파이썬 백엔드 연동 전까지 화면을 꽉 채워줄 주요 지표 더미 데이터 (백엔드에 data.major_indices 가 생기면 자동 대체됨)
+  const majorIndices = data.major_indices || [
+    { name: "KOSPI", value: 2680.12, change: 1.24, change_pct: 0.05 },
+    { name: "S&P 500", value: 5304.72, change: -10.5, change_pct: -0.20 },
+    { name: "NASDAQ", value: 16736.03, change: 45.2, change_pct: 0.27 },
+    { name: "WTI 원유", value: 78.45, change: 1.2, change_pct: 1.50 },
+    { name: "금 (Gold)", value: 2350.20, change: -5.4, change_pct: -0.23 },
+    { name: "미 10년물 국채", value: 4.45, change: -0.02, change_pct: -0.02 },
   ];
 
   return (
@@ -318,7 +323,7 @@ function DashboardContent({ data, isPro, activeTab }: { data: any, isPro: boolea
             </div>
           </div>
 
-          {/* ✨ 주요 외신 출처(타이틀 및 요약) 리스트 노출 영역 */}
+          {/* 주요 외신 출처(타이틀 및 요약) 리스트 노출 영역 */}
           {newsSources.length > 0 && (
             <div className="glass-panel" style={{ padding: "20px", marginTop: "4px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
@@ -351,10 +356,24 @@ function DashboardContent({ data, isPro, activeTab }: { data: any, isPro: boolea
         </div>
       )}
 
-      {/* 📱 탭 3: 지표상세 (테마, 섹터) */}
+      {/* 📱 탭 3: 지표상세 (주요지표, 테마, 섹터) */}
       {activeTab === "indicators" && (
         <div style={{ display: "flex", flexDirection: "column", gap: 12, paddingTop: 20 }}>
           <div style={{ padding: "0 16px" }}>
+            
+            {/* ✨ 3번 사안: 주요 핵심 지표 대시보드 추가 */}
+            <div className="glass-panel" style={{ padding: "20px", marginBottom: 12 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 16 }}>
+                <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#fff" }}>📈 주요 핵심 지표</h3>
+                <span style={{ fontSize: 11, color: "#666" }}>글로벌 자산 동향</span>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                {majorIndices.map((idxItem: any, i: number) => (
+                  <MajorIndexTile key={i} item={idxItem} />
+                ))}
+              </div>
+            </div>
+
             {data.theme_trends && (
               <div className="paywall-container glass-panel" style={{ marginBottom: 12 }}>
                 <div className={!isPro ? "paywall-blur" : ""} style={{ padding: "20px" }}>
@@ -368,7 +387,7 @@ function DashboardContent({ data, isPro, activeTab }: { data: any, isPro: boolea
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                       {data.theme_trends.mega?.map((t: any) => (
-                        <TrendRow key={t.ticker} item={t} badge="Mega" />
+                        <TrendRow key={t.ticker} item={t} /> 
                       ))}
                     </div>
                   </div>
@@ -378,7 +397,7 @@ function DashboardContent({ data, isPro, activeTab }: { data: any, isPro: boolea
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                       {data.theme_trends.recent?.map((t: any) => (
-                        <TrendRow key={t.ticker} item={t} badge="Hot" />
+                        <TrendRow key={t.ticker} item={t} />
                       ))}
                     </div>
                   </div>
@@ -522,9 +541,9 @@ function GridCard({ title, tooltip, value, suffix, threshold }: any) {
   );
 }
 
-function TrendRow({ item, badge }: { item: any; badge?: "Mega" | "Hot" }) {
+// ✨ 2번 사안: TrendRow 컴포넌트에서 뱃지 관련 로직 완전 제거
+function TrendRow({ item }: { item: any }) {
   const isPos = item.change_pct >= 0;
-  const badgeStyle = badge === "Mega" ? { background: "rgba(168, 85, 247, 0.15)", color: "#c084fc", border: "1px solid rgba(168, 85, 247, 0.3)" } : { background: "rgba(249, 115, 22, 0.15)", color: "#ff9d43", border: "1px solid rgba(249, 115, 22, 0.3)" };
   return (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 16px", background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.05)" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
@@ -532,7 +551,6 @@ function TrendRow({ item, badge }: { item: any; badge?: "Mega" | "Hot" }) {
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <div style={{ fontSize: 14, fontWeight: 700, color: "#eee" }}>{item.name}</div>
-            {badge && <span style={{ fontSize: 10, fontWeight: 800, padding: "2px 6px", borderRadius: 6, ...badgeStyle }}>{badge}</span>}
           </div>
           <div style={{ fontSize: 12, color: "#666", marginTop: 4 }}>테마 주도 자산</div>
         </div>
@@ -555,6 +573,30 @@ function SectorTile({ item, rank }: { item: any, rank: number }) {
         <span style={{ fontSize: 14, fontWeight: 800, color: isPos ? "#ff4d4d" : "#4d94ff" }}>{isPos ? "+" : ""}{item.change_pct}%</span>
       </div>
       <div style={{ fontSize: 12, fontWeight: 600, color: "#aaa", paddingLeft: 24, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name}</div>
+    </div>
+  );
+}
+
+// ✨ 3번 사안: 주요 핵심 지표 렌더링용 신규 컴포넌트
+function MajorIndexTile({ item }: { item: any }) {
+  const isPos = item.change_pct >= 0;
+  const color = isPos ? "#ff4d4d" : "#4d94ff";
+  const sign = isPos ? "+" : "";
+  
+  const formatValue = (val: any, name: string) => {
+    if (typeof val === 'string') return val;
+    if (name.includes('WTI') || name.includes('금')) return `$${val.toLocaleString()}`;
+    if (name.includes('국채')) return `${val.toFixed(3)}%`;
+    return val.toLocaleString();
+  };
+
+  return (
+    <div style={{ padding: "14px 12px", background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.05)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+      <div style={{ fontSize: 12, fontWeight: 700, color: "#aaa", marginBottom: 8 }}>{item.name}</div>
+      <div style={{ fontSize: 18, fontWeight: 800, color: "#fff", marginBottom: 6, letterSpacing: "-0.5px" }}>{formatValue(item.value, item.name)}</div>
+      <div style={{ fontSize: 12, fontWeight: 800, color: color }}>
+        {sign}{item.change} ({sign}{item.change_pct}%)
+      </div>
     </div>
   );
 }
