@@ -191,22 +191,87 @@ function DashboardContent({ data, isPro }: { data: any, isPro: boolean }) {
         </div>
 
         {/* 🚀 1. 퀀트 스코어 (PRO 전용 페이월) */}
-        <div className="paywall-container glass-panel" style={{ minHeight: 110, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        <div className="paywall-container glass-panel" style={{ minHeight: 140, display: "flex", flexDirection: "column", justifyContent: "center" }}>
           <div className={!isPro ? "paywall-blur" : ""} style={{ padding: "18px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-            <Tooltip label="통합 마켓 스코어" desc="5종의 매크로 지표 가중치를 연산한 위험 계수" />
-            <div>
-              <span style={{ fontSize: 28, fontWeight: 900, color: scoreColor }}>{riskScore}</span>
-              <span style={{ fontSize: 14, color: "#666", fontWeight: 700 }}> / 100</span>
+            
+            {/* 좌측: 타이틀 및 설명 텍스트 */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 6, flex: 1 }}>
+              <Tooltip label="통합 마켓 스코어" desc="5종의 매크로 지표 가중치를 연산한 위험 계수" />
+              <div style={{ fontSize: 12, color: "#888", fontWeight: 500, wordBreak: "keep-all" }}>현재 시장 위험도 종합 수치</div>
             </div>
+            
+            {/* 우측: ✨ SVG 반원형 게이지 (좌우 정렬 및 레이아웃 수정 완료본) */}
+            {(() => {
+              // 애니메이션 마커(헤드)를 위한 삼각함수 좌표 계산
+              const markerX = 100 - 80 * Math.cos((riskScore / 100) * Math.PI);
+              const markerY = 100 - 80 * Math.sin((riskScore / 100) * Math.PI);
+              
+              return (
+                <div style={{ 
+                  position: "relative", 
+                  width: "140px", 
+                  height: "90px", 
+                  display: "flex", 
+                  flexDirection: "column", 
+                  alignItems: "center", 
+                  justifyContent: "center",
+                  marginRight: "10px" // 오른쪽 여백으로 텍스트 겹침 방지
+                }}>
+                  <svg width="130" height="80" viewBox="0 0 200 120" style={{ overflow: "visible" }}>
+                    <defs>
+                      <linearGradient id="scoreZones" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#00d26a" stopOpacity="0.25" />
+                        <stop offset="27.3%" stopColor="#00d26a" stopOpacity="0.25" />
+                        <stop offset="27.3%" stopColor="#ffb800" stopOpacity="0.25" />
+                        <stop offset="72.7%" stopColor="#ffb800" stopOpacity="0.25" />
+                        <stop offset="72.7%" stopColor="#ff4d4d" stopOpacity="0.25" />
+                        <stop offset="100%" stopColor="#ff4d4d" stopOpacity="0.25" />
+                      </linearGradient>
+                    </defs>
+                    
+                    {/* 바탕 트랙 (안정/경계/위험 3구간) */}
+                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#scoreZones)" strokeWidth="18" strokeLinecap="round" />
+                    
+                    {/* 트랙 절취선 */}
+                    <path d="M 67.8 36.8 L 59.6 20.7" fill="none" stroke="#161616" strokeWidth="4" />
+                    <path d="M 132.2 36.8 L 140.4 20.7" fill="none" stroke="#161616" strokeWidth="4" />
+
+                    {/* 밸류 트랙 (점수만큼 차오름) */}
+                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke={scoreColor} strokeWidth="18" strokeLinecap="round"
+                          strokeDasharray={Math.PI * 80} 
+                          strokeDashoffset={(Math.PI * 80) * (1 - riskScore / 100)}
+                          style={{ transition: "stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1)" }} />
+
+                    {/* 헤드 마커 (빛나는 점) */}
+                    <circle cx={markerX} cy={markerY} r="12" fill={scoreColor} opacity="0.4"
+                            style={{ transition: "cx 1.5s cubic-bezier(0.4, 0, 0.2, 1), cy 1.5s cubic-bezier(0.4, 0, 0.2, 1)" }} />
+                    <circle cx={markerX} cy={markerY} r="6" fill="#fff" 
+                            style={{ transition: "cx 1.5s cubic-bezier(0.4, 0, 0.2, 1), cy 1.5s cubic-bezier(0.4, 0, 0.2, 1)" }} />
+                  </svg>
+                  
+                  {/* 차트 중앙 텍스트 (위치 안정화) */}
+                  <div style={{ position: "absolute", top: "50%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    <span style={{ fontSize: 26, fontWeight: 900, color: scoreColor, lineHeight: 1 }}>{riskScore}</span>
+                  </div>
+                  
+                  {/* 하단 안정/위험 라벨 */}
+                  <div style={{ position: "absolute", bottom: 0, width: "100%", display: "flex", justifyContent: "space-between", padding: "0 5px" }}>
+                    <span style={{ fontSize: 10, color: "#00d26a", fontWeight: 700 }}>안정</span>
+                    <span style={{ fontSize: 10, color: "#ff4d4d", fontWeight: 700 }}>위험</span>
+                  </div>
+                </div>
+              );
+            })()}
+            
           </div>
           
-          {/* 🔒 퀀트 스코어 가림막 통일 */}
+          {/* 🔒 퀀트 스코어 가림막 */}
           {!isPro && (
             <div className="paywall-overlay" style={{ background: "rgba(10, 10, 10, 0.75)", backdropFilter: "blur(2px)" }}>
               <span style={{ fontSize: 28, marginBottom: 12 }}>🔒</span>
               <div style={{ fontSize: 16, fontWeight: 800, color: "#fff", marginBottom: 6 }}>통합 퀀트 스코어 잠김</div>
               <div style={{ fontSize: 13, color: "#aaa", marginBottom: 16, maxWidth: "80%", lineHeight: 1.5, letterSpacing: "-0.3px", wordBreak: "keep-all" }}>
-                PRO 버전을 구독하고 시장 위험도를 수치로 확인하세요.
+                PRO 버전을 구독하고 시장 위험도를 시각적 차트로 확인하세요.
               </div>
             </div>
           )}
@@ -232,16 +297,38 @@ function DashboardContent({ data, isPro }: { data: any, isPro: boolean }) {
                   <h3 style={{ fontSize: 16, fontWeight: 800, margin: 0, color: "#fff", letterSpacing: "-0.5px" }}>AI 마켓 센티먼트</h3>
                 </div>
                 
-                <div style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.05)", padding: "6px 12px", borderRadius: 20, border: "1px solid rgba(255,255,255,0.08)" }}>
-                  <span style={{ fontSize: 11, color: "#aaa", fontWeight: 600 }}>투심</span>
-                  <span style={{ 
-                    fontSize: 14, 
-                    fontWeight: 800, 
-                    color: data.ai_sentiment.sentiment_score >= 60 ? "#00d26a" : data.ai_sentiment.sentiment_score <= 40 ? "#ff4d4d" : "#ffb800" 
-                  }}>
-                    {data.ai_sentiment.sentiment_score}
-                  </span>
-                </div>
+                {/* ✨SVG 원형(도넛) 다이어그램 뱃지 */}
+                {(() => {
+                  const sScore = data.ai_sentiment.sentiment_score;
+                  const isGood = sScore >= 60;
+                  const isBad = sScore <= 40;
+                  const sColor = isGood ? "#00d26a" : isBad ? "#ff4d4d" : "#ffb800";
+                  const sText = isGood ? "탐욕" : isBad ? "공포" : "중립";
+                  const r = 16;
+                  const circ = 2 * Math.PI * r;
+
+                  return (
+                    <div style={{ 
+                      display: "flex", alignItems: "center", gap: 10, 
+                      background: "rgba(255,255,255,0.03)", padding: "6px 14px 6px 6px", 
+                      borderRadius: 30, border: "1px solid rgba(255,255,255,0.05)" 
+                    }}>
+                      <div style={{ position: "relative", width: 36, height: 36 }}>
+                        <svg width="36" height="36" viewBox="0 0 40 40" style={{ transform: "rotate(-90deg)" }}>
+                          <circle cx="20" cy="20" r={r} fill="none" stroke="#2a2a2a" strokeWidth="4" />
+                          <circle cx="20" cy="20" r={r} fill="none" stroke={sColor} strokeWidth="4" strokeLinecap="round"
+                                  strokeDasharray={circ} 
+                                  strokeDashoffset={circ * (1 - sScore / 100)}
+                                  style={{ transition: "stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1)" }} />
+                        </svg>
+                        <div style={{ position: "absolute", inset: 0, display: "flex", justifyContent: "center", alignItems: "center", fontSize: 11, fontWeight: 900, color: sColor }}>
+                          {sScore}
+                        </div>
+                      </div>
+                      <span style={{ fontSize: 13, fontWeight: 800, color: "#ccc" }}>투심 {sText}</span>
+                    </div>
+                  );
+                })()}
               </div>
               
               <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -272,12 +359,20 @@ function DashboardContent({ data, isPro }: { data: any, isPro: boolean }) {
 
       {/* ── 심화 게이지 지표 (전체 공개) ── */}
       <div style={{ padding: "0 16px 12px" }}>
-        <div className="glass-panel" style={{ padding: "20px" }}>
-          <GaugeRow title="공포탐욕 지수" tooltip="시장 참여자들의 심리 상태" value={data.fear_greed?.value} isReversed={true} />
-          <div style={{ height: 24 }} />
-          <GaugeRow title="버핏 지표" tooltip="GDP 대비 시가총액 (180% 이상 고평가 영역)" value={data.buffett_indicator?.value} suffix="%" />
-          <div style={{ height: 24 }} />
+        <div className="glass-panel" style={{ padding: "24px 20px" }}>
+          
+          {/* type="fear_greed" 속성 추가 */}
+          <GaugeRow title="공포탐욕 지수" tooltip="시장 참여자들의 심리 상태" value={data.fear_greed?.value} type="fear_greed" />
+          
+          <div style={{ height: 32 }} /> {/* 요소 간격 여유롭게 조정 */}
+          
+          {/* type="buffett" 속성 추가 */}
+          <GaugeRow title="버핏 지표" tooltip="GDP 대비 시가총액 (180% 이상 고평가 영역)" value={data.buffett_indicator?.value} suffix="%" type="buffett" />
+          
+          <div style={{ height: 32 }} />
+          
           <SeesawRow title="장단기 금리차" tooltip="마이너스 진입 시 경기 침체 통계적 전조" value={data.yield_curve?.value} />
+          
         </div>
       </div>
 
@@ -382,18 +477,75 @@ function Tooltip({ label, desc }: { label: string, desc: string }) {
   );
 }
 
-function GaugeRow({ title, tooltip, value, suffix = "", isReversed = false }: any) {
+function GaugeRow({ title, tooltip, value, suffix = "", type = "default" }: any) {
   if (value === undefined) return null;
-  const isDanger = isReversed ? value <= 25 : value >= 180;
-  let percent = isReversed ? value : Math.min(100, (value / 250) * 100);
+
+  let percent = 50;
+  let gradient = "";
+  let statusText = "";
+  let statusColor = "#fff";
+  let leftLabel = "";
+  let rightLabel = "";
+
+  // 🚀 1. 공포탐욕 지수 전용 디자인 (U자형 위험도: 양끝이 빨간색)
+  if (type === "fear_greed") {
+    percent = Math.max(0, Math.min(100, value));
+    // 공포(빨강) -> 중립(노랑) -> 탐욕(초록) -> 극단적탐욕/버블(빨강)
+    gradient = "linear-gradient(90deg, #ff4d4d 0%, #ffb800 25%, #00d26a 50%, #ffb800 75%, #ff4d4d 100%)";
+    leftLabel = "극단적 공포";
+    rightLabel = "극단적 탐욕 (버블)";
+    if (value <= 25) { statusText = "극단적 공포"; statusColor = "#ff4d4d"; }
+    else if (value <= 45) { statusText = "공포 구간"; statusColor = "#ffb800"; }
+    else if (value <= 55) { statusText = "중립"; statusColor = "#aaa"; }
+    else if (value <= 75) { statusText = "건강한 탐욕"; statusColor = "#00d26a"; }
+    else { statusText = "과열 / 버블 경고"; statusColor = "#ff4d4d"; }
+  } 
+  // 🚀 2. 버핏 지수 전용 디자인 (우상향 위험도: 오른쪽이 빨간색)
+  else if (type === "buffett") {
+    // 보통 50% ~ 200% 사이를 움직이므로 비율을 조정해 시각화
+    percent = Math.max(0, Math.min(100, ((value - 50) / 150) * 100));
+    gradient = "linear-gradient(90deg, #00d26a 0%, #ffb800 60%, #ff4d4d 100%)";
+    leftLabel = "저평가 (50%)";
+    rightLabel = "고평가 (200%+)";
+    if (value <= 100) { statusText = "저평가 구간"; statusColor = "#00d26a"; }
+    else if (value <= 130) { statusText = "적정 가치"; statusColor = "#aaa"; }
+    else if (value <= 180) { statusText = "경계 구간"; statusColor = "#ffb800"; }
+    else { statusText = "심각한 고평가"; statusColor = "#ff4d4d"; }
+  }
+
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 12 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 16 }}>
         <Tooltip label={title} desc={tooltip} />
-        <div style={{ fontSize: 20, fontWeight: 800, color: isDanger ? "#ff4d4d" : "#fff" }}>{value}{suffix}</div>
+        <div style={{ textAlign: "right" }}>
+          <div style={{ fontSize: 24, fontWeight: 900, color: statusColor, letterSpacing: "-0.5px" }}>
+            {value}{suffix}
+          </div>
+          <div style={{ fontSize: 13, fontWeight: 800, color: statusColor, opacity: 0.9, marginTop: 4 }}>
+            {statusText}
+          </div>
+        </div>
       </div>
-      <div style={{ position: "relative", width: "100%", height: 6, borderRadius: 3, background: isReversed ? "linear-gradient(90deg, #ff4d4d, #ffb800, #00d26a)" : "linear-gradient(90deg, #00d26a 30%, #ffb800 60%, #ff4d4d 90%)", marginBottom: 6 }}>
-        <div style={{ position: "absolute", left: `${percent}%`, top: -3, bottom: -3, width: 4, background: "#fff", borderRadius: 2, boxShadow: "0 0 8px rgba(0,0,0,0.8)", transition: "left 0.8s cubic-bezier(0.4, 0, 0.2, 1)" }} />
+
+      <div style={{ position: "relative", width: "100%", height: 10, borderRadius: 10, background: gradient, marginBottom: 10, boxShadow: "inset 0 1px 3px rgba(0,0,0,0.3)" }}>
+        {/* 현재 위치를 나타내는 둥근 마커 */}
+        <div style={{
+          position: "absolute",
+          left: `calc(${percent}% - 8px)`,
+          top: -4,
+          width: 18,
+          height: 18,
+          background: "#fff",
+          borderRadius: "50%",
+          border: `4px solid ${statusColor}`,
+          boxShadow: "0 2px 8px rgba(0,0,0,0.6)",
+          transition: "left 0.8s cubic-bezier(0.4, 0, 0.2, 1)"
+        }} />
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, fontWeight: 700, color: "#666" }}>
+        <span>{leftLabel}</span>
+        <span>{rightLabel}</span>
       </div>
     </div>
   );
@@ -404,15 +556,37 @@ function SeesawRow({ title, tooltip, value }: any) {
   const isInv = value < 0;
   const leftPos = isInv ? `${Math.max(0, 50 + value * 25)}%` : "50%";
   const barWidth = `${Math.min(50, Math.abs(value) * 25)}%`;
+  
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 12 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 16 }}>
         <Tooltip label={title} desc={tooltip} />
-        <div style={{ fontSize: 20, fontWeight: 800, color: isInv ? "#ff4d4d" : "#fff" }}>{value > 0 ? "+" : ""}{value}%p</div>
+        <div style={{ textAlign: "right" }}>
+           <div style={{ fontSize: 24, fontWeight: 900, color: isInv ? "#ff4d4d" : "#00d26a", letterSpacing: "-0.5px" }}>
+             {value > 0 ? "+" : ""}{value}%p
+           </div>
+           <div style={{ fontSize: 13, fontWeight: 800, color: isInv ? "#ff4d4d" : "#00d26a", opacity: 0.9, marginTop: 4 }}>
+             {isInv ? "금리 역전 (침체 경고)" : "정상 구간"}
+           </div>
+        </div>
       </div>
-      <div style={{ position: "relative", width: "100%", height: 6, background: "#222", borderRadius: 3, marginBottom: 6 }}>
-        <div style={{ position: "absolute", left: "50%", top: -4, bottom: -4, width: 2, background: "#555", zIndex: 2 }} />
-        <div style={{ position: "absolute", left: leftPos, width: barWidth, height: "100%", background: isInv ? "#ff4d4d" : "#00d26a", borderRadius: 3, transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)" }} />
+
+      <div style={{ position: "relative", width: "100%", height: 10, background: "#222", borderRadius: 10, marginBottom: 10, boxShadow: "inset 0 1px 3px rgba(0,0,0,0.5)" }}>
+        <div style={{ position: "absolute", left: "50%", top: -4, bottom: -4, width: 2, background: "#666", zIndex: 2, borderRadius: 2 }} />
+        <div style={{
+          position: "absolute",
+          left: leftPos,
+          width: barWidth,
+          height: "100%",
+          background: isInv ? "linear-gradient(90deg, #ff4d4d, #ff7676)" : "linear-gradient(90deg, #00d26a, #4ade80)",
+          borderRadius: 10,
+          transition: "all 0.8s cubic-bezier(0.4, 0, 0.2, 1)"
+        }} />
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, fontWeight: 700, color: "#666" }}>
+        <span>역전 (비정상)</span>
+        <span>정상 (성장)</span>
       </div>
     </div>
   );
