@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 // ==========================================
 // 1. 글로벌 CSS
@@ -12,6 +12,9 @@ const GlobalStyles = () => (
     
     .fade-in { animation: fadeIn 0.4s ease-out; display: flex; flex-direction: column; min-height: 100%; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    
+    /* ✨ 라이브 동기화 깜빡임 애니메이션 추가 */
+    @keyframes pulseLive { 0% { opacity: 1; box-shadow: 0 0 8px #00d26a; } 50% { opacity: 0.3; box-shadow: none; } 100% { opacity: 1; box-shadow: 0 0 8px #00d26a; } }
     
     .skeleton { background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 8px; }
     @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
@@ -47,33 +50,44 @@ export function MacroDashboardPage() {
   const [macroData, setMacroData] = useState<any>(null);
   const [isPro] = useState<boolean>(true); 
   const [activeTab, setActiveTab] = useState<string>("overview");
+  
+  // ✨ 앱이 백그라운드에서 확인하고 있다는 것을 보여줄 시간 상태
+  const [lastCheckedTime, setLastCheckedTime] = useState<Date>(new Date());
+  // 컴포넌트 내부 상단에 위치
+  const lastUpdateTimeRef = useRef<string>(""); 
 
   useEffect(() => {
-    // ✨ 1번 사안: 데이터를 주기적으로 불러오는 함수
     const fetchData = async () => {
       try {
-        const GITHUB_RAW_URL = "https://gist.githubusercontent.com/Kun0623/6ff77031bd5979e9177a21272fac7018/raw/macro_status.json";
-        const response = await fetch(`${GITHUB_RAW_URL}?t=${new Date().getTime()}`);
-        if (!response.ok) throw new Error("네트워크 응답 오류");
+        const TARGET_URL = "https://gist.githubusercontent.com/Kun0623/6ff77031bd5979e9177a21272fac7018/raw/macro_status.json";
+        
+        // 1. 캐시 방지를 위해 타임스탬프 파라미터 추가
+        // 2. 브라우저가 CORS 차단을 덜 하도록 일반적인 fetch 시도
+        const response = await fetch(`${TARGET_URL}?t=${new Date().getTime()}`);
+        
+        if (!response.ok) throw new Error("네트워크 오류");
+        
         const data = await response.json();
-        setMacroData(data);
+
+        // 3. 데이터 변경 감지 로직: 이전 값과 다를 때만 업데이트
+        if (data.updated_at !== lastUpdateTimeRef.current) {
+          lastUpdateTimeRef.current = data.updated_at;
+          setMacroData(data);
+          setLastCheckedTime(new Date());
+        }
       } catch (error) {
-        console.error("데이터 로드 실패:", error);
+        console.error("데이터 로드 실패 (CORS 정책 확인 필요):", error);
       }
     };
 
-    fetchData(); // 컴포넌트가 켜질 때 최초 1회 즉시 실행
-    
-    // 60,000ms(1분)마다 fetchData를 백그라운드에서 다시 실행하여 자동 갱신
-    const intervalId = setInterval(fetchData, 60000); 
-
-    // 컴포넌트가 화면에서 사라질 때 타이머 청소
+    fetchData();
+    const intervalId = setInterval(fetchData, 30000); 
     return () => clearInterval(intervalId);
   }, []);
 
-  const updateTimeString = macroData?.updated_at 
-    ? `업데이트: ${new Date(macroData.updated_at).toLocaleString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`
-    : "데이터 로딩중...";
+  const dataDateString = macroData?.updated_at 
+    ? new Date(macroData.updated_at).toLocaleString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+    : "로딩중...";
 
   return (
     <div style={{ position: "fixed", inset: 0, display: "flex", flexDirection: "column", background: "#0a0a0a", color: "#f5f5f5", fontFamily: "'Pretendard', sans-serif" }}>
@@ -81,12 +95,23 @@ export function MacroDashboardPage() {
       
       {/* 🚀 상단 고정 네비게이션 바 */}
       <div style={{ 
-        flexShrink: 0, width: "100%", padding: "12px 16px", 
+        flexShrink: 0, width: "100%", padding: "10px 16px", 
         background: "rgba(10, 10, 10, 0.85)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
         borderBottom: "1px solid rgba(255,255,255,0.08)", 
         display: "flex", justifyContent: "space-between", alignItems: "center", zIndex: 100
       }}>
-        <span style={{ fontSize: 13, color: "#aaa", fontWeight: 600 }}>{updateTimeString}</span>
+        {/* ✨ 폴링(새로고침) 상태를 보여주는 실시간 UI */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <div style={{ fontSize: 13, color: "#eee", fontWeight: 700 }}>
+            데이터 기준: {dataDateString}
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#00d26a", animation: "pulseLive 2s infinite" }} />
+            <span style={{ fontSize: 10, color: "#00d26a", fontWeight: 600 }}>
+              자동 스캔 중 (최근: {lastCheckedTime.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })})
+            </span>
+          </div>
+        </div>
         
         <div style={{ background: "linear-gradient(135deg, #3182ce, #805ad5)", color: "#fff", padding: "6px 12px", borderRadius: 20, fontSize: 11, fontWeight: 800, boxShadow: "0 2px 8px rgba(128, 90, 213, 0.4)", display: "flex", alignItems: "center", gap: 4 }}>
           <span>✨</span> 베타 프리패스
@@ -166,7 +191,6 @@ function DashboardContent({ data, isPro, activeTab }: { data: any, isPro: boolea
     { provider: "WSJ", title: "중동 지정학적 긴장 고조, 증시 하방 압력", summary: "거시경제 환경의 리스크가 커지며 단기적인 시장 변동성이 확대될 수 있습니다." }
   ];
 
-  // ✨ 3번 사안: 실제 파이썬 백엔드 연동 전까지 화면을 꽉 채워줄 주요 지표 더미 데이터 (백엔드에 data.major_indices 가 생기면 자동 대체됨)
   const majorIndices = data.major_indices || [
     { name: "KOSPI", value: 2680.12, change: 1.24, change_pct: 0.05 },
     { name: "S&P 500", value: 5304.72, change: -10.5, change_pct: -0.20 },
@@ -361,7 +385,6 @@ function DashboardContent({ data, isPro, activeTab }: { data: any, isPro: boolea
         <div style={{ display: "flex", flexDirection: "column", gap: 12, paddingTop: 20 }}>
           <div style={{ padding: "0 16px" }}>
             
-            {/* ✨ 3번 사안: 주요 핵심 지표 대시보드 추가 */}
             <div className="glass-panel" style={{ padding: "20px", marginBottom: 12 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 16 }}>
                 <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#fff" }}>📈 주요 핵심 지표</h3>
@@ -541,7 +564,6 @@ function GridCard({ title, tooltip, value, suffix, threshold }: any) {
   );
 }
 
-// ✨ 2번 사안: TrendRow 컴포넌트에서 뱃지 관련 로직 완전 제거
 function TrendRow({ item }: { item: any }) {
   const isPos = item.change_pct >= 0;
   return (
@@ -577,7 +599,6 @@ function SectorTile({ item, rank }: { item: any, rank: number }) {
   );
 }
 
-// ✨ 3번 사안: 주요 핵심 지표 렌더링용 신규 컴포넌트
 function MajorIndexTile({ item }: { item: any }) {
   const isPos = item.change_pct >= 0;
   const color = isPos ? "#ff4d4d" : "#4d94ff";

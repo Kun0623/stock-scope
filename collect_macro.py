@@ -8,8 +8,6 @@ from datetime import datetime, timezone, timedelta
 import requests
 from bs4 import BeautifulSoup
 import yfinance as yf
-
-# 🚀 [추가] AI 뉴스 분석용 라이브러리
 import feedparser
 import google.generativeai as genai
 
@@ -17,9 +15,7 @@ FRED_API_KEY = "***REMOVED***"
 FRED_BASE = "https://api.stlouisfed.org/fred/series/observations"
 OUTPUT_FILE = "public/macro_status.json"
 
-# 🚀 [보안] 깃허브 Secrets에서 환경변수로 키를 가져옵니다.
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
 
@@ -32,9 +28,8 @@ HEADERS = {
 
 KST = timezone(timedelta(hours=9))
 
-
 def fetch_fred(series_id: str) -> float:
-    time.sleep(1)  # 연준 서버 방어용 숨 고르기
+    time.sleep(1) 
     params = {
         "series_id": series_id,
         "api_key": FRED_API_KEY,
@@ -50,33 +45,26 @@ def fetch_fred(series_id: str) -> float:
             return float(obs["value"])
     raise ValueError(f"{series_id} 유효 데이터 없음")
 
-
 def get_sahm_rule() -> dict:
     try:
         value = fetch_fred("SAHMCURRENT")
         return {"value": round(value, 2), "status": "Recession" if value >= 0.5 else "Normal"}
     except Exception as e:
-        print(f"[WARN] Sahm Failed: {e}", file=sys.stderr)
         return {"value": None, "status": "Unavailable"}
-
 
 def get_high_yield_spread() -> dict:
     try:
         value = fetch_fred("BAMLH0A0HYM2")
         return {"value": round(value, 2), "status": "High Risk" if value >= 5.0 else "Normal"}
     except Exception as e:
-        print(f"[WARN] HY Spread Failed: {e}", file=sys.stderr)
         return {"value": None, "status": "Unavailable"}
-
 
 def get_yield_curve() -> dict:
     try:
         value = fetch_fred("T10Y2Y")
         return {"value": round(value, 2), "status": "Inverted" if value < 0 else "Normal"}
     except Exception as e:
-        print(f"[WARN] Yield Failed: {e}", file=sys.stderr)
         return {"value": None, "status": "Unavailable"}
-
 
 def get_fear_greed() -> dict:
     url = "https://production.dataviz.cnn.io/index/fearandgreed/graphdata"
@@ -87,9 +75,8 @@ def get_fear_greed() -> dict:
         if score is not None:
             return {"value": round(float(score)), "status": "Normal"}
     except Exception as e:
-        print(f"[WARN] CNN API Failed: {e}", file=sys.stderr)
+        pass
     return {"value": 50, "status": "Neutral"}
-
 
 def get_buffett_indicator() -> dict:
     try:
@@ -99,9 +86,8 @@ def get_buffett_indicator() -> dict:
             ratio = (float(w5000['Close'].iloc[-1]) / gdp) * 100
             return {"value": round(ratio, 1), "status": "Overvalued" if ratio >= 180 else "Normal"}
     except Exception as e:
-        print(f"[WARN] Buffett Failed: {e}", file=sys.stderr)
+        pass
     return {"value": None, "status": "Unavailable"}
-
 
 def get_vix_index() -> dict:
     try:
@@ -110,9 +96,8 @@ def get_vix_index() -> dict:
             val = float(vix['Close'].iloc[-1])
             return {"value": round(val, 2), "status": "Panic" if val >= 25 else "Stable"}
     except Exception as e:
-        print(f"[WARN] VIX Failed: {e}", file=sys.stderr)
+        pass
     return {"value": None, "status": "Unavailable"}
-
 
 def get_fx_data() -> dict:
     try:
@@ -123,11 +108,9 @@ def get_fx_data() -> dict:
             "usd_krw": round(float(krw['Close'].iloc[-1]), 1) if not krw.empty else None
         }
     except Exception as e:
-        print(f"[WARN] FX Failed: {e}", file=sys.stderr)
+        pass
     return {"dxy": None, "usd_krw": None}
 
-
-# ✨ [추가] 3번 사안: 주요 핵심 지표 데이터 수집 (코스피, 나스닥 등)
 def get_major_indices() -> list:
     indices = {
         "^KS11": "KOSPI",
@@ -138,7 +121,7 @@ def get_major_indices() -> list:
         "^TNX": "미 10년물 국채"
     }
     results = []
-    print("📈 주요 핵심 지표 수집 시작...")
+    print("📈 실시간 주요 핵심 지표 수집 시작...")
     for ticker, name in indices.items():
         try:
             hist = yf.Ticker(ticker).history(period="2d")
@@ -148,45 +131,21 @@ def get_major_indices() -> list:
                 change = curr - prev
                 change_pct = (change / prev) * 100
                 results.append({
-                    "name": name,
-                    "value": round(curr, 2),
-                    "change": round(change, 2),
-                    "change_pct": round(change_pct, 2)
+                    "name": name, "value": round(curr, 2), "change": round(change, 2), "change_pct": round(change_pct, 2)
                 })
             elif not hist.empty and len(hist) == 1:
-                # 주말 등 거래일이 아니어서 하루치 데이터만 있을 경우 방어 로직
                 curr = float(hist['Close'].iloc[-1])
-                results.append({
-                    "name": name,
-                    "value": round(curr, 2),
-                    "change": 0.0,
-                    "change_pct": 0.0
-                })
+                results.append({"name": name, "value": round(curr, 2), "change": 0.0, "change_pct": 0.0})
         except Exception as e:
-            print(f"    [오류] {name} 수집 실패: {e}")
-            
+            pass
     return results
-
 
 def get_theme_trends() -> dict:
     themes = {
-        "mega": {
-            "AIQ": "인공지능 & 빅데이터",
-            "SKYY": "클라우드 컴퓨팅",
-            "CIBR": "사이버 보안",
-            "BOTZ": "로봇공학 & 자동화"
-        },
-        "recent": {
-            "BLOK": "웹 3.0 & 블록체인",
-            "QTUM": "양자컴퓨팅 & 차세대 통신",
-            "ITA": "우주항공 & 국방",
-            "URA": "우라늄 & 차세대 에너지"
-        }
+        "mega": {"AIQ": "인공지능 & 빅데이터", "SKYY": "클라우드 컴퓨팅", "CIBR": "사이버 보안", "BOTZ": "로봇공학 & 자동화"},
+        "recent": {"BLOK": "웹 3.0 & 블록체인", "QTUM": "양자컴퓨팅 & 차세대 통신", "ITA": "우주항공 & 국방", "URA": "우라늄 & 차세대 에너지"}
     }
-    
     results = {"mega": [], "recent": []}
-    print("📡 글로벌 메가 & 이머징 테마 트렌드 수집 시작...")
-    
     for category, etfs in themes.items():
         for ticker, name in etfs.items():
             try:
@@ -195,28 +154,15 @@ def get_theme_trends() -> dict:
                     curr = float(hist['Close'].iloc[-1])
                     prev = float(hist['Close'].iloc[-2])
                     change = ((curr - prev) / prev) * 100
-                    results[category].append({
-                        "ticker": ticker, 
-                        "name": name, 
-                        "change_pct": round(change, 2)
-                    })
+                    results[category].append({"ticker": ticker, "name": name, "change_pct": round(change, 2)})
             except Exception as e:
-                print(f"    [오류] {ticker} 수집 실패: {e}")
-                
+                pass
         results[category].sort(key=lambda x: x["change_pct"], reverse=True)
-        
     return results
 
-
 def get_sector_data() -> list:
-    sectors = {
-        "XLK": "기술 (Tech)", "XLF": "금융 (Financials)", "XLV": "헬스케어 (Health Care)", 
-        "XLE": "에너지 (Energy)", "XLY": "임의소비재 (Discretionary)", "XLP": "필수소비재 (Staples)",
-        "XLI": "산업재 (Industrials)", "XLB": "소재 (Materials)", "XLRE": "부동산 (Real Estate)", 
-        "XLU": "유틸리티 (Utilities)", "XLC": "통신 (Communication)", "SMH": "반도체 (Semiconductors)"
-    }
+    sectors = {"XLK": "기술 (Tech)", "XLF": "금융 (Financials)", "XLV": "헬스케어 (Health Care)", "XLE": "에너지 (Energy)", "XLY": "임의소비재 (Discretionary)", "XLP": "필수소비재 (Staples)", "XLI": "산업재 (Industrials)", "XLB": "소재 (Materials)", "XLRE": "부동산 (Real Estate)", "XLU": "유틸리티 (Utilities)", "XLC": "통신 (Communication)", "SMH": "반도체 (Semiconductors)"}
     results = []
-    print("🌍 S&P 500 12개 상세 섹터 수집 시작...")
     for ticker, name in sectors.items():
         try:
             hist = yf.Ticker(ticker).history(period="2d")
@@ -226,113 +172,94 @@ def get_sector_data() -> list:
                 change = ((curr - prev) / prev) * 100
                 results.append({"ticker": ticker, "name": name, "change_pct": round(change, 2)})
         except Exception as e:
-            print(f"    [오류] {ticker} 수집 실패: {e}")
+            pass
     results.sort(key=lambda x: x["change_pct"], reverse=True)
     return results
 
+# ✨ [핵심 변경] 스마트 캐싱이 적용된 AI 분석 함수
+def get_ai_news_sentiment(existing_data: dict) -> dict:
+    current_timestamp = datetime.now().timestamp()
+    
+    # 1. 캐시 검사: 기존 파일에 ai_sentiment 데이터가 있는지 확인
+    if existing_data and "ai_sentiment" in existing_data:
+        prev_ai = existing_data["ai_sentiment"]
+        last_timestamp = prev_ai.get("updated_timestamp", 0)
+        
+        # 3600초(1시간)가 경과하지 않았다면, 기존 요약본 재사용 (실시간 수집 생략)
+        if current_timestamp - last_timestamp < 3600:
+            print("⚡ AI 분석 1시간 캐시 적용 (Gemini API 호출을 생략하여 비용을 절약합니다)")
+            return prev_ai
 
-def get_ai_news_sentiment() -> dict:
     if not GEMINI_API_KEY:
         print("⚠️ Gemini API 키가 설정되지 않았습니다.")
-        return {
-            "sentiment_score": 50, 
-            "summary": ["AI 뉴스 분석을 위해 GitHub Secrets에 GEMINI_API_KEY 설정이 필요합니다.", "코드를 업데이트해 주세요.", ""],
-            "news_sources": []
-        }
+        return {"sentiment_score": 50, "summary": ["API 키 오류"], "news_sources": [], "updated_timestamp": current_timestamp}
 
-    print("📡 글로벌 경제 뉴스 RSS 수집 및 AI 분석 시작...")
+    print("🤖 1시간 경과: 글로벌 뉴스 실시간 스크래핑 및 AI 요약 분석 실행 중...")
     try:
-        # 가장 안정적이고 빠른 구글 뉴스(미국 경제/기술) RSS
         rss_url = "https://news.google.com/rss/search?q=stock+market+OR+technology+OR+economy&hl=en-US&gl=US&ceid=US:en"
         feed = feedparser.parse(rss_url)
-        
-        # 데이터가 비어있는지 1차 방어
         if not feed.entries:
-            raise ValueError("RSS 피드에서 뉴스를 가져오지 못했습니다. URL을 확인하세요.")
+            raise ValueError("RSS 뉴스를 가져오지 못했습니다.")
             
-        # 최근 20개 헤드라인 추출
         headlines = [entry.title for entry in feed.entries[:20]]
         news_text = "\n".join(headlines)
         
         prompt = f"""
-        너는 퀀트 애널리스트야. 다음은 방금 수집된 글로벌 경제 뉴스 헤드라인 20개야.
-        
+        너는 퀀트 애널리스트야. 다음 20개 글로벌 경제 헤드라인을 바탕으로 아래 JSON 형식으로 답해.
         {news_text}
         
-        이 뉴스들을 분석해서 다음 JSON 형식으로만 완벽하게 대답해. 다른 인사말이나 설명은 절대 넣지 마.
-        
-        1. sentiment_score: 시장의 긍정/부정 상태를 0(극단적 공포)에서 100(탐욕/상승장) 사이 정수로 평가.
-        2. summary: 엔비디아, 아이온큐 등 기술주 모멘텀 환경과 매크로 시황을 결합하여, 현재 시장 핵심 트렌드를 명확하고 간결하게 3줄로 요약 (한국어).
-        3. news_sources: 위 20개 헤드라인 중 가장 중요하다고 판단되는 3~5개의 뉴스를 선정하여, 각각의 출처(provider), 제목(title), 그리고 1~2문장의 간략한 한글 요약(summary)을 작성해. 출처(provider)는 뉴스 제목에 포함된 언론사 이름(예: Bloomberg, Reuters, Yahoo Finance 등)을 추출해서 써줘.
+        1. sentiment_score: 시장의 긍정/부정 상태 (0~100 정수)
+        2. summary: 현재 시장 핵심 트렌드를 명확하고 간결하게 3줄 요약 (한국어)
+        3. news_sources: 가장 중요한 뉴스 3~5개를 선정해 출처(provider), 원본 제목(title), 1~2문장의 한글 요약(summary) 작성
         
         출력 형식:
         {{
             "sentiment_score": 75,
-            "summary": [
-                "1. 첫 번째 요약",
-                "2. 두 번째 요약",
-                "3. 세 번째 요약"
-            ],
-            "news_sources": [
-                {{
-                    "provider": "Bloomberg",
-                    "title": "실제 뉴스 원본 제목 (또는 번역된 제목)",
-                    "summary": "해당 뉴스에 대한 1~2문장의 간략한 한글 요약 내용"
-                }}
-            ]
+            "summary": ["1. 요약", "2. 요약", "3. 요약"],
+            "news_sources": [{{"provider": "Bloomberg", "title": "제목", "summary": "내용"}}]
         }}
         """
-        
         model = genai.GenerativeModel('gemini-2.5-flash')
         response = model.generate_content(prompt)
-        
-        # AI가 인사말을 섞더라도 순수 JSON만 뜯어내는 강력한 정규식(Regex) 방어
         match = re.search(r'\{.*\}', response.text, re.DOTALL)
         
         if match:
-            raw_json = match.group(0)
-            return json.loads(raw_json)
+            result_json = json.loads(match.group(0))
+            # ✨ 다음번 실행 때 비교하기 위해 현재 시간의 타임스탬프를 콱 박아줍니다.
+            result_json["updated_timestamp"] = current_timestamp 
+            return result_json
         else:
-            raise ValueError(f"AI 응답에서 JSON 형식을 찾을 수 없습니다. 원본: {response.text}")
-        
+            raise ValueError("JSON 형식을 찾을 수 없음")
+            
     except Exception as e:
-        print(f"❌ AI 센티먼트 분석 실패: {e}")
-        return {
-            "sentiment_score": 50,
-            "summary": ["현재 글로벌 뉴스 데이터를 수집하거나 AI로 분석하는 중입니다.", "API 서버 트래픽 초과이거나 처리 중일 수 있습니다.", "다음 업데이트 주기(15분 후)에 다시 확인해 주세요."],
-            "news_sources": []
-        }
-
+        print(f"❌ AI 분석 실패: {e}")
+        # 실패 시 기존 캐시가 있다면 유지, 없으면 기본값
+        if existing_data and "ai_sentiment" in existing_data:
+            return existing_data["ai_sentiment"]
+        return {"sentiment_score": 50, "summary": ["데이터 수집 중 오류 발생"], "news_sources": [], "updated_timestamp": 0}
 
 def calculate_quant_risk_score(fg, vix, yc, sahm, hy) -> int:
-    score = 0
-    weight_total = 0
-    
-    if fg and fg.get("value") is not None:
-        score += (100 - fg["value"]) * 0.25 
-        weight_total += 0.25
-    if vix and vix.get("value") is not None:
-        vix_risk = max(0, min(100, ((vix["value"] - 12) / (35 - 12)) * 100)) 
-        score += vix_risk * 0.25
-        weight_total += 0.25
-    if yc and yc.get("value") is not None:
-        yc_risk = max(0, min(100, ((0.4 - yc["value"]) / 0.8) * 100)) 
-        score += yc_risk * 0.20
-        weight_total += 0.20
-    if sahm and sahm.get("value") is not None:
-        sahm_risk = max(0, min(100, (sahm["value"] / 0.6) * 100)) 
-        score += sahm_risk * 0.15
-        weight_total += 0.15
-    if hy and hy.get("value") is not None:
-        hy_risk = max(0, min(100, ((hy["value"] - 3.0) / 3.0) * 100)) 
-        score += hy_risk * 0.15
-        weight_total += 0.15
-
+    score = 0; weight_total = 0
+    if fg and fg.get("value") is not None: score += (100 - fg["value"]) * 0.25; weight_total += 0.25
+    if vix and vix.get("value") is not None: score += max(0, min(100, ((vix["value"] - 12) / 23) * 100)) * 0.25; weight_total += 0.25
+    if yc and yc.get("value") is not None: score += max(0, min(100, ((0.4 - yc["value"]) / 0.8) * 100)) * 0.20; weight_total += 0.20
+    if sahm and sahm.get("value") is not None: score += max(0, min(100, (sahm["value"] / 0.6) * 100)) * 0.15; weight_total += 0.15
+    if hy and hy.get("value") is not None: score += max(0, min(100, ((hy["value"] - 3.0) / 3.0) * 100)) * 0.15; weight_total += 0.15
     return round(score / weight_total) if weight_total > 0 else 50
 
-
 def main():
-    print("📡 안안(AnAn) 고도화 통합 매크로 엔진 가동...\n")
+    print("📡 안안(AnAn) 통합 매크로 엔진 가동 (실시간/캐시 하이브리드)...\n")
+    
+    # ✨ 1. 기존 파일 불러오기 (캐시 판별 목적)
+    existing_data = {}
+    if os.path.exists(OUTPUT_FILE):
+        try:
+            with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
+                existing_data = json.load(f)
+        except:
+            pass
+
+    # 2. 숫자형 지표들은 캐시 없이 매번 실시간으로 긁어옵니다.
     sahm = get_sahm_rule()
     hy_spread = get_high_yield_spread()
     yield_curve = get_yield_curve()
@@ -340,15 +267,12 @@ def main():
     buffett = get_buffett_indicator()
     vix = get_vix_index()
     fx = get_fx_data()
-    
-    # ✨ 신규 지표 수집
     major_indices = get_major_indices()
-    
     theme_trends = get_theme_trends()
     sectors = get_sector_data()
     
-    # 🚀 AI 뉴스 분석 실행
-    ai_sentiment = get_ai_news_sentiment()
+    # 3. AI 분석 모듈에 기존 데이터를 넘겨주어 1시간이 안 넘었으면 AI 호출을 스킵하도록 지시합니다.
+    ai_sentiment = get_ai_news_sentiment(existing_data)
     
     risk_score = calculate_quant_risk_score(fear_greed, vix, yield_curve, sahm, hy_spread)
     now_kst = datetime.now(KST).isoformat(timespec="seconds")
@@ -363,16 +287,18 @@ def main():
         "yield_curve": yield_curve,
         "vix": vix,
         "fx": fx,
-        "major_indices": major_indices,  # ✨ 수집한 지표를 결과에 추가
+        "major_indices": major_indices, 
         "theme_trends": theme_trends,
         "sectors": sectors,
         "ai_sentiment": ai_sentiment, 
     }
 
+    # 4. 저장 (업데이트된 최신 시간과, 캐시된 AI 시간이 함께 저장됨)
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
-    print(f"\n✅ 퀀트 엔진 스케줄 연동 완료! 리스크 점수: {risk_score}점")
-
+        
+    print(f"\n✅ 데이터 갱신 완료! 리스크 점수: {risk_score}점")
 
 if __name__ == "__main__":
     main()
