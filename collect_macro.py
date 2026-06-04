@@ -190,6 +190,81 @@ def get_sector_data() -> list:
     return results
 
 
+# 🚀 [수정] AI 뉴스 스크래핑 및 센티먼트 요약 함수 (뉴스 출처 리스트 추가)
+def get_ai_news_sentiment() -> dict:
+    if not GEMINI_API_KEY:
+        print("⚠️ Gemini API 키가 설정되지 않았습니다.")
+        return {
+            "sentiment_score": 50, 
+            "summary": ["AI 뉴스 분석을 위해 GitHub Secrets에 GEMINI_API_KEY 설정이 필요합니다.", "코드를 업데이트해 주세요.", ""],
+            "news_sources": []
+        }
+
+    print("📡 글로벌 경제 뉴스 RSS 수집 및 AI 분석 시작...")
+    try:
+        # 가장 안정적이고 빠른 구글 뉴스(미국 경제/기술) RSS
+        rss_url = "https://news.google.com/rss/search?q=stock+market+OR+technology+OR+economy&hl=en-US&gl=US&ceid=US:en"
+        feed = feedparser.parse(rss_url)
+        
+        # 데이터가 비어있는지 1차 방어
+        if not feed.entries:
+            raise ValueError("RSS 피드에서 뉴스를 가져오지 못했습니다. URL을 확인하세요.")
+            
+        # 최근 20개 헤드라인 추출
+        headlines = [entry.title for entry in feed.entries[:20]]
+        news_text = "\n".join(headlines)
+        
+        # ✨ 프롬프트 대대적 수정: news_sources 배열을 명시적으로 반환하도록 지시
+        prompt = f"""
+        너는 퀀트 애널리스트야. 다음은 방금 수집된 글로벌 경제 뉴스 헤드라인 20개야.
+        
+        {news_text}
+        
+        이 뉴스들을 분석해서 다음 JSON 형식으로만 완벽하게 대답해. 다른 인사말이나 설명은 절대 넣지 마.
+        
+        1. sentiment_score: 시장의 긍정/부정 상태를 0(극단적 공포)에서 100(탐욕/상승장) 사이 정수로 평가.
+        2. summary: 엔비디아, 아이온큐 등 기술주 모멘텀 환경과 매크로 시황을 결합하여, 현재 시장 핵심 트렌드를 명확하고 간결하게 3줄로 요약 (한국어).
+        3. news_sources: 위 20개 헤드라인 중 가장 중요하다고 판단되는 3~5개의 뉴스를 선정하여, 각각의 출처(provider), 제목(title), 그리고 1~2문장의 간략한 한글 요약(summary)을 작성해. 출처(provider)는 뉴스 제목에 포함된 언론사 이름(예: Bloomberg, Reuters, Yahoo Finance 등)을 추출해서 써줘.
+        
+        출력 형식:
+        {{
+            "sentiment_score": 75,
+            "summary": [
+                "1. 첫 번째 요약",
+                "2. 두 번째 요약",
+                "3. 세 번째 요약"
+            ],
+            "news_sources": [
+                {{
+                    "provider": "Bloomberg",
+                    "title": "실제 뉴스 원본 제목 (또는 번역된 제목)",
+                    "summary": "해당 뉴스에 대한 1~2문장의 간략한 한글 요약 내용"
+                }}
+            ]
+        }}
+        """
+        
+        model = genai.GenerativeModel('gemini-2.5-flash')
+        response = model.generate_content(prompt)
+        
+        # AI가 인사말을 섞더라도 순수 JSON만 뜯어내는 강력한 정규식(Regex) 방어
+        match = re.search(r'\{.*\}', response.text, re.DOTALL)
+        
+        if match:
+            raw_json = match.group(0)
+            return json.loads(raw_json)
+        else:
+            raise ValueError(f"AI 응답에서 JSON 형식을 찾을 수 없습니다. 원본: {response.text}")
+        
+    except Exception as e:
+        print(f"❌ AI 센티먼트 분석 실패: {e}")
+        return {
+            "sentiment_score": 50,
+            "summary": ["현재 글로벌 뉴스 데이터를 수집하거나 AI로 분석하는 중입니다.", "API 서버 트래픽 초과이거나 처리 중일 수 있습니다.", "다음 업데이트 주기(15분 후)에 다시 확인해 주세요."],
+            "news_sources": []
+        }
+
+
 def calculate_quant_risk_score(fg, vix, yc, sahm, hy) -> int:
     score = 0
     weight_total = 0
@@ -217,67 +292,6 @@ def calculate_quant_risk_score(fg, vix, yc, sahm, hy) -> int:
     return round(score / weight_total) if weight_total > 0 else 50
 
 
-# 🚀 [수정] AI 뉴스 스크래핑 및 센티먼트 요약 함수
-def get_ai_news_sentiment() -> dict:
-    if not GEMINI_API_KEY:
-        print("⚠️ Gemini API 키가 설정되지 않았습니다.")
-        return {"sentiment_score": 50, "summary": ["AI 뉴스 분석을 위해 GitHub Secrets에 GEMINI_API_KEY 설정이 필요합니다.", "코드를 업데이트해 주세요.", ""]}
-
-    print("📡 글로벌 경제 뉴스 RSS 수집 및 AI 분석 시작...")
-    try:
-        # 1. 야후 대신 가장 안정적이고 빠른 구글 뉴스(미국 경제/기술) RSS로 교체
-        rss_url = "https://news.google.com/rss/search?q=stock+market+OR+technology+OR+economy&hl=en-US&gl=US&ceid=US:en"
-        feed = feedparser.parse(rss_url)
-        
-        # 데이터가 비어있는지 1차 방어
-        if not feed.entries:
-            raise ValueError("RSS 피드에서 뉴스를 가져오지 못했습니다. URL을 확인하세요.")
-            
-        # 최근 20개 헤드라인 추출
-        headlines = [entry.title for entry in feed.entries[:20]]
-        news_text = "\n".join(headlines)
-        
-        prompt = f"""
-        너는 퀀트 애널리스트야. 다음은 방금 수집된 글로벌 경제 뉴스 헤드라인 20개야.
-        
-        {news_text}
-        
-        이 뉴스들을 분석해서 다음 JSON 형식으로만 완벽하게 대답해. 다른 인사말이나 설명은 절대 넣지 마.
-        - sentiment_score: 시장의 긍정/부정 상태를 0(극단적 공포)에서 100(탐욕/상승장) 사이 정수로 평가해.
-        - summary: 엔비디아(Nvidia), 아이온큐(IonQ), 포에트(Poet Technologies) 등 주요 혁신 기술주의 모멘텀 환경과 매크로 시황을 결합하여, 현재 시장을 관통하는 핵심 트렌드를 명확하고 간결하게 3줄로 요약해 (한국어 작성).
-        
-        출력 형식:
-        {{
-            "sentiment_score": 75,
-            "summary": [
-                "1. 첫 번째 요약",
-                "2. 두 번째 요약",
-                "3. 세 번째 요약"
-            ]
-        }}
-        """
-        
-        # 안정적인 최신 1.5 플래시 버전 명칭으로 변경 (또는 'gemini-pro' 사용 가능)
-        model = genai.GenerativeModel('gemini-2.5-flash')
-        response = model.generate_content(prompt)
-        
-        # 2. AI가 인사말을 섞더라도 순수 JSON만 뜯어내는 강력한 정규식(Regex) 방어
-        match = re.search(r'\{.*\}', response.text, re.DOTALL)
-        
-        if match:
-            raw_json = match.group(0)
-            return json.loads(raw_json)
-        else:
-            raise ValueError(f"AI 응답에서 JSON 형식을 찾을 수 없습니다. 원본: {response.text}")
-        
-    except Exception as e:
-        print(f"❌ AI 센티먼트 분석 실패: {e}")
-        return {
-            "sentiment_score": 50,
-            "summary": ["현재 글로벌 뉴스 데이터를 수집하거나 AI로 분석하는 중입니다.", "API 서버 트래픽 초과이거나 처리 중일 수 있습니다.", "다음 업데이트 주기(15분 후)에 다시 확인해 주세요."]
-        }
-
-
 def main():
     print("📡 안안(AnAn) 고도화 통합 매크로 엔진 가동...\n")
     sahm = get_sahm_rule()
@@ -291,7 +305,7 @@ def main():
     theme_trends = get_theme_trends()
     sectors = get_sector_data()
     
-    # 🚀 [추가] AI 뉴스 분석 실행
+    # 🚀 AI 뉴스 분석 실행
     ai_sentiment = get_ai_news_sentiment()
     
     risk_score = calculate_quant_risk_score(fear_greed, vix, yield_curve, sahm, hy_spread)
@@ -309,7 +323,7 @@ def main():
         "fx": fx,
         "theme_trends": theme_trends,
         "sectors": sectors,
-        "ai_sentiment": ai_sentiment, # 🚀 [추가] 결과 JSON에 결합
+        "ai_sentiment": ai_sentiment, # 🚀 결과 JSON에 결합 (news_sources 포함)
     }
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
