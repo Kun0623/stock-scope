@@ -3,6 +3,7 @@ import json
 import re
 import sys
 import time
+import math
 from datetime import datetime, timezone, timedelta
 
 import requests
@@ -99,6 +100,33 @@ def get_vix_index() -> dict:
         pass
     return {"value": None, "status": "Unavailable"}
 
+# ✨ 신규: VVIX 지수 실시간 수집 함수 (yfinance 활용)
+def get_vvix_index() -> dict:
+    try:
+        vvix = yf.Ticker("^VVIX").history(period="2d")
+        if not vvix.empty:
+            val = float(vvix['Close'].iloc[-1])
+            # NaN 방어 로직
+            if math.isnan(val):
+                return {"value": 85.0} 
+            return {"value": round(val, 2)}
+    except Exception as e:
+        print(f"VVIX 수집 오류: {e}")
+        pass
+    return {"value": 85.0} # 에러 시 기본값 반환
+
+# ✨ 신규: PCR 데이터 플레이스홀더 (추후 CBOE 크롤링 연동 전까지 UI 테스트용)
+def get_pcr_data() -> dict:
+    return {"value": 0.85}
+
+# ✨ 신규: COT 리포트 플레이스홀더 (추후 CFTC 매주 토요일 데이터 연동 전까지 UI 테스트용)
+def get_cot_report() -> dict:
+    return {
+        "value": "Net Short (순매도)",
+        "is_short": True,
+        "desc": "헤지펀드 S&P500 선물 하방 베팅 우위"
+    }
+
 def get_fx_data() -> dict:
     try:
         dxy = yf.Ticker("DX-Y.NYB").history(period="2d")
@@ -176,16 +204,13 @@ def get_sector_data() -> list:
     results.sort(key=lambda x: x["change_pct"], reverse=True)
     return results
 
-# ✨ [핵심 변경] 스마트 캐싱이 적용된 AI 분석 함수
 def get_ai_news_sentiment(existing_data: dict) -> dict:
     current_timestamp = datetime.now().timestamp()
     
-    # 1. 캐시 검사: 기존 파일에 ai_sentiment 데이터가 있는지 확인
     if existing_data and "ai_sentiment" in existing_data:
         prev_ai = existing_data["ai_sentiment"]
         last_timestamp = prev_ai.get("updated_timestamp", 0)
         
-        # 3600초=1시간 or 900초=15분이 경과하지 않았다면, 기존 요약본 재사용 (실시간 수집 생략)
         if current_timestamp - last_timestamp < 900:
             print("⚡ AI 분석 15분 캐시 적용 (Gemini API 호출을 생략하여 비용을 절약합니다)")
             return prev_ai
@@ -225,7 +250,6 @@ def get_ai_news_sentiment(existing_data: dict) -> dict:
         
         if match:
             result_json = json.loads(match.group(0))
-            # ✨ 다음번 실행 때 비교하기 위해 현재 시간의 타임스탬프를 콱 박아줍니다.
             result_json["updated_timestamp"] = current_timestamp 
             return result_json
         else:
@@ -233,7 +257,6 @@ def get_ai_news_sentiment(existing_data: dict) -> dict:
             
     except Exception as e:
         print(f"❌ AI 분석 실패: {e}")
-        # 실패 시 기존 캐시가 있다면 유지, 없으면 기본값
         if existing_data and "ai_sentiment" in existing_data:
             return existing_data["ai_sentiment"]
         return {"sentiment_score": 50, "summary": ["데이터 수집 중 오류 발생"], "news_sources": [], "updated_timestamp": 0}
@@ -250,7 +273,6 @@ def calculate_quant_risk_score(fg, vix, yc, sahm, hy) -> int:
 def main():
     print("📡 안안(AnAn) 통합 매크로 엔진 가동 (실시간/캐시 하이브리드)...\n")
     
-    # ✨ 1. 기존 파일 불러오기 (캐시 판별 목적)
     existing_data = {}
     if os.path.exists(OUTPUT_FILE):
         try:
@@ -259,7 +281,6 @@ def main():
         except:
             pass
 
-    # 2. 숫자형 지표들은 캐시 없이 매번 실시간으로 긁어옵니다.
     sahm = get_sahm_rule()
     hy_spread = get_high_yield_spread()
     yield_curve = get_yield_curve()
@@ -271,7 +292,11 @@ def main():
     theme_trends = get_theme_trends()
     sectors = get_sector_data()
     
-    # 3. AI 분석 모듈에 기존 데이터를 넘겨주어 1시간이 안 넘었으면 AI 호출을 스킵하도록 지시합니다.
+    # ✨ 신규 지표 수집 호출
+    vvix = get_vvix_index()
+    pcr = get_pcr_data()
+    cot = get_cot_report()
+    
     ai_sentiment = get_ai_news_sentiment(existing_data)
     
     risk_score = calculate_quant_risk_score(fear_greed, vix, yield_curve, sahm, hy_spread)
@@ -286,6 +311,9 @@ def main():
         "high_yield_spread": hy_spread,
         "yield_curve": yield_curve,
         "vix": vix,
+        "vvix": vvix,   # ✨ JSON에 VVIX 추가
+        "pcr": pcr,     # ✨ JSON에 PCR 추가
+        "cot": cot,     # ✨ JSON에 COT 추가
         "fx": fx,
         "major_indices": major_indices, 
         "theme_trends": theme_trends,
@@ -293,7 +321,6 @@ def main():
         "ai_sentiment": ai_sentiment, 
     }
 
-    # 4. 저장 (업데이트된 최신 시간과, 캐시된 AI 시간이 함께 저장됨)
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)

@@ -1,4 +1,3 @@
-import React from "react";
 import { MacroDashboardPage } from "./pages/MacroDashboardPage"; // (경로는 실제에 맞게 유지)
 
 export default function App() {
