@@ -10,11 +10,11 @@ export function OverviewTab({ data, isPro }: { data: any, isPro: boolean }) {
   if (data.yield_curve?.value < 0) dangerCount++;
   if (data.vix?.value >= 25) dangerCount++;
 
-  let shield = { title: "안정적 추세 구간", desc: "주요 거시 지표가 장기 평균치에 수렴하는 안정적인 흐름을 보이고 있습니다.", color: "#00d26a", bg: "#00d26a10", level: "green" };
+  let shield = { title: "안정적 추세 구간", desc: "5대 주요 거시 지표가 장기 평균치에 수렴하는 안정적인 흐름을 보이고 있습니다.", color: "#00d26a", bg: "#00d26a10", level: "green" };
   if (dangerCount >= 3) {
-    shield = { title: "고변동성 국면 진입", desc: "과거 통계상 마켓 스트레스 지수가 상위 15%에 위치한 고위험 구간입니다.", color: "#ff4d4d", bg: "#ff4d4d10", level: "red" };
+    shield = { title: "고변동성 국면 진입", desc: "5대 거시 지표 기준, 마켓 스트레스가 상위 15%에 위치한 고위험 구간입니다.", color: "#ff4d4d", bg: "#ff4d4d10", level: "red" };
   } else if (dangerCount >= 1) {
-    shield = { title: "추세 전환 모니터링", desc: "지표 간 디커플링으로 인해 단기 변동성 추세가 관측되는 구간입니다.", color: "#ffb800", bg: "#ffb80010", level: "yellow" };
+    shield = { title: "추세 전환 모니터링", desc: "일부 코어 지표의 디커플링으로 단기 변동성 추세가 관측되는 구간입니다.", color: "#ffb800", bg: "#ffb80010", level: "yellow" };
   }
 
   const riskScore = data.quant_risk_score ?? 50;
@@ -28,9 +28,13 @@ export function OverviewTab({ data, isPro }: { data: any, isPro: boolean }) {
         <div style={{ background: shield.bg, border: `1px solid ${shield.color}30`, borderRadius: 16, padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: shield.color, marginBottom: 8 }}>매크로 스트레스 가이드</div>
+              {/* ✨ 변경: 5대 코어 지표 기준임을 명시 */}
+              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: shield.color }}>매크로 스트레스 가이드</div>
+                <div style={{ fontSize: 10, fontWeight: 800, color: shield.color, background: "rgba(255,255,255,0.1)", padding: "2px 6px", borderRadius: 4 }}>5 Core Metrics</div>
+              </div>
               <h2 style={{ fontSize: 22, fontWeight: 800, margin: "0 0 8px", color: "#fff" }}>{shield.title}</h2>
-              <p style={{ fontSize: 14, color: "#aaa", margin: 0, wordBreak: "keep-all" }}>{shield.desc}</p>
+              <p style={{ fontSize: 14, color: "#aaa", margin: 0, wordBreak: "keep-all", lineHeight: 1.4 }}>{shield.desc}</p>
             </div>
             <div style={{ display: "flex", gap: 6, background: "#000", padding: "8px 12px", borderRadius: 20, border: "1px solid #333" }}>
               <div style={{ width: 12, height: 12, borderRadius: "50%", background: shield.level === "red" ? "#ff4d4d" : "#222", boxShadow: shield.level === "red" ? "0 0 10px #ff4d4d" : "none" }} />
@@ -46,8 +50,14 @@ export function OverviewTab({ data, isPro }: { data: any, isPro: boolean }) {
         <div className="paywall-container glass-panel" style={{ minHeight: 140, display: "flex", flexDirection: "column", justifyContent: "center" }}>
           <div className={!isPro ? "paywall-blur" : ""} style={{ padding: "18px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 6, flex: 1 }}>
-              <Tooltip label="리스크 스코어" desc="5종의 매크로 지표 가중치를 연산한 위험 계수" />
-              <div style={{ fontSize: 12, color: "#888", fontWeight: 500, wordBreak: "keep-all" }}>현재 시장 위험도 종합 수치</div>
+              {/* ✨ 변경: 툴팁과 서브 텍스트에 계산 근거를 정확히 기재 */}
+              <Tooltip 
+                label="리스크 스코어" 
+                desc="VIX, 숌 룰, 버핏 지표, 하이일드, 장단기 금리차 5종을 연산한 메인 위험 계수입니다. (하단 스마트 머니 지표는 독립 레이더로 작동)" 
+              />
+              <div style={{ fontSize: 12, color: "#888", fontWeight: 500, wordBreak: "keep-all", lineHeight: 1.4 }}>
+                5대 핵심 매크로 기반 종합 위험도
+              </div>
             </div>
             
             {(() => {
@@ -98,14 +108,14 @@ export function OverviewTab({ data, isPro }: { data: any, isPro: boolean }) {
         </div>
       </div>
 
-      {/* 4. 미니 팩터 그리드 */}
+      {/* 4. 미니 팩터 그리드 (5대 코어) */}
       <div style={{ padding: "0 16px" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
           <GridCard title="숌 룰 지수" tooltip="실업률 기반 침체 확률 (0.5% 임계치)" value={data.sahm_rule?.value} suffix="%" threshold={0.5} />
           <GridCard title="하이일드" tooltip="기업 신용 경색 지표 (5.0% 임계치)" value={data.high_yield_spread?.value} suffix="%" threshold={5.0} />
           <GridCard title="VIX 지수" tooltip="S&P 500 변동성 (25 이상 고변동성)" value={data.vix?.value} suffix="" threshold={25} />
           <div className="glass-panel" style={{ padding: "16px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-            <Tooltip label="원/달러 환율" desc="DXY 달러 인덱스 연동" />
+            <Tooltip label="원/달러 환율" desc="DXY 달러 인덱스 연동 (점수 미포함)" />
             <div style={{ marginTop: 12 }}>
               <div style={{ fontSize: 20, fontWeight: 800, color: "#fff" }}>{data.fx?.usd_krw?.toLocaleString()}</div>
               <div style={{ fontSize: 11, color: "#666", marginTop: 4 }}>달러 인덱스: {data.fx?.dxy}</div>
@@ -114,17 +124,19 @@ export function OverviewTab({ data, isPro }: { data: any, isPro: boolean }) {
         </div>
       </div>
 
-      {/* ✨ 5. 신규 추가: 스마트 머니 선행 지표 패널 */}
+      {/* 5. 스마트 머니 선행 지표 패널 */}
       <div style={{ padding: "0 16px", marginTop: "4px" }}>
         <div className="glass-panel" style={{ padding: "20px" }}>
           
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
             <span style={{ fontSize: 18 }}>🕵️‍♂️</span>
-            <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#ffb800" }}>스마트 머니 선행 지표 (하방 베팅)</h3>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#ffb800" }}>스마트 머니 선행 지표 (하방 베팅)</h3>
+              <span style={{ fontSize: 11, color: "#888", marginTop: 4 }}>메인 점수와 독립적으로 작동하는 조기 경보 레이더</span>
+            </div>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-            {/* 데이터가 아직 없을 때를 대비한 방어 로직 (?? 연산자) */}
             <GridCard 
               title="풋/콜 비율 (PCR)" 
               tooltip="1.0 이상 진입 시 기관의 강력한 하방 옵션 매집(보험)을 의미합니다." 
@@ -150,7 +162,6 @@ export function OverviewTab({ data, isPro }: { data: any, isPro: boolean }) {
                 <div style={{ fontSize: 12, color: "#aaa" }}>최근 CFTC 발표 기준</div>
               </div>
               <div style={{ textAlign: "right" }}>
-                {/* 데이터가 없으면 'Net Short'로 임시 표출 */}
                 <div style={{ fontSize: 16, fontWeight: 900, color: data.cot?.is_short ?? true ? "#ff4d4d" : "#00d26a" }}>
                   {data.cot?.value ?? "Net Short (순매도)"}
                 </div>

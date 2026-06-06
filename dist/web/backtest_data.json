@@ -1,0 +1,6034 @@
+[
+  {
+    "date": "2023-06-05",
+    "sp500": 4273.79,
+    "nvda": 39.14,
+    "ionq": 9.84,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2023-06-06",
+    "sp500": 4283.85,
+    "nvda": 38.62,
+    "ionq": 9.81,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2023-06-07",
+    "sp500": 4267.52,
+    "nvda": 37.45,
+    "ionq": 9.45,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2023-06-08",
+    "sp500": 4293.93,
+    "nvda": 38.48,
+    "ionq": 10.65,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2023-06-09",
+    "sp500": 4298.86,
+    "nvda": 38.74,
+    "ionq": 10.55,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2023-06-12",
+    "sp500": 4338.93,
+    "nvda": 39.45,
+    "ionq": 10.54,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2023-06-13",
+    "sp500": 4369.01,
+    "nvda": 40.99,
+    "ionq": 10.63,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2023-06-14",
+    "sp500": 4372.59,
+    "nvda": 42.96,
+    "ionq": 9.94,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2023-06-15",
+    "sp500": 4425.84,
+    "nvda": 42.62,
+    "ionq": 9.94,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2023-06-16",
+    "sp500": 4409.59,
+    "nvda": 42.66,
+    "ionq": 9.7,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2023-06-20",
+    "sp500": 4388.71,
+    "nvda": 43.77,
+    "ionq": 9.31,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2023-06-21",
+    "sp500": 4365.69,
+    "nvda": 43.01,
+    "ionq": 9.22,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2023-06-22",
+    "sp500": 4381.89,
+    "nvda": 42.99,
+    "ionq": 9.43,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2023-06-23",
+    "sp500": 4348.33,
+    "nvda": 42.18,
+    "ionq": 9.37,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2023-06-26",
+    "sp500": 4328.82,
+    "nvda": 40.6,
+    "ionq": 10.33,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2023-06-27",
+    "sp500": 4378.41,
+    "nvda": 41.84,
+    "ionq": 10.81,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2023-06-28",
+    "sp500": 4376.86,
+    "nvda": 41.08,
+    "ionq": 13.35,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2023-06-29",
+    "sp500": 4396.44,
+    "nvda": 40.79,
+    "ionq": 13.53,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2023-06-30",
+    "sp500": 4450.38,
+    "nvda": 42.27,
+    "ionq": 13.53,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2023-07-03",
+    "sp500": 4455.59,
+    "nvda": 42.38,
+    "ionq": 13.5,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2023-07-05",
+    "sp500": 4446.82,
+    "nvda": 42.28,
+    "ionq": 14.12,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2023-07-06",
+    "sp500": 4411.59,
+    "nvda": 42.07,
+    "ionq": 13.29,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2023-07-07",
+    "sp500": 4398.95,
+    "nvda": 42.47,
+    "ionq": 13.28,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2023-07-10",
+    "sp500": 4409.53,
+    "nvda": 42.15,
+    "ionq": 14.03,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2023-07-11",
+    "sp500": 4439.26,
+    "nvda": 42.37,
+    "ionq": 13.86,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2023-07-12",
+    "sp500": 4472.16,
+    "nvda": 43.87,
+    "ionq": 14.72,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2023-07-13",
+    "sp500": 4510.04,
+    "nvda": 45.94,
+    "ionq": 14.46,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2023-07-14",
+    "sp500": 4505.42,
+    "nvda": 45.43,
+    "ionq": 13.55,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2023-07-17",
+    "sp500": 4522.79,
+    "nvda": 46.42,
+    "ionq": 14.9,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2023-07-18",
+    "sp500": 4554.98,
+    "nvda": 47.46,
+    "ionq": 15.71,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2023-07-19",
+    "sp500": 4565.72,
+    "nvda": 47.04,
+    "ionq": 15.52,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2023-07-20",
+    "sp500": 4534.87,
+    "nvda": 45.48,
+    "ionq": 14.92,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2023-07-21",
+    "sp500": 4536.34,
+    "nvda": 44.27,
+    "ionq": 14.42,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2023-07-24",
+    "sp500": 4554.64,
+    "nvda": 44.58,
+    "ionq": 14.39,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2023-07-25",
+    "sp500": 4567.46,
+    "nvda": 45.64,
+    "ionq": 15.22,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2023-07-26",
+    "sp500": 4566.75,
+    "nvda": 45.42,
+    "ionq": 16.19,
+    "risk_score": 5,
+    "event": {
+      "type": "rate",
+      "title": "금리 5.5% 도달",
+      "desc": "22년 만에 최고치"
+    }
+  },
+  {
+    "date": "2023-07-27",
+    "sp500": 4537.41,
+    "nvda": 45.86,
+    "ionq": 15.53,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2023-07-28",
+    "sp500": 4582.23,
+    "nvda": 46.71,
+    "ionq": 17.93,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2023-07-31",
+    "sp500": 4588.96,
+    "nvda": 46.69,
+    "ionq": 19.25,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2023-08-01",
+    "sp500": 4576.73,
+    "nvda": 46.47,
+    "ionq": 19.86,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2023-08-02",
+    "sp500": 4513.39,
+    "nvda": 44.23,
+    "ionq": 18.33,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2023-08-03",
+    "sp500": 4501.89,
+    "nvda": 44.48,
+    "ionq": 18.29,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2023-08-04",
+    "sp500": 4478.03,
+    "nvda": 44.65,
+    "ionq": 17.39,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2023-08-07",
+    "sp500": 4518.44,
+    "nvda": 45.38,
+    "ionq": 15.58,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2023-08-08",
+    "sp500": 4499.38,
+    "nvda": 44.63,
+    "ionq": 15.33,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2023-08-09",
+    "sp500": 4467.71,
+    "nvda": 42.52,
+    "ionq": 14.49,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2023-08-10",
+    "sp500": 4468.83,
+    "nvda": 42.35,
+    "ionq": 14.19,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2023-08-11",
+    "sp500": 4464.05,
+    "nvda": 40.82,
+    "ionq": 15.71,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2023-08-14",
+    "sp500": 4489.72,
+    "nvda": 43.72,
+    "ionq": 14.88,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2023-08-15",
+    "sp500": 4437.86,
+    "nvda": 43.91,
+    "ionq": 15.56,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2023-08-16",
+    "sp500": 4404.33,
+    "nvda": 43.45,
+    "ionq": 13.69,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2023-08-17",
+    "sp500": 4370.36,
+    "nvda": 43.31,
+    "ionq": 13.01,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2023-08-18",
+    "sp500": 4369.71,
+    "nvda": 43.27,
+    "ionq": 13.42,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2023-08-21",
+    "sp500": 4399.77,
+    "nvda": 46.93,
+    "ionq": 14.42,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2023-08-22",
+    "sp500": 4387.55,
+    "nvda": 45.63,
+    "ionq": 14.92,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2023-08-23",
+    "sp500": 4436.01,
+    "nvda": 47.08,
+    "ionq": 16.1,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2023-08-24",
+    "sp500": 4376.31,
+    "nvda": 47.13,
+    "ionq": 14.62,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2023-08-25",
+    "sp500": 4405.71,
+    "nvda": 45.98,
+    "ionq": 14.67,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2023-08-28",
+    "sp500": 4433.31,
+    "nvda": 46.8,
+    "ionq": 15.27,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2023-08-29",
+    "sp500": 4497.63,
+    "nvda": 48.75,
+    "ionq": 16.5,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2023-08-30",
+    "sp500": 4514.87,
+    "nvda": 49.23,
+    "ionq": 17.12,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2023-08-31",
+    "sp500": 4507.66,
+    "nvda": 49.32,
+    "ionq": 17.19,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2023-09-01",
+    "sp500": 4515.77,
+    "nvda": 48.47,
+    "ionq": 17.51,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2023-09-05",
+    "sp500": 4496.83,
+    "nvda": 48.51,
+    "ionq": 18.97,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2023-09-06",
+    "sp500": 4465.48,
+    "nvda": 47.03,
+    "ionq": 19.58,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2023-09-07",
+    "sp500": 4451.14,
+    "nvda": 46.21,
+    "ionq": 17.49,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2023-09-08",
+    "sp500": 4457.49,
+    "nvda": 45.54,
+    "ionq": 19.34,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2023-09-11",
+    "sp500": 4487.46,
+    "nvda": 45.15,
+    "ionq": 19.68,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2023-09-12",
+    "sp500": 4461.9,
+    "nvda": 44.84,
+    "ionq": 19.31,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2023-09-13",
+    "sp500": 4467.44,
+    "nvda": 45.45,
+    "ionq": 18.69,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2023-09-14",
+    "sp500": 4505.1,
+    "nvda": 45.55,
+    "ionq": 18.03,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2023-09-15",
+    "sp500": 4450.32,
+    "nvda": 43.87,
+    "ionq": 17.08,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2023-09-18",
+    "sp500": 4453.53,
+    "nvda": 43.94,
+    "ionq": 16.16,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2023-09-19",
+    "sp500": 4443.95,
+    "nvda": 43.49,
+    "ionq": 15.78,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2023-09-20",
+    "sp500": 4402.2,
+    "nvda": 42.21,
+    "ionq": 14.8,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2023-09-21",
+    "sp500": 4330.0,
+    "nvda": 40.99,
+    "ionq": 13.53,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2023-09-22",
+    "sp500": 4320.06,
+    "nvda": 41.58,
+    "ionq": 13.28,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2023-09-25",
+    "sp500": 4337.44,
+    "nvda": 42.19,
+    "ionq": 13.41,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2023-09-26",
+    "sp500": 4273.53,
+    "nvda": 41.88,
+    "ionq": 13.1,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2023-09-27",
+    "sp500": 4274.51,
+    "nvda": 42.44,
+    "ionq": 14.24,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2023-09-28",
+    "sp500": 4299.7,
+    "nvda": 43.06,
+    "ionq": 15.39,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2023-09-29",
+    "sp500": 4288.05,
+    "nvda": 43.47,
+    "ionq": 14.88,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2023-10-02",
+    "sp500": 4288.39,
+    "nvda": 44.75,
+    "ionq": 14.81,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2023-10-03",
+    "sp500": 4229.45,
+    "nvda": 43.49,
+    "ionq": 13.92,
+    "risk_score": 31,
+    "event": null
+  },
+  {
+    "date": "2023-10-04",
+    "sp500": 4263.75,
+    "nvda": 44.01,
+    "ionq": 14.77,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2023-10-05",
+    "sp500": 4258.19,
+    "nvda": 44.66,
+    "ionq": 14.69,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2023-10-06",
+    "sp500": 4308.5,
+    "nvda": 45.73,
+    "ionq": 15.29,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2023-10-09",
+    "sp500": 4335.66,
+    "nvda": 45.24,
+    "ionq": 14.64,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2023-10-10",
+    "sp500": 4358.24,
+    "nvda": 45.77,
+    "ionq": 16.0,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2023-10-11",
+    "sp500": 4376.95,
+    "nvda": 46.77,
+    "ionq": 15.69,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2023-10-12",
+    "sp500": 4349.61,
+    "nvda": 46.91,
+    "ionq": 15.21,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2023-10-13",
+    "sp500": 4327.78,
+    "nvda": 45.43,
+    "ionq": 14.29,
+    "risk_score": 29,
+    "event": null
+  },
+  {
+    "date": "2023-10-16",
+    "sp500": 4373.63,
+    "nvda": 46.06,
+    "ionq": 14.41,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2023-10-17",
+    "sp500": 4373.2,
+    "nvda": 43.91,
+    "ionq": 14.38,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2023-10-18",
+    "sp500": 4314.6,
+    "nvda": 42.17,
+    "ionq": 13.69,
+    "risk_score": 29,
+    "event": null
+  },
+  {
+    "date": "2023-10-19",
+    "sp500": 4278.0,
+    "nvda": 42.07,
+    "ionq": 13.47,
+    "risk_score": 38,
+    "event": null
+  },
+  {
+    "date": "2023-10-20",
+    "sp500": 4224.16,
+    "nvda": 41.36,
+    "ionq": 12.59,
+    "risk_score": 39,
+    "event": null
+  },
+  {
+    "date": "2023-10-23",
+    "sp500": 4217.04,
+    "nvda": 42.94,
+    "ionq": 12.64,
+    "risk_score": 33,
+    "event": null
+  },
+  {
+    "date": "2023-10-24",
+    "sp500": 4247.68,
+    "nvda": 43.63,
+    "ionq": 11.01,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2023-10-25",
+    "sp500": 4186.77,
+    "nvda": 41.75,
+    "ionq": 10.4,
+    "risk_score": 33,
+    "event": null
+  },
+  {
+    "date": "2023-10-26",
+    "sp500": 4137.23,
+    "nvda": 40.3,
+    "ionq": 9.92,
+    "risk_score": 35,
+    "event": null
+  },
+  {
+    "date": "2023-10-27",
+    "sp500": 4117.37,
+    "nvda": 40.47,
+    "ionq": 10.14,
+    "risk_score": 37,
+    "event": null
+  },
+  {
+    "date": "2023-10-30",
+    "sp500": 4166.82,
+    "nvda": 41.13,
+    "ionq": 9.5,
+    "risk_score": 31,
+    "event": null
+  },
+  {
+    "date": "2023-10-31",
+    "sp500": 4193.8,
+    "nvda": 40.75,
+    "ionq": 9.64,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2023-11-01",
+    "sp500": 4237.86,
+    "nvda": 42.3,
+    "ionq": 10.22,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2023-11-02",
+    "sp500": 4317.78,
+    "nvda": 43.48,
+    "ionq": 11.14,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2023-11-03",
+    "sp500": 4358.34,
+    "nvda": 44.97,
+    "ionq": 11.58,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2023-11-06",
+    "sp500": 4365.98,
+    "nvda": 45.72,
+    "ionq": 11.21,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2023-11-07",
+    "sp500": 4378.38,
+    "nvda": 45.92,
+    "ionq": 11.47,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2023-11-08",
+    "sp500": 4382.78,
+    "nvda": 46.54,
+    "ionq": 11.41,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2023-11-09",
+    "sp500": 4347.35,
+    "nvda": 46.92,
+    "ionq": 11.23,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2023-11-10",
+    "sp500": 4415.24,
+    "nvda": 48.3,
+    "ionq": 10.66,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2023-11-13",
+    "sp500": 4411.55,
+    "nvda": 48.59,
+    "ionq": 11.55,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2023-11-14",
+    "sp500": 4495.7,
+    "nvda": 49.62,
+    "ionq": 12.69,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2023-11-15",
+    "sp500": 4502.88,
+    "nvda": 48.85,
+    "ionq": 12.99,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2023-11-16",
+    "sp500": 4508.24,
+    "nvda": 49.45,
+    "ionq": 12.2,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2023-11-17",
+    "sp500": 4514.02,
+    "nvda": 49.26,
+    "ionq": 12.7,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2023-11-20",
+    "sp500": 4547.38,
+    "nvda": 50.37,
+    "ionq": 12.85,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2023-11-21",
+    "sp500": 4538.19,
+    "nvda": 49.91,
+    "ionq": 12.29,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2023-11-22",
+    "sp500": 4556.62,
+    "nvda": 48.68,
+    "ionq": 12.42,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2023-11-24",
+    "sp500": 4559.34,
+    "nvda": 47.74,
+    "ionq": 12.36,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2023-11-27",
+    "sp500": 4550.43,
+    "nvda": 48.21,
+    "ionq": 12.1,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2023-11-28",
+    "sp500": 4554.89,
+    "nvda": 47.79,
+    "ionq": 12.21,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2023-11-29",
+    "sp500": 4550.58,
+    "nvda": 48.11,
+    "ionq": 12.48,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2023-11-30",
+    "sp500": 4567.8,
+    "nvda": 46.74,
+    "ionq": 12.23,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2023-12-01",
+    "sp500": 4594.63,
+    "nvda": 46.73,
+    "ionq": 13.61,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2023-12-04",
+    "sp500": 4569.78,
+    "nvda": 45.48,
+    "ionq": 13.76,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2023-12-05",
+    "sp500": 4567.18,
+    "nvda": 46.54,
+    "ionq": 13.01,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2023-12-06",
+    "sp500": 4549.34,
+    "nvda": 45.48,
+    "ionq": 12.97,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2023-12-07",
+    "sp500": 4585.59,
+    "nvda": 46.57,
+    "ionq": 13.2,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2023-12-08",
+    "sp500": 4604.37,
+    "nvda": 47.48,
+    "ionq": 13.69,
+    "risk_score": 1,
+    "event": null
+  },
+  {
+    "date": "2023-12-11",
+    "sp500": 4622.44,
+    "nvda": 46.6,
+    "ionq": 13.05,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2023-12-12",
+    "sp500": 4643.7,
+    "nvda": 47.63,
+    "ionq": 12.76,
+    "risk_score": 0,
+    "event": null
+  },
+  {
+    "date": "2023-12-13",
+    "sp500": 4707.09,
+    "nvda": 48.06,
+    "ionq": 13.43,
+    "risk_score": 1,
+    "event": null
+  },
+  {
+    "date": "2023-12-14",
+    "sp500": 4719.55,
+    "nvda": 48.32,
+    "ionq": 14.76,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2023-12-15",
+    "sp500": 4719.19,
+    "nvda": 48.86,
+    "ionq": 14.93,
+    "risk_score": 1,
+    "event": null
+  },
+  {
+    "date": "2023-12-18",
+    "sp500": 4740.56,
+    "nvda": 50.05,
+    "ionq": 14.57,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2023-12-19",
+    "sp500": 4768.37,
+    "nvda": 49.57,
+    "ionq": 14.32,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2023-12-20",
+    "sp500": 4698.35,
+    "nvda": 48.08,
+    "ionq": 13.39,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2023-12-21",
+    "sp500": 4746.75,
+    "nvda": 48.96,
+    "ionq": 13.79,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2023-12-22",
+    "sp500": 4754.63,
+    "nvda": 48.8,
+    "ionq": 13.64,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2023-12-26",
+    "sp500": 4774.75,
+    "nvda": 49.25,
+    "ionq": 13.52,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2023-12-27",
+    "sp500": 4781.58,
+    "nvda": 49.39,
+    "ionq": 13.21,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2023-12-28",
+    "sp500": 4783.35,
+    "nvda": 49.49,
+    "ionq": 13.23,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2023-12-29",
+    "sp500": 4769.83,
+    "nvda": 49.49,
+    "ionq": 12.39,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2024-01-02",
+    "sp500": 4742.83,
+    "nvda": 48.14,
+    "ionq": 12.16,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-01-03",
+    "sp500": 4704.81,
+    "nvda": 47.54,
+    "ionq": 11.93,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2024-01-04",
+    "sp500": 4688.68,
+    "nvda": 47.97,
+    "ionq": 12.28,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2024-01-05",
+    "sp500": 4697.24,
+    "nvda": 49.07,
+    "ionq": 12.0,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-01-08",
+    "sp500": 4763.54,
+    "nvda": 52.22,
+    "ionq": 12.64,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-01-09",
+    "sp500": 4756.5,
+    "nvda": 53.11,
+    "ionq": 12.45,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-01-10",
+    "sp500": 4783.45,
+    "nvda": 54.32,
+    "ionq": 12.09,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-01-11",
+    "sp500": 4780.24,
+    "nvda": 54.79,
+    "ionq": 11.56,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2024-01-12",
+    "sp500": 4783.83,
+    "nvda": 54.68,
+    "ionq": 11.4,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-01-16",
+    "sp500": 4765.98,
+    "nvda": 56.35,
+    "ionq": 10.97,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2024-01-17",
+    "sp500": 4739.21,
+    "nvda": 56.02,
+    "ionq": 10.85,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2024-01-18",
+    "sp500": 4780.94,
+    "nvda": 57.07,
+    "ionq": 10.72,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2024-01-19",
+    "sp500": 4839.81,
+    "nvda": 59.45,
+    "ionq": 10.85,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-01-22",
+    "sp500": 4850.43,
+    "nvda": 59.62,
+    "ionq": 11.72,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-01-23",
+    "sp500": 4864.6,
+    "nvda": 59.84,
+    "ionq": 11.75,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2024-01-24",
+    "sp500": 4868.55,
+    "nvda": 61.32,
+    "ionq": 11.07,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-01-25",
+    "sp500": 4894.16,
+    "nvda": 61.58,
+    "ionq": 11.28,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2024-01-26",
+    "sp500": 4890.97,
+    "nvda": 60.99,
+    "ionq": 11.01,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-01-29",
+    "sp500": 4927.93,
+    "nvda": 62.43,
+    "ionq": 11.21,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2024-01-30",
+    "sp500": 4924.97,
+    "nvda": 62.74,
+    "ionq": 10.69,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-01-31",
+    "sp500": 4845.65,
+    "nvda": 61.49,
+    "ionq": 10.27,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2024-02-01",
+    "sp500": 4906.19,
+    "nvda": 62.99,
+    "ionq": 10.24,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2024-02-02",
+    "sp500": 4958.61,
+    "nvda": 66.12,
+    "ionq": 10.27,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2024-02-05",
+    "sp500": 4942.81,
+    "nvda": 69.29,
+    "ionq": 9.87,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2024-02-06",
+    "sp500": 4954.23,
+    "nvda": 68.18,
+    "ionq": 10.44,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-02-07",
+    "sp500": 4995.06,
+    "nvda": 70.06,
+    "ionq": 10.41,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-02-08",
+    "sp500": 4997.91,
+    "nvda": 69.6,
+    "ionq": 10.9,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-02-09",
+    "sp500": 5026.61,
+    "nvda": 72.09,
+    "ionq": 11.16,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-02-12",
+    "sp500": 5021.84,
+    "nvda": 72.2,
+    "ionq": 11.62,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2024-02-13",
+    "sp500": 4953.17,
+    "nvda": 72.08,
+    "ionq": 10.54,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2024-02-14",
+    "sp500": 5000.62,
+    "nvda": 73.85,
+    "ionq": 10.93,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2024-02-15",
+    "sp500": 5029.73,
+    "nvda": 72.61,
+    "ionq": 11.01,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2024-02-16",
+    "sp500": 5005.57,
+    "nvda": 72.57,
+    "ionq": 10.82,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2024-02-20",
+    "sp500": 4975.51,
+    "nvda": 69.41,
+    "ionq": 10.62,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2024-02-21",
+    "sp500": 4981.8,
+    "nvda": 67.43,
+    "ionq": 10.63,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2024-02-22",
+    "sp500": 5087.03,
+    "nvda": 78.49,
+    "ionq": 10.99,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2024-02-23",
+    "sp500": 5088.8,
+    "nvda": 78.77,
+    "ionq": 10.65,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2024-02-26",
+    "sp500": 5069.53,
+    "nvda": 79.04,
+    "ionq": 11.24,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2024-02-27",
+    "sp500": 5078.18,
+    "nvda": 78.65,
+    "ionq": 11.57,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2024-02-28",
+    "sp500": 5069.76,
+    "nvda": 77.62,
+    "ionq": 11.26,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2024-02-29",
+    "sp500": 5096.27,
+    "nvda": 79.06,
+    "ionq": 10.36,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2024-03-01",
+    "sp500": 5137.08,
+    "nvda": 82.23,
+    "ionq": 10.66,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-03-04",
+    "sp500": 5130.95,
+    "nvda": 85.18,
+    "ionq": 10.09,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2024-03-05",
+    "sp500": 5078.65,
+    "nvda": 85.92,
+    "ionq": 9.37,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2024-03-06",
+    "sp500": 5104.76,
+    "nvda": 88.65,
+    "ionq": 9.92,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2024-03-07",
+    "sp500": 5157.36,
+    "nvda": 92.62,
+    "ionq": 10.9,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2024-03-08",
+    "sp500": 5123.69,
+    "nvda": 87.48,
+    "ionq": 10.81,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2024-03-11",
+    "sp500": 5117.94,
+    "nvda": 85.73,
+    "ionq": 9.79,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2024-03-12",
+    "sp500": 5175.27,
+    "nvda": 91.86,
+    "ionq": 9.87,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2024-03-13",
+    "sp500": 5165.31,
+    "nvda": 90.84,
+    "ionq": 9.63,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2024-03-14",
+    "sp500": 5150.48,
+    "nvda": 87.89,
+    "ionq": 9.2,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2024-03-15",
+    "sp500": 5117.09,
+    "nvda": 87.79,
+    "ionq": 9.31,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2024-03-18",
+    "sp500": 5149.42,
+    "nvda": 88.41,
+    "ionq": 9.54,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2024-03-19",
+    "sp500": 5178.51,
+    "nvda": 89.35,
+    "ionq": 9.24,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2024-03-20",
+    "sp500": 5224.62,
+    "nvda": 90.32,
+    "ionq": 9.58,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-03-21",
+    "sp500": 5241.53,
+    "nvda": 91.38,
+    "ionq": 9.42,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-03-22",
+    "sp500": 5234.18,
+    "nvda": 94.24,
+    "ionq": 9.39,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-03-25",
+    "sp500": 5218.19,
+    "nvda": 94.95,
+    "ionq": 9.55,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-03-26",
+    "sp500": 5203.58,
+    "nvda": 92.51,
+    "ionq": 9.11,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-03-27",
+    "sp500": 5248.49,
+    "nvda": 90.2,
+    "ionq": 9.55,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-03-28",
+    "sp500": 5254.35,
+    "nvda": 90.31,
+    "ionq": 9.99,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-04-01",
+    "sp500": 5243.77,
+    "nvda": 90.31,
+    "ionq": 9.99,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2024-04-02",
+    "sp500": 5205.81,
+    "nvda": 89.4,
+    "ionq": 9.36,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2024-04-03",
+    "sp500": 5211.49,
+    "nvda": 88.91,
+    "ionq": 9.32,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2024-04-04",
+    "sp500": 5147.21,
+    "nvda": 85.86,
+    "ionq": 9.12,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2024-04-05",
+    "sp500": 5204.34,
+    "nvda": 87.96,
+    "ionq": 9.21,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2024-04-08",
+    "sp500": 5202.39,
+    "nvda": 87.08,
+    "ionq": 8.37,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2024-04-09",
+    "sp500": 5209.91,
+    "nvda": 85.31,
+    "ionq": 8.4,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2024-04-10",
+    "sp500": 5160.64,
+    "nvda": 86.99,
+    "ionq": 8.0,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2024-04-11",
+    "sp500": 5199.06,
+    "nvda": 90.56,
+    "ionq": 8.24,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2024-04-12",
+    "sp500": 5123.41,
+    "nvda": 88.14,
+    "ionq": 8.03,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2024-04-15",
+    "sp500": 5061.82,
+    "nvda": 85.95,
+    "ionq": 7.53,
+    "risk_score": 29,
+    "event": null
+  },
+  {
+    "date": "2024-04-16",
+    "sp500": 5051.41,
+    "nvda": 87.37,
+    "ionq": 7.52,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2024-04-17",
+    "sp500": 5022.21,
+    "nvda": 83.99,
+    "ionq": 7.28,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2024-04-18",
+    "sp500": 5011.12,
+    "nvda": 84.62,
+    "ionq": 7.37,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2024-04-19",
+    "sp500": 4967.23,
+    "nvda": 76.16,
+    "ionq": 7.09,
+    "risk_score": 27,
+    "event": {
+      "type": "shock",
+      "title": "중동 확전 우려",
+      "desc": "이스라엘-이란 충돌"
+    }
+  },
+  {
+    "date": "2024-04-22",
+    "sp500": 5010.6,
+    "nvda": 79.47,
+    "ionq": 7.49,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2024-04-23",
+    "sp500": 5070.55,
+    "nvda": 82.38,
+    "ionq": 7.97,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2024-04-24",
+    "sp500": 5071.63,
+    "nvda": 79.63,
+    "ionq": 8.2,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2024-04-25",
+    "sp500": 5048.42,
+    "nvda": 82.59,
+    "ionq": 8.18,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2024-04-26",
+    "sp500": 5099.96,
+    "nvda": 87.69,
+    "ionq": 8.97,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2024-04-29",
+    "sp500": 5116.17,
+    "nvda": 87.71,
+    "ionq": 8.92,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2024-04-30",
+    "sp500": 5035.69,
+    "nvda": 86.35,
+    "ionq": 8.55,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2024-05-01",
+    "sp500": 5018.39,
+    "nvda": 82.99,
+    "ionq": 8.75,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2024-05-02",
+    "sp500": 5064.2,
+    "nvda": 85.77,
+    "ionq": 9.0,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2024-05-03",
+    "sp500": 5127.79,
+    "nvda": 88.74,
+    "ionq": 8.94,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2024-05-06",
+    "sp500": 5180.74,
+    "nvda": 92.09,
+    "ionq": 9.28,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2024-05-07",
+    "sp500": 5187.7,
+    "nvda": 90.5,
+    "ionq": 8.63,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-05-08",
+    "sp500": 5187.67,
+    "nvda": 90.36,
+    "ionq": 8.78,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-05-09",
+    "sp500": 5214.08,
+    "nvda": 88.7,
+    "ionq": 9.2,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-05-10",
+    "sp500": 5222.68,
+    "nvda": 89.83,
+    "ionq": 8.71,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2024-05-13",
+    "sp500": 5221.42,
+    "nvda": 90.35,
+    "ionq": 8.77,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2024-05-14",
+    "sp500": 5246.68,
+    "nvda": 91.3,
+    "ionq": 9.22,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2024-05-15",
+    "sp500": 5308.15,
+    "nvda": 94.58,
+    "ionq": 9.0,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2024-05-16",
+    "sp500": 5297.1,
+    "nvda": 94.31,
+    "ionq": 8.71,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2024-05-17",
+    "sp500": 5303.27,
+    "nvda": 92.43,
+    "ionq": 8.78,
+    "risk_score": 0,
+    "event": null
+  },
+  {
+    "date": "2024-05-20",
+    "sp500": 5308.13,
+    "nvda": 94.73,
+    "ionq": 8.88,
+    "risk_score": 1,
+    "event": null
+  },
+  {
+    "date": "2024-05-21",
+    "sp500": 5321.41,
+    "nvda": 95.33,
+    "ionq": 8.48,
+    "risk_score": 0,
+    "event": null
+  },
+  {
+    "date": "2024-05-22",
+    "sp500": 5307.01,
+    "nvda": 94.9,
+    "ionq": 8.6,
+    "risk_score": 1,
+    "event": null
+  },
+  {
+    "date": "2024-05-23",
+    "sp500": 5267.84,
+    "nvda": 103.74,
+    "ionq": 8.32,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-05-24",
+    "sp500": 5304.72,
+    "nvda": 106.41,
+    "ionq": 8.43,
+    "risk_score": 0,
+    "event": null
+  },
+  {
+    "date": "2024-05-28",
+    "sp500": 5306.04,
+    "nvda": 113.84,
+    "ionq": 8.28,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-05-29",
+    "sp500": 5266.95,
+    "nvda": 114.76,
+    "ionq": 8.14,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2024-05-30",
+    "sp500": 5235.48,
+    "nvda": 110.44,
+    "ionq": 8.4,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2024-05-31",
+    "sp500": 5277.51,
+    "nvda": 109.57,
+    "ionq": 8.15,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-06-03",
+    "sp500": 5283.4,
+    "nvda": 114.94,
+    "ionq": 7.78,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-06-04",
+    "sp500": 5291.34,
+    "nvda": 116.37,
+    "ionq": 7.71,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-06-05",
+    "sp500": 5354.03,
+    "nvda": 122.37,
+    "ionq": 7.93,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-06-06",
+    "sp500": 5352.96,
+    "nvda": 120.93,
+    "ionq": 7.83,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2024-06-07",
+    "sp500": 5346.99,
+    "nvda": 120.82,
+    "ionq": 7.86,
+    "risk_score": 1,
+    "event": null
+  },
+  {
+    "date": "2024-06-10",
+    "sp500": 5360.79,
+    "nvda": 121.72,
+    "ionq": 8.22,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-06-11",
+    "sp500": 5375.32,
+    "nvda": 120.85,
+    "ionq": 7.87,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-06-12",
+    "sp500": 5421.03,
+    "nvda": 125.14,
+    "ionq": 7.95,
+    "risk_score": 0,
+    "event": null
+  },
+  {
+    "date": "2024-06-13",
+    "sp500": 5433.74,
+    "nvda": 129.55,
+    "ionq": 7.71,
+    "risk_score": 0,
+    "event": null
+  },
+  {
+    "date": "2024-06-14",
+    "sp500": 5431.6,
+    "nvda": 131.82,
+    "ionq": 7.7,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-06-17",
+    "sp500": 5473.23,
+    "nvda": 130.92,
+    "ionq": 7.56,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-06-18",
+    "sp500": 5487.03,
+    "nvda": 135.51,
+    "ionq": 7.21,
+    "risk_score": 1,
+    "event": null
+  },
+  {
+    "date": "2024-06-20",
+    "sp500": 5473.17,
+    "nvda": 130.72,
+    "ionq": 6.8,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-06-21",
+    "sp500": 5464.62,
+    "nvda": 126.51,
+    "ionq": 6.76,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-06-24",
+    "sp500": 5447.87,
+    "nvda": 118.05,
+    "ionq": 6.76,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-06-25",
+    "sp500": 5469.3,
+    "nvda": 126.03,
+    "ionq": 6.59,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-06-26",
+    "sp500": 5477.9,
+    "nvda": 126.34,
+    "ionq": 6.73,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2024-06-27",
+    "sp500": 5482.87,
+    "nvda": 123.93,
+    "ionq": 7.1,
+    "risk_score": 1,
+    "event": null
+  },
+  {
+    "date": "2024-06-28",
+    "sp500": 5460.48,
+    "nvda": 123.48,
+    "ionq": 7.03,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2024-07-01",
+    "sp500": 5475.09,
+    "nvda": 124.24,
+    "ionq": 6.84,
+    "risk_score": 1,
+    "event": null
+  },
+  {
+    "date": "2024-07-02",
+    "sp500": 5509.01,
+    "nvda": 122.61,
+    "ionq": 7.14,
+    "risk_score": 0,
+    "event": null
+  },
+  {
+    "date": "2024-07-03",
+    "sp500": 5537.02,
+    "nvda": 128.22,
+    "ionq": 7.17,
+    "risk_score": 0,
+    "event": null
+  },
+  {
+    "date": "2024-07-05",
+    "sp500": 5567.19,
+    "nvda": 125.77,
+    "ionq": 7.41,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2024-07-08",
+    "sp500": 5572.85,
+    "nvda": 128.14,
+    "ionq": 7.67,
+    "risk_score": 1,
+    "event": null
+  },
+  {
+    "date": "2024-07-09",
+    "sp500": 5576.98,
+    "nvda": 131.32,
+    "ionq": 7.93,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2024-07-10",
+    "sp500": 5633.91,
+    "nvda": 134.85,
+    "ionq": 8.45,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-07-11",
+    "sp500": 5584.54,
+    "nvda": 127.34,
+    "ionq": 8.02,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-07-12",
+    "sp500": 5615.35,
+    "nvda": 129.18,
+    "ionq": 8.45,
+    "risk_score": 2,
+    "event": null
+  },
+  {
+    "date": "2024-07-15",
+    "sp500": 5631.22,
+    "nvda": 128.38,
+    "ionq": 8.95,
+    "risk_score": 4,
+    "event": null
+  },
+  {
+    "date": "2024-07-16",
+    "sp500": 5667.2,
+    "nvda": 126.3,
+    "ionq": 9.03,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-07-17",
+    "sp500": 5588.27,
+    "nvda": 117.93,
+    "ionq": 8.56,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2024-07-18",
+    "sp500": 5544.59,
+    "nvda": 121.03,
+    "ionq": 8.21,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2024-07-19",
+    "sp500": 5505.0,
+    "nvda": 117.87,
+    "ionq": 7.43,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2024-07-22",
+    "sp500": 5564.41,
+    "nvda": 123.48,
+    "ionq": 8.08,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2024-07-23",
+    "sp500": 5555.74,
+    "nvda": 122.53,
+    "ionq": 8.3,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2024-07-24",
+    "sp500": 5427.13,
+    "nvda": 114.19,
+    "ionq": 7.62,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2024-07-25",
+    "sp500": 5399.22,
+    "nvda": 112.23,
+    "ionq": 7.93,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2024-07-26",
+    "sp500": 5459.1,
+    "nvda": 113.01,
+    "ionq": 8.21,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2024-07-29",
+    "sp500": 5463.54,
+    "nvda": 111.54,
+    "ionq": 7.89,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2024-07-30",
+    "sp500": 5436.44,
+    "nvda": 103.68,
+    "ionq": 7.8,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2024-07-31",
+    "sp500": 5522.3,
+    "nvda": 116.96,
+    "ionq": 8.15,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2024-08-01",
+    "sp500": 5446.68,
+    "nvda": 109.16,
+    "ionq": 7.52,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2024-08-02",
+    "sp500": 5346.56,
+    "nvda": 107.22,
+    "ionq": 7.08,
+    "risk_score": 46,
+    "event": null
+  },
+  {
+    "date": "2024-08-05",
+    "sp500": 5186.33,
+    "nvda": 100.4,
+    "ionq": 6.57,
+    "risk_score": 100,
+    "event": null
+  },
+  {
+    "date": "2024-08-06",
+    "sp500": 5240.03,
+    "nvda": 104.2,
+    "ionq": 7.21,
+    "risk_score": 63,
+    "event": null
+  },
+  {
+    "date": "2024-08-07",
+    "sp500": 5199.5,
+    "nvda": 98.86,
+    "ionq": 6.8,
+    "risk_score": 63,
+    "event": null
+  },
+  {
+    "date": "2024-08-08",
+    "sp500": 5319.31,
+    "nvda": 104.92,
+    "ionq": 7.11,
+    "risk_score": 47,
+    "event": null
+  },
+  {
+    "date": "2024-08-09",
+    "sp500": 5344.16,
+    "nvda": 104.7,
+    "ionq": 7.12,
+    "risk_score": 33,
+    "event": null
+  },
+  {
+    "date": "2024-08-12",
+    "sp500": 5344.39,
+    "nvda": 108.97,
+    "ionq": 6.72,
+    "risk_score": 35,
+    "event": null
+  },
+  {
+    "date": "2024-08-13",
+    "sp500": 5434.43,
+    "nvda": 116.08,
+    "ionq": 7.28,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2024-08-14",
+    "sp500": 5455.21,
+    "nvda": 118.02,
+    "ionq": 7.31,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2024-08-15",
+    "sp500": 5543.22,
+    "nvda": 122.8,
+    "ionq": 7.42,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2024-08-16",
+    "sp500": 5554.25,
+    "nvda": 124.52,
+    "ionq": 7.28,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2024-08-19",
+    "sp500": 5608.25,
+    "nvda": 129.94,
+    "ionq": 7.29,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2024-08-20",
+    "sp500": 5597.12,
+    "nvda": 127.19,
+    "ionq": 7.21,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2024-08-21",
+    "sp500": 5620.85,
+    "nvda": 128.44,
+    "ionq": 7.77,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2024-08-22",
+    "sp500": 5570.64,
+    "nvda": 123.68,
+    "ionq": 7.31,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2024-08-23",
+    "sp500": 5634.61,
+    "nvda": 129.31,
+    "ionq": 7.38,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2024-08-26",
+    "sp500": 5616.84,
+    "nvda": 126.4,
+    "ionq": 7.51,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2024-08-27",
+    "sp500": 5625.8,
+    "nvda": 128.24,
+    "ionq": 7.28,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2024-08-28",
+    "sp500": 5592.18,
+    "nvda": 125.55,
+    "ionq": 7.01,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2024-08-29",
+    "sp500": 5591.96,
+    "nvda": 117.53,
+    "ionq": 7.32,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2024-08-30",
+    "sp500": 5648.4,
+    "nvda": 119.31,
+    "ionq": 7.42,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2024-09-03",
+    "sp500": 5528.93,
+    "nvda": 107.95,
+    "ionq": 6.96,
+    "risk_score": 35,
+    "event": null
+  },
+  {
+    "date": "2024-09-04",
+    "sp500": 5520.07,
+    "nvda": 106.16,
+    "ionq": 7.01,
+    "risk_score": 37,
+    "event": null
+  },
+  {
+    "date": "2024-09-05",
+    "sp500": 5503.41,
+    "nvda": 107.16,
+    "ionq": 7.04,
+    "risk_score": 32,
+    "event": null
+  },
+  {
+    "date": "2024-09-06",
+    "sp500": 5408.42,
+    "nvda": 102.78,
+    "ionq": 6.8,
+    "risk_score": 42,
+    "event": null
+  },
+  {
+    "date": "2024-09-09",
+    "sp500": 5471.05,
+    "nvda": 106.42,
+    "ionq": 6.62,
+    "risk_score": 30,
+    "event": null
+  },
+  {
+    "date": "2024-09-10",
+    "sp500": 5495.52,
+    "nvda": 108.05,
+    "ionq": 6.9,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2024-09-11",
+    "sp500": 5554.13,
+    "nvda": 116.85,
+    "ionq": 7.23,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2024-09-12",
+    "sp500": 5595.76,
+    "nvda": 119.09,
+    "ionq": 7.38,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2024-09-13",
+    "sp500": 5626.02,
+    "nvda": 119.05,
+    "ionq": 7.76,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2024-09-16",
+    "sp500": 5633.09,
+    "nvda": 116.73,
+    "ionq": 7.82,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2024-09-17",
+    "sp500": 5634.58,
+    "nvda": 115.54,
+    "ionq": 8.12,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2024-09-18",
+    "sp500": 5618.26,
+    "nvda": 113.33,
+    "ionq": 7.83,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2024-09-19",
+    "sp500": 5713.64,
+    "nvda": 117.82,
+    "ionq": 7.72,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2024-09-20",
+    "sp500": 5702.55,
+    "nvda": 115.95,
+    "ionq": 8.22,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2024-09-23",
+    "sp500": 5718.57,
+    "nvda": 116.21,
+    "ionq": 8.01,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2024-09-24",
+    "sp500": 5732.93,
+    "nvda": 120.82,
+    "ionq": 8.12,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2024-09-25",
+    "sp500": 5722.26,
+    "nvda": 123.46,
+    "ionq": 7.59,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2024-09-26",
+    "sp500": 5745.37,
+    "nvda": 123.99,
+    "ionq": 8.06,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2024-09-27",
+    "sp500": 5738.17,
+    "nvda": 121.35,
+    "ionq": 9.71,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2024-09-30",
+    "sp500": 5762.48,
+    "nvda": 121.39,
+    "ionq": 8.74,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2024-10-01",
+    "sp500": 5708.75,
+    "nvda": 116.95,
+    "ionq": 8.17,
+    "risk_score": 29,
+    "event": null
+  },
+  {
+    "date": "2024-10-02",
+    "sp500": 5709.54,
+    "nvda": 118.8,
+    "ionq": 9.2,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2024-10-03",
+    "sp500": 5699.94,
+    "nvda": 122.8,
+    "ionq": 9.25,
+    "risk_score": 34,
+    "event": null
+  },
+  {
+    "date": "2024-10-04",
+    "sp500": 5751.07,
+    "nvda": 124.87,
+    "ionq": 9.31,
+    "risk_score": 29,
+    "event": null
+  },
+  {
+    "date": "2024-10-07",
+    "sp500": 5695.94,
+    "nvda": 127.67,
+    "ionq": 9.07,
+    "risk_score": 43,
+    "event": null
+  },
+  {
+    "date": "2024-10-08",
+    "sp500": 5751.13,
+    "nvda": 132.84,
+    "ionq": 9.55,
+    "risk_score": 38,
+    "event": null
+  },
+  {
+    "date": "2024-10-09",
+    "sp500": 5792.04,
+    "nvda": 132.6,
+    "ionq": 9.54,
+    "risk_score": 35,
+    "event": null
+  },
+  {
+    "date": "2024-10-10",
+    "sp500": 5780.05,
+    "nvda": 134.76,
+    "ionq": 9.81,
+    "risk_score": 36,
+    "event": null
+  },
+  {
+    "date": "2024-10-11",
+    "sp500": 5815.03,
+    "nvda": 134.75,
+    "ionq": 10.66,
+    "risk_score": 34,
+    "event": null
+  },
+  {
+    "date": "2024-10-14",
+    "sp500": 5859.85,
+    "nvda": 138.02,
+    "ionq": 10.84,
+    "risk_score": 31,
+    "event": null
+  },
+  {
+    "date": "2024-10-15",
+    "sp500": 5815.26,
+    "nvda": 131.55,
+    "ionq": 10.49,
+    "risk_score": 35,
+    "event": null
+  },
+  {
+    "date": "2024-10-16",
+    "sp500": 5842.47,
+    "nvda": 135.67,
+    "ionq": 12.3,
+    "risk_score": 30,
+    "event": null
+  },
+  {
+    "date": "2024-10-17",
+    "sp500": 5841.47,
+    "nvda": 136.88,
+    "ionq": 12.5,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2024-10-18",
+    "sp500": 5864.67,
+    "nvda": 137.95,
+    "ionq": 13.3,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2024-10-21",
+    "sp500": 5853.98,
+    "nvda": 143.65,
+    "ionq": 14.76,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2024-10-22",
+    "sp500": 5851.2,
+    "nvda": 143.53,
+    "ionq": 15.01,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2024-10-23",
+    "sp500": 5797.42,
+    "nvda": 139.5,
+    "ionq": 14.74,
+    "risk_score": 29,
+    "event": null
+  },
+  {
+    "date": "2024-10-24",
+    "sp500": 5809.86,
+    "nvda": 140.35,
+    "ionq": 15.71,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2024-10-25",
+    "sp500": 5808.12,
+    "nvda": 141.48,
+    "ionq": 16.96,
+    "risk_score": 33,
+    "event": null
+  },
+  {
+    "date": "2024-10-28",
+    "sp500": 5823.52,
+    "nvda": 140.46,
+    "ionq": 17.81,
+    "risk_score": 31,
+    "event": null
+  },
+  {
+    "date": "2024-10-29",
+    "sp500": 5832.92,
+    "nvda": 141.19,
+    "ionq": 16.74,
+    "risk_score": 29,
+    "event": null
+  },
+  {
+    "date": "2024-10-30",
+    "sp500": 5813.67,
+    "nvda": 139.28,
+    "ionq": 16.87,
+    "risk_score": 33,
+    "event": null
+  },
+  {
+    "date": "2024-10-31",
+    "sp500": 5705.45,
+    "nvda": 132.71,
+    "ionq": 15.03,
+    "risk_score": 45,
+    "event": null
+  },
+  {
+    "date": "2024-11-01",
+    "sp500": 5728.8,
+    "nvda": 135.35,
+    "ionq": 14.85,
+    "risk_score": 40,
+    "event": null
+  },
+  {
+    "date": "2024-11-04",
+    "sp500": 5712.69,
+    "nvda": 136.0,
+    "ionq": 14.37,
+    "risk_score": 40,
+    "event": null
+  },
+  {
+    "date": "2024-11-05",
+    "sp500": 5782.76,
+    "nvda": 139.85,
+    "ionq": 15.35,
+    "risk_score": 34,
+    "event": null
+  },
+  {
+    "date": "2024-11-06",
+    "sp500": 5929.04,
+    "nvda": 145.55,
+    "ionq": 16.45,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2024-11-07",
+    "sp500": 5973.1,
+    "nvda": 148.82,
+    "ionq": 22.11,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2024-11-08",
+    "sp500": 5995.54,
+    "nvda": 147.57,
+    "ionq": 24.79,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2024-11-11",
+    "sp500": 6001.35,
+    "nvda": 145.2,
+    "ionq": 23.52,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2024-11-12",
+    "sp500": 5983.99,
+    "nvda": 148.23,
+    "ionq": 23.01,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2024-11-13",
+    "sp500": 5985.38,
+    "nvda": 146.21,
+    "ionq": 26.76,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2024-11-14",
+    "sp500": 5949.17,
+    "nvda": 146.7,
+    "ionq": 26.16,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2024-11-15",
+    "sp500": 5870.62,
+    "nvda": 141.92,
+    "ionq": 29.14,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2024-11-18",
+    "sp500": 5893.62,
+    "nvda": 140.09,
+    "ionq": 25.23,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2024-11-19",
+    "sp500": 5916.98,
+    "nvda": 146.95,
+    "ionq": 27.89,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2024-11-20",
+    "sp500": 5917.11,
+    "nvda": 145.83,
+    "ionq": 28.86,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2024-11-21",
+    "sp500": 5948.71,
+    "nvda": 146.61,
+    "ionq": 32.78,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2024-11-22",
+    "sp500": 5969.34,
+    "nvda": 141.89,
+    "ionq": 31.8,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2024-11-25",
+    "sp500": 5987.37,
+    "nvda": 135.97,
+    "ionq": 30.88,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2024-11-26",
+    "sp500": 6021.63,
+    "nvda": 136.87,
+    "ionq": 30.65,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2024-11-27",
+    "sp500": 5998.74,
+    "nvda": 135.29,
+    "ionq": 32.21,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2024-11-29",
+    "sp500": 6032.38,
+    "nvda": 138.2,
+    "ionq": 36.5,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2024-12-02",
+    "sp500": 6047.15,
+    "nvda": 138.58,
+    "ionq": 32.06,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-12-03",
+    "sp500": 6049.88,
+    "nvda": 140.2,
+    "ionq": 32.79,
+    "risk_score": 5,
+    "event": null
+  },
+  {
+    "date": "2024-12-04",
+    "sp500": 6086.49,
+    "nvda": 145.08,
+    "ionq": 33.42,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2024-12-05",
+    "sp500": 6075.11,
+    "nvda": 145.01,
+    "ionq": 35.95,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2024-12-06",
+    "sp500": 6090.27,
+    "nvda": 142.39,
+    "ionq": 37.97,
+    "risk_score": 3,
+    "event": null
+  },
+  {
+    "date": "2024-12-09",
+    "sp500": 6052.85,
+    "nvda": 138.76,
+    "ionq": 34.24,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2024-12-10",
+    "sp500": 6034.91,
+    "nvda": 135.03,
+    "ionq": 32.97,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2024-12-11",
+    "sp500": 6084.19,
+    "nvda": 139.26,
+    "ionq": 29.83,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2024-12-12",
+    "sp500": 6051.25,
+    "nvda": 137.3,
+    "ionq": 29.99,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2024-12-13",
+    "sp500": 6051.09,
+    "nvda": 134.21,
+    "ionq": 33.83,
+    "risk_score": 7,
+    "event": null
+  },
+  {
+    "date": "2024-12-16",
+    "sp500": 6074.08,
+    "nvda": 131.96,
+    "ionq": 41.81,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2024-12-17",
+    "sp500": 6050.61,
+    "nvda": 130.35,
+    "ionq": 43.84,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2024-12-18",
+    "sp500": 5872.16,
+    "nvda": 128.87,
+    "ionq": 37.5,
+    "risk_score": 62,
+    "event": null
+  },
+  {
+    "date": "2024-12-19",
+    "sp500": 5867.08,
+    "nvda": 130.64,
+    "ionq": 37.76,
+    "risk_score": 48,
+    "event": null
+  },
+  {
+    "date": "2024-12-20",
+    "sp500": 5930.85,
+    "nvda": 134.66,
+    "ionq": 44.42,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2024-12-23",
+    "sp500": 5974.07,
+    "nvda": 139.62,
+    "ionq": 41.32,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2024-12-24",
+    "sp500": 6040.04,
+    "nvda": 140.17,
+    "ionq": 44.58,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2024-12-26",
+    "sp500": 6037.59,
+    "nvda": 139.88,
+    "ionq": 48.24,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2024-12-27",
+    "sp500": 5970.84,
+    "nvda": 136.97,
+    "ionq": 45.48,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2024-12-30",
+    "sp500": 5906.94,
+    "nvda": 137.44,
+    "ionq": 44.29,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2024-12-31",
+    "sp500": 5881.63,
+    "nvda": 134.25,
+    "ionq": 41.77,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-01-02",
+    "sp500": 5868.55,
+    "nvda": 138.26,
+    "ionq": 43.1,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2025-01-03",
+    "sp500": 5942.47,
+    "nvda": 144.42,
+    "ionq": 47.77,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2025-01-06",
+    "sp500": 5975.38,
+    "nvda": 149.38,
+    "ionq": 51.07,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2025-01-07",
+    "sp500": 5909.03,
+    "nvda": 140.09,
+    "ionq": 49.59,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2025-01-08",
+    "sp500": 5918.25,
+    "nvda": 140.06,
+    "ionq": 30.25,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2025-01-10",
+    "sp500": 5827.04,
+    "nvda": 135.87,
+    "ionq": 32.33,
+    "risk_score": 30,
+    "event": null
+  },
+  {
+    "date": "2025-01-13",
+    "sp500": 5836.22,
+    "nvda": 133.19,
+    "ionq": 27.86,
+    "risk_score": 29,
+    "event": null
+  },
+  {
+    "date": "2025-01-14",
+    "sp500": 5842.91,
+    "nvda": 131.72,
+    "ionq": 29.51,
+    "risk_score": 27,
+    "event": null
+  },
+  {
+    "date": "2025-01-15",
+    "sp500": 5949.91,
+    "nvda": 136.2,
+    "ionq": 39.39,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2025-01-16",
+    "sp500": 5937.34,
+    "nvda": 133.53,
+    "ionq": 41.55,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-01-17",
+    "sp500": 5996.66,
+    "nvda": 137.66,
+    "ionq": 38.89,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2025-01-21",
+    "sp500": 6049.24,
+    "nvda": 140.78,
+    "ionq": 45.31,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2025-01-22",
+    "sp500": 6086.37,
+    "nvda": 147.02,
+    "ionq": 42.04,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2025-01-23",
+    "sp500": 6118.71,
+    "nvda": 147.17,
+    "ionq": 41.35,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2025-01-24",
+    "sp500": 6101.24,
+    "nvda": 142.57,
+    "ionq": 40.76,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2025-01-27",
+    "sp500": 6012.28,
+    "nvda": 118.38,
+    "ionq": 38.54,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2025-01-28",
+    "sp500": 6067.7,
+    "nvda": 128.95,
+    "ionq": 38.86,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-01-29",
+    "sp500": 6039.31,
+    "nvda": 123.66,
+    "ionq": 39.54,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-01-30",
+    "sp500": 6071.17,
+    "nvda": 124.61,
+    "ionq": 38.81,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2025-01-31",
+    "sp500": 6040.53,
+    "nvda": 120.03,
+    "ionq": 39.49,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-02-03",
+    "sp500": 5994.57,
+    "nvda": 116.62,
+    "ionq": 41.47,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2025-02-04",
+    "sp500": 6037.88,
+    "nvda": 118.61,
+    "ionq": 41.86,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-02-05",
+    "sp500": 6061.48,
+    "nvda": 124.79,
+    "ionq": 42.32,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2025-02-06",
+    "sp500": 6083.57,
+    "nvda": 128.64,
+    "ionq": 41.27,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2025-02-07",
+    "sp500": 6025.99,
+    "nvda": 129.8,
+    "ionq": 40.57,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-02-10",
+    "sp500": 6066.44,
+    "nvda": 133.53,
+    "ionq": 41.07,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2025-02-11",
+    "sp500": 6068.5,
+    "nvda": 132.76,
+    "ionq": 37.7,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2025-02-12",
+    "sp500": 6051.97,
+    "nvda": 131.1,
+    "ionq": 38.0,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2025-02-13",
+    "sp500": 6115.07,
+    "nvda": 135.25,
+    "ionq": 38.65,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2025-02-14",
+    "sp500": 6114.63,
+    "nvda": 138.8,
+    "ionq": 37.46,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2025-02-18",
+    "sp500": 6129.58,
+    "nvda": 139.35,
+    "ionq": 33.94,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2025-02-19",
+    "sp500": 6144.15,
+    "nvda": 139.18,
+    "ionq": 34.14,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2025-02-20",
+    "sp500": 6117.52,
+    "nvda": 140.06,
+    "ionq": 33.75,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2025-02-21",
+    "sp500": 6013.13,
+    "nvda": 134.39,
+    "ionq": 31.74,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2025-02-24",
+    "sp500": 5983.25,
+    "nvda": 130.24,
+    "ionq": 31.24,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2025-02-25",
+    "sp500": 5955.25,
+    "nvda": 126.59,
+    "ionq": 29.73,
+    "risk_score": 30,
+    "event": null
+  },
+  {
+    "date": "2025-02-26",
+    "sp500": 5956.06,
+    "nvda": 131.24,
+    "ionq": 29.93,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2025-02-27",
+    "sp500": 5861.57,
+    "nvda": 120.11,
+    "ionq": 24.91,
+    "risk_score": 37,
+    "event": null
+  },
+  {
+    "date": "2025-02-28",
+    "sp500": 5954.5,
+    "nvda": 124.88,
+    "ionq": 24.57,
+    "risk_score": 31,
+    "event": null
+  },
+  {
+    "date": "2025-03-03",
+    "sp500": 5849.72,
+    "nvda": 114.02,
+    "ionq": 23.11,
+    "risk_score": 43,
+    "event": null
+  },
+  {
+    "date": "2025-03-04",
+    "sp500": 5778.15,
+    "nvda": 115.95,
+    "ionq": 22.35,
+    "risk_score": 46,
+    "event": null
+  },
+  {
+    "date": "2025-03-05",
+    "sp500": 5842.63,
+    "nvda": 117.26,
+    "ionq": 22.63,
+    "risk_score": 40,
+    "event": null
+  },
+  {
+    "date": "2025-03-06",
+    "sp500": 5738.52,
+    "nvda": 110.53,
+    "ionq": 20.48,
+    "risk_score": 51,
+    "event": null
+  },
+  {
+    "date": "2025-03-07",
+    "sp500": 5770.2,
+    "nvda": 112.65,
+    "ionq": 20.55,
+    "risk_score": 45,
+    "event": null
+  },
+  {
+    "date": "2025-03-10",
+    "sp500": 5614.56,
+    "nvda": 106.94,
+    "ionq": 18.27,
+    "risk_score": 63,
+    "event": null
+  },
+  {
+    "date": "2025-03-11",
+    "sp500": 5572.07,
+    "nvda": 108.72,
+    "ionq": 18.7,
+    "risk_score": 60,
+    "event": null
+  },
+  {
+    "date": "2025-03-12",
+    "sp500": 5599.3,
+    "nvda": 115.71,
+    "ionq": 21.82,
+    "risk_score": 49,
+    "event": null
+  },
+  {
+    "date": "2025-03-13",
+    "sp500": 5521.52,
+    "nvda": 115.55,
+    "ionq": 21.37,
+    "risk_score": 51,
+    "event": null
+  },
+  {
+    "date": "2025-03-14",
+    "sp500": 5638.94,
+    "nvda": 121.64,
+    "ionq": 25.0,
+    "risk_score": 39,
+    "event": null
+  },
+  {
+    "date": "2025-03-17",
+    "sp500": 5675.12,
+    "nvda": 119.5,
+    "ionq": 24.93,
+    "risk_score": 34,
+    "event": null
+  },
+  {
+    "date": "2025-03-18",
+    "sp500": 5614.66,
+    "nvda": 115.4,
+    "ionq": 22.68,
+    "risk_score": 39,
+    "event": null
+  },
+  {
+    "date": "2025-03-19",
+    "sp500": 5675.29,
+    "nvda": 117.49,
+    "ionq": 23.3,
+    "risk_score": 32,
+    "event": null
+  },
+  {
+    "date": "2025-03-20",
+    "sp500": 5662.89,
+    "nvda": 118.5,
+    "ionq": 21.14,
+    "risk_score": 31,
+    "event": null
+  },
+  {
+    "date": "2025-03-21",
+    "sp500": 5667.56,
+    "nvda": 117.67,
+    "ionq": 22.26,
+    "risk_score": 29,
+    "event": null
+  },
+  {
+    "date": "2025-03-24",
+    "sp500": 5767.57,
+    "nvda": 121.38,
+    "ionq": 26.12,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2025-03-25",
+    "sp500": 5776.65,
+    "nvda": 120.66,
+    "ionq": 25.55,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-03-26",
+    "sp500": 5712.2,
+    "nvda": 113.73,
+    "ionq": 24.8,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2025-03-27",
+    "sp500": 5693.31,
+    "nvda": 111.4,
+    "ionq": 23.65,
+    "risk_score": 27,
+    "event": null
+  },
+  {
+    "date": "2025-03-28",
+    "sp500": 5580.94,
+    "nvda": 109.64,
+    "ionq": 22.85,
+    "risk_score": 39,
+    "event": null
+  },
+  {
+    "date": "2025-03-31",
+    "sp500": 5611.85,
+    "nvda": 108.35,
+    "ionq": 22.07,
+    "risk_score": 41,
+    "event": null
+  },
+  {
+    "date": "2025-04-01",
+    "sp500": 5633.07,
+    "nvda": 110.12,
+    "ionq": 23.19,
+    "risk_score": 39,
+    "event": null
+  },
+  {
+    "date": "2025-04-02",
+    "sp500": 5670.97,
+    "nvda": 110.39,
+    "ionq": 25.05,
+    "risk_score": 38,
+    "event": null
+  },
+  {
+    "date": "2025-04-03",
+    "sp500": 5396.52,
+    "nvda": 101.78,
+    "ionq": 23.25,
+    "risk_score": 72,
+    "event": null
+  },
+  {
+    "date": "2025-04-04",
+    "sp500": 5074.08,
+    "nvda": 94.29,
+    "ionq": 20.68,
+    "risk_score": 100,
+    "event": null
+  },
+  {
+    "date": "2025-04-07",
+    "sp500": 5062.25,
+    "nvda": 97.62,
+    "ionq": 22.75,
+    "risk_score": 100,
+    "event": null
+  },
+  {
+    "date": "2025-04-08",
+    "sp500": 4982.77,
+    "nvda": 96.28,
+    "ionq": 21.28,
+    "risk_score": 100,
+    "event": null
+  },
+  {
+    "date": "2025-04-09",
+    "sp500": 5456.9,
+    "nvda": 114.3,
+    "ionq": 26.37,
+    "risk_score": 86,
+    "event": null
+  },
+  {
+    "date": "2025-04-10",
+    "sp500": 5268.05,
+    "nvda": 107.54,
+    "ionq": 25.89,
+    "risk_score": 100,
+    "event": null
+  },
+  {
+    "date": "2025-04-11",
+    "sp500": 5363.36,
+    "nvda": 110.9,
+    "ionq": 26.09,
+    "risk_score": 100,
+    "event": null
+  },
+  {
+    "date": "2025-04-14",
+    "sp500": 5405.97,
+    "nvda": 110.68,
+    "ionq": 25.35,
+    "risk_score": 76,
+    "event": null
+  },
+  {
+    "date": "2025-04-15",
+    "sp500": 5396.63,
+    "nvda": 112.17,
+    "ionq": 25.4,
+    "risk_score": 72,
+    "event": null
+  },
+  {
+    "date": "2025-04-16",
+    "sp500": 5275.7,
+    "nvda": 104.47,
+    "ionq": 24.57,
+    "risk_score": 83,
+    "event": null
+  },
+  {
+    "date": "2025-04-17",
+    "sp500": 5282.7,
+    "nvda": 101.47,
+    "ionq": 25.74,
+    "risk_score": 71,
+    "event": null
+  },
+  {
+    "date": "2025-04-21",
+    "sp500": 5158.2,
+    "nvda": 96.89,
+    "ionq": 24.03,
+    "risk_score": 87,
+    "event": null
+  },
+  {
+    "date": "2025-04-22",
+    "sp500": 5287.76,
+    "nvda": 98.87,
+    "ionq": 25.56,
+    "risk_score": 74,
+    "event": null
+  },
+  {
+    "date": "2025-04-23",
+    "sp500": 5375.86,
+    "nvda": 102.69,
+    "ionq": 26.8,
+    "risk_score": 66,
+    "event": null
+  },
+  {
+    "date": "2025-04-24",
+    "sp500": 5484.77,
+    "nvda": 106.4,
+    "ionq": 28.39,
+    "risk_score": 58,
+    "event": null
+  },
+  {
+    "date": "2025-04-25",
+    "sp500": 5525.21,
+    "nvda": 110.98,
+    "ionq": 28.9,
+    "risk_score": 51,
+    "event": null
+  },
+  {
+    "date": "2025-04-28",
+    "sp500": 5528.75,
+    "nvda": 108.7,
+    "ionq": 28.7,
+    "risk_score": 53,
+    "event": null
+  },
+  {
+    "date": "2025-04-29",
+    "sp500": 5560.83,
+    "nvda": 108.99,
+    "ionq": 28.09,
+    "risk_score": 49,
+    "event": null
+  },
+  {
+    "date": "2025-04-30",
+    "sp500": 5569.06,
+    "nvda": 108.89,
+    "ionq": 27.46,
+    "risk_score": 51,
+    "event": null
+  },
+  {
+    "date": "2025-05-01",
+    "sp500": 5604.14,
+    "nvda": 111.58,
+    "ionq": 27.38,
+    "risk_score": 50,
+    "event": null
+  },
+  {
+    "date": "2025-05-02",
+    "sp500": 5686.67,
+    "nvda": 114.47,
+    "ionq": 30.92,
+    "risk_score": 43,
+    "event": null
+  },
+  {
+    "date": "2025-05-05",
+    "sp500": 5650.38,
+    "nvda": 113.79,
+    "ionq": 29.82,
+    "risk_score": 47,
+    "event": null
+  },
+  {
+    "date": "2025-05-06",
+    "sp500": 5606.91,
+    "nvda": 113.51,
+    "ionq": 29.42,
+    "risk_score": 51,
+    "event": null
+  },
+  {
+    "date": "2025-05-07",
+    "sp500": 5631.28,
+    "nvda": 117.03,
+    "ionq": 29.14,
+    "risk_score": 46,
+    "event": null
+  },
+  {
+    "date": "2025-05-08",
+    "sp500": 5663.94,
+    "nvda": 117.34,
+    "ionq": 31.84,
+    "risk_score": 42,
+    "event": null
+  },
+  {
+    "date": "2025-05-09",
+    "sp500": 5659.91,
+    "nvda": 116.62,
+    "ionq": 31.27,
+    "risk_score": 40,
+    "event": null
+  },
+  {
+    "date": "2025-05-12",
+    "sp500": 5844.19,
+    "nvda": 122.97,
+    "ionq": 32.89,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2025-05-13",
+    "sp500": 5886.55,
+    "nvda": 129.9,
+    "ionq": 33.22,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2025-05-14",
+    "sp500": 5892.58,
+    "nvda": 135.31,
+    "ionq": 33.41,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2025-05-15",
+    "sp500": 5916.93,
+    "nvda": 134.8,
+    "ionq": 32.54,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2025-05-16",
+    "sp500": 5958.38,
+    "nvda": 135.37,
+    "ionq": 34.99,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-05-19",
+    "sp500": 5963.6,
+    "nvda": 135.54,
+    "ionq": 35.09,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2025-05-20",
+    "sp500": 5940.46,
+    "nvda": 134.35,
+    "ionq": 35.31,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2025-05-21",
+    "sp500": 5844.61,
+    "nvda": 131.77,
+    "ionq": 33.54,
+    "risk_score": 35,
+    "event": null
+  },
+  {
+    "date": "2025-05-22",
+    "sp500": 5842.01,
+    "nvda": 132.8,
+    "ionq": 45.79,
+    "risk_score": 33,
+    "event": null
+  },
+  {
+    "date": "2025-05-23",
+    "sp500": 5802.82,
+    "nvda": 131.26,
+    "ionq": 45.69,
+    "risk_score": 41,
+    "event": null
+  },
+  {
+    "date": "2025-05-27",
+    "sp500": 5921.54,
+    "nvda": 135.47,
+    "ionq": 48.04,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2025-05-28",
+    "sp500": 5888.55,
+    "nvda": 134.78,
+    "ionq": 47.56,
+    "risk_score": 29,
+    "event": null
+  },
+  {
+    "date": "2025-05-29",
+    "sp500": 5912.17,
+    "nvda": 139.16,
+    "ionq": 43.2,
+    "risk_score": 29,
+    "event": null
+  },
+  {
+    "date": "2025-05-30",
+    "sp500": 5911.69,
+    "nvda": 135.1,
+    "ionq": 40.34,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2025-06-02",
+    "sp500": 5935.94,
+    "nvda": 137.35,
+    "ionq": 40.57,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2025-06-03",
+    "sp500": 5970.37,
+    "nvda": 141.19,
+    "ionq": 39.81,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2025-06-04",
+    "sp500": 5970.81,
+    "nvda": 141.89,
+    "ionq": 39.64,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2025-06-05",
+    "sp500": 5939.3,
+    "nvda": 139.96,
+    "ionq": 36.66,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2025-06-06",
+    "sp500": 6000.36,
+    "nvda": 141.69,
+    "ionq": 39.02,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-06-09",
+    "sp500": 6005.88,
+    "nvda": 142.6,
+    "ionq": 40.06,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-06-10",
+    "sp500": 6038.81,
+    "nvda": 143.93,
+    "ionq": 39.74,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2025-06-11",
+    "sp500": 6022.24,
+    "nvda": 142.81,
+    "ionq": 39.7,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-06-12",
+    "sp500": 6045.26,
+    "nvda": 144.98,
+    "ionq": 38.71,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2025-06-13",
+    "sp500": 5976.97,
+    "nvda": 141.95,
+    "ionq": 37.84,
+    "risk_score": 35,
+    "event": null
+  },
+  {
+    "date": "2025-06-16",
+    "sp500": 6033.11,
+    "nvda": 144.67,
+    "ionq": 38.43,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2025-06-17",
+    "sp500": 5982.72,
+    "nvda": 144.1,
+    "ionq": 38.04,
+    "risk_score": 38,
+    "event": null
+  },
+  {
+    "date": "2025-06-18",
+    "sp500": 5980.87,
+    "nvda": 145.46,
+    "ionq": 39.63,
+    "risk_score": 33,
+    "event": null
+  },
+  {
+    "date": "2025-06-20",
+    "sp500": 5967.84,
+    "nvda": 143.83,
+    "ionq": 40.36,
+    "risk_score": 34,
+    "event": null
+  },
+  {
+    "date": "2025-06-23",
+    "sp500": 6025.17,
+    "nvda": 144.15,
+    "ionq": 41.14,
+    "risk_score": 31,
+    "event": null
+  },
+  {
+    "date": "2025-06-24",
+    "sp500": 6092.18,
+    "nvda": 147.88,
+    "ionq": 40.86,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2025-06-25",
+    "sp500": 6092.16,
+    "nvda": 154.28,
+    "ionq": 38.11,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-06-26",
+    "sp500": 6141.02,
+    "nvda": 154.99,
+    "ionq": 41.12,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-06-27",
+    "sp500": 6173.07,
+    "nvda": 157.72,
+    "ionq": 40.25,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2025-06-30",
+    "sp500": 6204.95,
+    "nvda": 157.96,
+    "ionq": 42.97,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-07-01",
+    "sp500": 6198.01,
+    "nvda": 153.27,
+    "ionq": 40.1,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-07-02",
+    "sp500": 6227.42,
+    "nvda": 157.22,
+    "ionq": 44.75,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-07-03",
+    "sp500": 6279.35,
+    "nvda": 159.31,
+    "ionq": 44.39,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-07-07",
+    "sp500": 6229.98,
+    "nvda": 158.21,
+    "ionq": 45.2,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2025-07-08",
+    "sp500": 6225.52,
+    "nvda": 159.97,
+    "ionq": 44.97,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-07-09",
+    "sp500": 6263.26,
+    "nvda": 162.85,
+    "ionq": 45.56,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2025-07-10",
+    "sp500": 6280.46,
+    "nvda": 164.07,
+    "ionq": 45.93,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2025-07-11",
+    "sp500": 6259.75,
+    "nvda": 164.89,
+    "ionq": 41.81,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-07-14",
+    "sp500": 6268.56,
+    "nvda": 164.04,
+    "ionq": 42.41,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-07-15",
+    "sp500": 6243.76,
+    "nvda": 170.67,
+    "ionq": 41.47,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2025-07-16",
+    "sp500": 6263.7,
+    "nvda": 171.34,
+    "ionq": 43.54,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-07-17",
+    "sp500": 6297.36,
+    "nvda": 172.97,
+    "ionq": 44.84,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-07-18",
+    "sp500": 6296.79,
+    "nvda": 172.38,
+    "ionq": 46.51,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-07-21",
+    "sp500": 6305.6,
+    "nvda": 171.35,
+    "ionq": 44.43,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-07-22",
+    "sp500": 6309.62,
+    "nvda": 167.0,
+    "ionq": 41.94,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-07-23",
+    "sp500": 6358.91,
+    "nvda": 170.75,
+    "ionq": 43.28,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2025-07-24",
+    "sp500": 6363.35,
+    "nvda": 173.71,
+    "ionq": 43.9,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2025-07-25",
+    "sp500": 6388.64,
+    "nvda": 173.47,
+    "ionq": 43.17,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2025-07-28",
+    "sp500": 6389.77,
+    "nvda": 176.72,
+    "ionq": 42.34,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2025-07-29",
+    "sp500": 6370.86,
+    "nvda": 175.48,
+    "ionq": 40.53,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2025-07-30",
+    "sp500": 6362.9,
+    "nvda": 179.24,
+    "ionq": 39.88,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2025-07-31",
+    "sp500": 6339.39,
+    "nvda": 177.84,
+    "ionq": 39.87,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-08-01",
+    "sp500": 6238.01,
+    "nvda": 173.69,
+    "ionq": 38.12,
+    "risk_score": 34,
+    "event": null
+  },
+  {
+    "date": "2025-08-04",
+    "sp500": 6329.94,
+    "nvda": 179.97,
+    "ionq": 39.86,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2025-08-05",
+    "sp500": 6299.19,
+    "nvda": 178.23,
+    "ionq": 42.02,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2025-08-06",
+    "sp500": 6345.06,
+    "nvda": 179.39,
+    "ionq": 41.23,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-08-07",
+    "sp500": 6340.0,
+    "nvda": 180.74,
+    "ionq": 40.49,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-08-08",
+    "sp500": 6389.45,
+    "nvda": 182.67,
+    "ionq": 41.85,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2025-08-11",
+    "sp500": 6373.45,
+    "nvda": 182.03,
+    "ionq": 44.94,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2025-08-12",
+    "sp500": 6445.76,
+    "nvda": 183.13,
+    "ionq": 43.0,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2025-08-13",
+    "sp500": 6466.58,
+    "nvda": 181.56,
+    "ionq": 41.21,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2025-08-14",
+    "sp500": 6468.54,
+    "nvda": 181.99,
+    "ionq": 41.03,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2025-08-15",
+    "sp500": 6449.8,
+    "nvda": 180.42,
+    "ionq": 40.23,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2025-08-18",
+    "sp500": 6449.15,
+    "nvda": 181.98,
+    "ionq": 40.23,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2025-08-19",
+    "sp500": 6411.37,
+    "nvda": 175.61,
+    "ionq": 36.8,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2025-08-20",
+    "sp500": 6395.78,
+    "nvda": 175.37,
+    "ionq": 36.79,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2025-08-21",
+    "sp500": 6370.17,
+    "nvda": 174.95,
+    "ionq": 37.17,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-08-22",
+    "sp500": 6466.91,
+    "nvda": 177.96,
+    "ionq": 39.78,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2025-08-25",
+    "sp500": 6439.32,
+    "nvda": 179.78,
+    "ionq": 38.68,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2025-08-26",
+    "sp500": 6465.94,
+    "nvda": 181.74,
+    "ionq": 40.75,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2025-08-27",
+    "sp500": 6481.4,
+    "nvda": 181.57,
+    "ionq": 41.42,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2025-08-28",
+    "sp500": 6501.86,
+    "nvda": 180.14,
+    "ionq": 43.3,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2025-08-29",
+    "sp500": 6460.26,
+    "nvda": 174.15,
+    "ionq": 42.74,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2025-09-02",
+    "sp500": 6415.54,
+    "nvda": 170.75,
+    "ionq": 42.99,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-09-03",
+    "sp500": 6448.26,
+    "nvda": 170.59,
+    "ionq": 40.97,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2025-09-04",
+    "sp500": 6502.08,
+    "nvda": 171.63,
+    "ionq": 42.11,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2025-09-05",
+    "sp500": 6481.5,
+    "nvda": 166.99,
+    "ionq": 41.8,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2025-09-08",
+    "sp500": 6495.15,
+    "nvda": 168.28,
+    "ionq": 41.01,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2025-09-09",
+    "sp500": 6512.61,
+    "nvda": 170.73,
+    "ionq": 44.0,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2025-09-10",
+    "sp500": 6532.04,
+    "nvda": 177.3,
+    "ionq": 43.86,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2025-09-11",
+    "sp500": 6587.47,
+    "nvda": 177.15,
+    "ionq": 47.05,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2025-09-12",
+    "sp500": 6584.29,
+    "nvda": 177.8,
+    "ionq": 55.61,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2025-09-15",
+    "sp500": 6615.28,
+    "nvda": 177.73,
+    "ionq": 59.11,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2025-09-16",
+    "sp500": 6606.76,
+    "nvda": 174.86,
+    "ionq": 62.26,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2025-09-17",
+    "sp500": 6600.35,
+    "nvda": 170.27,
+    "ionq": 65.44,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2025-09-18",
+    "sp500": 6631.96,
+    "nvda": 176.22,
+    "ionq": 66.81,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2025-09-19",
+    "sp500": 6664.36,
+    "nvda": 176.65,
+    "ionq": 70.41,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2025-09-22",
+    "sp500": 6693.75,
+    "nvda": 183.59,
+    "ionq": 71.94,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2025-09-23",
+    "sp500": 6656.92,
+    "nvda": 178.41,
+    "ionq": 75.14,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-09-24",
+    "sp500": 6637.97,
+    "nvda": 176.95,
+    "ionq": 73.86,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2025-09-25",
+    "sp500": 6604.72,
+    "nvda": 177.67,
+    "ionq": 69.43,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-09-26",
+    "sp500": 6643.7,
+    "nvda": 178.17,
+    "ionq": 67.28,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2025-09-29",
+    "sp500": 6661.21,
+    "nvda": 181.83,
+    "ionq": 64.26,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2025-09-30",
+    "sp500": 6688.46,
+    "nvda": 186.56,
+    "ionq": 61.5,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2025-10-01",
+    "sp500": 6711.2,
+    "nvda": 187.22,
+    "ionq": 63.09,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2025-10-02",
+    "sp500": 6715.35,
+    "nvda": 188.87,
+    "ionq": 69.6,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-10-03",
+    "sp500": 6715.79,
+    "nvda": 187.6,
+    "ionq": 73.28,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-10-06",
+    "sp500": 6740.28,
+    "nvda": 185.52,
+    "ionq": 78.99,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2025-10-07",
+    "sp500": 6714.59,
+    "nvda": 185.02,
+    "ionq": 79.23,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-10-08",
+    "sp500": 6753.72,
+    "nvda": 189.09,
+    "ionq": 74.3,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2025-10-09",
+    "sp500": 6735.11,
+    "nvda": 192.55,
+    "ionq": 77.5,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-10-10",
+    "sp500": 6552.51,
+    "nvda": 183.14,
+    "ionq": 70.65,
+    "risk_score": 39,
+    "event": null
+  },
+  {
+    "date": "2025-10-13",
+    "sp500": 6654.72,
+    "nvda": 188.3,
+    "ionq": 82.09,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2025-10-14",
+    "sp500": 6644.31,
+    "nvda": 180.01,
+    "ionq": 77.55,
+    "risk_score": 35,
+    "event": null
+  },
+  {
+    "date": "2025-10-15",
+    "sp500": 6671.06,
+    "nvda": 179.81,
+    "ionq": 72.41,
+    "risk_score": 35,
+    "event": null
+  },
+  {
+    "date": "2025-10-16",
+    "sp500": 6629.07,
+    "nvda": 181.79,
+    "ionq": 65.59,
+    "risk_score": 53,
+    "event": null
+  },
+  {
+    "date": "2025-10-17",
+    "sp500": 6664.01,
+    "nvda": 183.2,
+    "ionq": 62.94,
+    "risk_score": 35,
+    "event": null
+  },
+  {
+    "date": "2025-10-20",
+    "sp500": 6735.13,
+    "nvda": 182.62,
+    "ionq": 59.94,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2025-10-21",
+    "sp500": 6735.35,
+    "nvda": 181.14,
+    "ionq": 59.5,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2025-10-22",
+    "sp500": 6699.4,
+    "nvda": 180.26,
+    "ionq": 55.45,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2025-10-23",
+    "sp500": 6738.44,
+    "nvda": 182.14,
+    "ionq": 59.37,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-10-24",
+    "sp500": 6791.69,
+    "nvda": 186.24,
+    "ionq": 60.3,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2025-10-27",
+    "sp500": 6875.16,
+    "nvda": 191.47,
+    "ionq": 62.8,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2025-10-28",
+    "sp500": 6890.89,
+    "nvda": 201.01,
+    "ionq": 57.15,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-10-29",
+    "sp500": 6890.59,
+    "nvda": 207.02,
+    "ionq": 61.11,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2025-10-30",
+    "sp500": 6822.34,
+    "nvda": 202.87,
+    "ionq": 60.17,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2025-10-31",
+    "sp500": 6840.2,
+    "nvda": 202.47,
+    "ionq": 62.38,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2025-11-03",
+    "sp500": 6851.97,
+    "nvda": 206.86,
+    "ionq": 58.4,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-11-04",
+    "sp500": 6771.55,
+    "nvda": 198.67,
+    "ionq": 53.38,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2025-11-05",
+    "sp500": 6796.29,
+    "nvda": 195.19,
+    "ionq": 55.41,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2025-11-06",
+    "sp500": 6720.32,
+    "nvda": 188.06,
+    "ionq": 57.43,
+    "risk_score": 30,
+    "event": null
+  },
+  {
+    "date": "2025-11-07",
+    "sp500": 6728.8,
+    "nvda": 188.13,
+    "ionq": 59.27,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2025-11-10",
+    "sp500": 6832.43,
+    "nvda": 199.03,
+    "ionq": 55.37,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2025-11-11",
+    "sp500": 6846.61,
+    "nvda": 193.14,
+    "ionq": 54.42,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-11-12",
+    "sp500": 6850.92,
+    "nvda": 193.78,
+    "ionq": 50.71,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2025-11-13",
+    "sp500": 6737.49,
+    "nvda": 186.84,
+    "ionq": 45.4,
+    "risk_score": 32,
+    "event": null
+  },
+  {
+    "date": "2025-11-14",
+    "sp500": 6734.11,
+    "nvda": 190.15,
+    "ionq": 47.18,
+    "risk_score": 31,
+    "event": null
+  },
+  {
+    "date": "2025-11-17",
+    "sp500": 6672.41,
+    "nvda": 186.58,
+    "ionq": 47.79,
+    "risk_score": 42,
+    "event": null
+  },
+  {
+    "date": "2025-11-18",
+    "sp500": 6617.32,
+    "nvda": 181.34,
+    "ionq": 49.12,
+    "risk_score": 51,
+    "event": null
+  },
+  {
+    "date": "2025-11-19",
+    "sp500": 6642.16,
+    "nvda": 186.5,
+    "ionq": 47.88,
+    "risk_score": 47,
+    "event": null
+  },
+  {
+    "date": "2025-11-20",
+    "sp500": 6538.76,
+    "nvda": 180.62,
+    "ionq": 41.0,
+    "risk_score": 58,
+    "event": null
+  },
+  {
+    "date": "2025-11-21",
+    "sp500": 6602.99,
+    "nvda": 178.86,
+    "ionq": 41.71,
+    "risk_score": 46,
+    "event": null
+  },
+  {
+    "date": "2025-11-24",
+    "sp500": 6705.12,
+    "nvda": 182.53,
+    "ionq": 46.76,
+    "risk_score": 34,
+    "event": null
+  },
+  {
+    "date": "2025-11-25",
+    "sp500": 6765.88,
+    "nvda": 177.8,
+    "ionq": 47.06,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2025-11-26",
+    "sp500": 6812.61,
+    "nvda": 180.24,
+    "ionq": 46.9,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-11-28",
+    "sp500": 6849.09,
+    "nvda": 176.98,
+    "ionq": 49.3,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2025-12-01",
+    "sp500": 6812.63,
+    "nvda": 179.9,
+    "ionq": 47.12,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2025-12-02",
+    "sp500": 6829.37,
+    "nvda": 181.44,
+    "ionq": 46.93,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-12-03",
+    "sp500": 6849.72,
+    "nvda": 179.57,
+    "ionq": 48.65,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2025-12-04",
+    "sp500": 6857.12,
+    "nvda": 183.37,
+    "ionq": 54.76,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2025-12-05",
+    "sp500": 6870.4,
+    "nvda": 182.4,
+    "ionq": 52.69,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2025-12-08",
+    "sp500": 6846.51,
+    "nvda": 185.54,
+    "ionq": 54.36,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-12-09",
+    "sp500": 6840.51,
+    "nvda": 184.96,
+    "ionq": 54.44,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2025-12-10",
+    "sp500": 6886.68,
+    "nvda": 183.77,
+    "ionq": 51.67,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2025-12-11",
+    "sp500": 6901.0,
+    "nvda": 180.92,
+    "ionq": 52.55,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2025-12-12",
+    "sp500": 6827.41,
+    "nvda": 175.01,
+    "ionq": 50.35,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2025-12-15",
+    "sp500": 6816.51,
+    "nvda": 176.28,
+    "ionq": 46.07,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-12-16",
+    "sp500": 6800.26,
+    "nvda": 177.71,
+    "ionq": 49.67,
+    "risk_score": 18,
+    "event": null
+  },
+  {
+    "date": "2025-12-17",
+    "sp500": 6721.43,
+    "nvda": 170.93,
+    "ionq": 45.85,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2025-12-18",
+    "sp500": 6774.76,
+    "nvda": 174.13,
+    "ionq": 46.44,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2025-12-19",
+    "sp500": 6834.5,
+    "nvda": 180.98,
+    "ionq": 48.48,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2025-12-22",
+    "sp500": 6878.49,
+    "nvda": 183.68,
+    "ionq": 53.86,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2025-12-23",
+    "sp500": 6909.79,
+    "nvda": 189.2,
+    "ionq": 51.39,
+    "risk_score": 8,
+    "event": null
+  },
+  {
+    "date": "2025-12-24",
+    "sp500": 6932.05,
+    "nvda": 188.6,
+    "ionq": 49.82,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2025-12-26",
+    "sp500": 6929.94,
+    "nvda": 190.52,
+    "ionq": 46.0,
+    "risk_score": 6,
+    "event": null
+  },
+  {
+    "date": "2025-12-29",
+    "sp500": 6905.74,
+    "nvda": 188.21,
+    "ionq": 45.25,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2025-12-30",
+    "sp500": 6896.24,
+    "nvda": 187.53,
+    "ionq": 45.31,
+    "risk_score": 9,
+    "event": null
+  },
+  {
+    "date": "2025-12-31",
+    "sp500": 6845.5,
+    "nvda": 186.49,
+    "ionq": 44.87,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2026-01-02",
+    "sp500": 6858.47,
+    "nvda": 188.84,
+    "ionq": 46.77,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2026-01-05",
+    "sp500": 6902.05,
+    "nvda": 188.11,
+    "ionq": 48.71,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2026-01-06",
+    "sp500": 6944.82,
+    "nvda": 187.23,
+    "ionq": 50.76,
+    "risk_score": 11,
+    "event": null
+  },
+  {
+    "date": "2026-01-07",
+    "sp500": 6920.93,
+    "nvda": 189.1,
+    "ionq": 49.78,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2026-01-08",
+    "sp500": 6921.46,
+    "nvda": 185.03,
+    "ionq": 50.45,
+    "risk_score": 14,
+    "event": null
+  },
+  {
+    "date": "2026-01-09",
+    "sp500": 6966.28,
+    "nvda": 184.85,
+    "ionq": 49.45,
+    "risk_score": 10,
+    "event": null
+  },
+  {
+    "date": "2026-01-12",
+    "sp500": 6977.27,
+    "nvda": 184.93,
+    "ionq": 50.95,
+    "risk_score": 12,
+    "event": null
+  },
+  {
+    "date": "2026-01-13",
+    "sp500": 6963.74,
+    "nvda": 185.8,
+    "ionq": 48.94,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2026-01-14",
+    "sp500": 6926.6,
+    "nvda": 183.13,
+    "ionq": 50.88,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2026-01-15",
+    "sp500": 6944.47,
+    "nvda": 187.04,
+    "ionq": 47.56,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2026-01-16",
+    "sp500": 6940.01,
+    "nvda": 186.22,
+    "ionq": 50.8,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2026-01-20",
+    "sp500": 6796.86,
+    "nvda": 178.06,
+    "ionq": 50.66,
+    "risk_score": 32,
+    "event": null
+  },
+  {
+    "date": "2026-01-21",
+    "sp500": 6875.62,
+    "nvda": 183.31,
+    "ionq": 48.33,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2026-01-22",
+    "sp500": 6913.35,
+    "nvda": 184.83,
+    "ionq": 49.33,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2026-01-23",
+    "sp500": 6915.61,
+    "nvda": 187.66,
+    "ionq": 47.25,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2026-01-26",
+    "sp500": 6950.23,
+    "nvda": 186.46,
+    "ionq": 43.37,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2026-01-27",
+    "sp500": 6978.6,
+    "nvda": 188.51,
+    "ionq": 45.49,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2026-01-28",
+    "sp500": 6978.03,
+    "nvda": 191.51,
+    "ionq": 45.8,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2026-01-29",
+    "sp500": 6969.01,
+    "nvda": 192.5,
+    "ionq": 43.24,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2026-01-30",
+    "sp500": 6939.03,
+    "nvda": 191.12,
+    "ionq": 39.98,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2026-02-02",
+    "sp500": 6976.44,
+    "nvda": 185.6,
+    "ionq": 38.56,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2026-02-03",
+    "sp500": 6917.81,
+    "nvda": 180.33,
+    "ionq": 38.47,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2026-02-04",
+    "sp500": 6882.72,
+    "nvda": 174.18,
+    "ionq": 35.34,
+    "risk_score": 27,
+    "event": null
+  },
+  {
+    "date": "2026-02-05",
+    "sp500": 6798.4,
+    "nvda": 171.87,
+    "ionq": 30.43,
+    "risk_score": 39,
+    "event": null
+  },
+  {
+    "date": "2026-02-06",
+    "sp500": 6932.3,
+    "nvda": 185.4,
+    "ionq": 34.99,
+    "risk_score": 33,
+    "event": null
+  },
+  {
+    "date": "2026-02-09",
+    "sp500": 6964.82,
+    "nvda": 190.03,
+    "ionq": 35.48,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2026-02-10",
+    "sp500": 6941.81,
+    "nvda": 188.53,
+    "ionq": 35.19,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2026-02-11",
+    "sp500": 6941.47,
+    "nvda": 190.04,
+    "ionq": 33.61,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2026-02-12",
+    "sp500": 6832.76,
+    "nvda": 186.93,
+    "ionq": 31.3,
+    "risk_score": 35,
+    "event": null
+  },
+  {
+    "date": "2026-02-13",
+    "sp500": 6836.17,
+    "nvda": 182.8,
+    "ionq": 34.11,
+    "risk_score": 34,
+    "event": null
+  },
+  {
+    "date": "2026-02-17",
+    "sp500": 6843.22,
+    "nvda": 184.96,
+    "ionq": 33.18,
+    "risk_score": 33,
+    "event": null
+  },
+  {
+    "date": "2026-02-18",
+    "sp500": 6881.31,
+    "nvda": 187.97,
+    "ionq": 33.34,
+    "risk_score": 30,
+    "event": null
+  },
+  {
+    "date": "2026-02-19",
+    "sp500": 6861.89,
+    "nvda": 187.89,
+    "ionq": 33.43,
+    "risk_score": 33,
+    "event": null
+  },
+  {
+    "date": "2026-02-20",
+    "sp500": 6909.51,
+    "nvda": 189.81,
+    "ionq": 31.9,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2026-02-23",
+    "sp500": 6837.75,
+    "nvda": 191.54,
+    "ionq": 30.78,
+    "risk_score": 36,
+    "event": null
+  },
+  {
+    "date": "2026-02-24",
+    "sp500": 6890.07,
+    "nvda": 192.84,
+    "ionq": 31.62,
+    "risk_score": 30,
+    "event": null
+  },
+  {
+    "date": "2026-02-25",
+    "sp500": 6946.13,
+    "nvda": 195.55,
+    "ionq": 33.59,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2026-02-26",
+    "sp500": 6908.86,
+    "nvda": 184.88,
+    "ionq": 40.88,
+    "risk_score": 27,
+    "event": null
+  },
+  {
+    "date": "2026-02-27",
+    "sp500": 6878.88,
+    "nvda": 177.18,
+    "ionq": 38.37,
+    "risk_score": 31,
+    "event": null
+  },
+  {
+    "date": "2026-03-02",
+    "sp500": 6881.62,
+    "nvda": 182.47,
+    "ionq": 38.34,
+    "risk_score": 38,
+    "event": null
+  },
+  {
+    "date": "2026-03-03",
+    "sp500": 6816.63,
+    "nvda": 180.04,
+    "ionq": 37.05,
+    "risk_score": 46,
+    "event": null
+  },
+  {
+    "date": "2026-03-04",
+    "sp500": 6869.5,
+    "nvda": 183.03,
+    "ionq": 37.13,
+    "risk_score": 37,
+    "event": null
+  },
+  {
+    "date": "2026-03-05",
+    "sp500": 6830.71,
+    "nvda": 183.33,
+    "ionq": 36.02,
+    "risk_score": 47,
+    "event": null
+  },
+  {
+    "date": "2026-03-06",
+    "sp500": 6740.02,
+    "nvda": 177.81,
+    "ionq": 35.73,
+    "risk_score": 70,
+    "event": null
+  },
+  {
+    "date": "2026-03-09",
+    "sp500": 6795.99,
+    "nvda": 182.64,
+    "ionq": 35.87,
+    "risk_score": 54,
+    "event": null
+  },
+  {
+    "date": "2026-03-10",
+    "sp500": 6781.48,
+    "nvda": 184.76,
+    "ionq": 35.12,
+    "risk_score": 52,
+    "event": null
+  },
+  {
+    "date": "2026-03-11",
+    "sp500": 6775.8,
+    "nvda": 186.03,
+    "ionq": 34.27,
+    "risk_score": 49,
+    "event": null
+  },
+  {
+    "date": "2026-03-12",
+    "sp500": 6672.62,
+    "nvda": 183.14,
+    "ionq": 33.03,
+    "risk_score": 61,
+    "event": null
+  },
+  {
+    "date": "2026-03-13",
+    "sp500": 6632.19,
+    "nvda": 180.25,
+    "ionq": 32.98,
+    "risk_score": 61,
+    "event": null
+  },
+  {
+    "date": "2026-03-16",
+    "sp500": 6699.38,
+    "nvda": 183.22,
+    "ionq": 33.29,
+    "risk_score": 46,
+    "event": null
+  },
+  {
+    "date": "2026-03-17",
+    "sp500": 6716.09,
+    "nvda": 181.93,
+    "ionq": 33.31,
+    "risk_score": 41,
+    "event": null
+  },
+  {
+    "date": "2026-03-18",
+    "sp500": 6624.7,
+    "nvda": 180.4,
+    "ionq": 32.38,
+    "risk_score": 52,
+    "event": null
+  },
+  {
+    "date": "2026-03-19",
+    "sp500": 6606.49,
+    "nvda": 178.56,
+    "ionq": 31.9,
+    "risk_score": 48,
+    "event": null
+  },
+  {
+    "date": "2026-03-20",
+    "sp500": 6506.48,
+    "nvda": 172.7,
+    "ionq": 31.2,
+    "risk_score": 59,
+    "event": null
+  },
+  {
+    "date": "2026-03-23",
+    "sp500": 6581.0,
+    "nvda": 175.64,
+    "ionq": 33.11,
+    "risk_score": 57,
+    "event": null
+  },
+  {
+    "date": "2026-03-24",
+    "sp500": 6556.37,
+    "nvda": 175.2,
+    "ionq": 32.7,
+    "risk_score": 60,
+    "event": null
+  },
+  {
+    "date": "2026-03-25",
+    "sp500": 6591.9,
+    "nvda": 178.68,
+    "ionq": 31.96,
+    "risk_score": 53,
+    "event": null
+  },
+  {
+    "date": "2026-03-26",
+    "sp500": 6477.16,
+    "nvda": 171.24,
+    "ionq": 29.84,
+    "risk_score": 62,
+    "event": null
+  },
+  {
+    "date": "2026-03-27",
+    "sp500": 6368.85,
+    "nvda": 167.52,
+    "ionq": 27.51,
+    "risk_score": 76,
+    "event": null
+  },
+  {
+    "date": "2026-03-30",
+    "sp500": 6343.72,
+    "nvda": 165.17,
+    "ionq": 26.59,
+    "risk_score": 74,
+    "event": null
+  },
+  {
+    "date": "2026-03-31",
+    "sp500": 6528.52,
+    "nvda": 174.4,
+    "ionq": 28.83,
+    "risk_score": 53,
+    "event": null
+  },
+  {
+    "date": "2026-04-01",
+    "sp500": 6575.32,
+    "nvda": 175.75,
+    "ionq": 27.79,
+    "risk_score": 50,
+    "event": null
+  },
+  {
+    "date": "2026-04-02",
+    "sp500": 6582.69,
+    "nvda": 177.39,
+    "ionq": 29.3,
+    "risk_score": 47,
+    "event": null
+  },
+  {
+    "date": "2026-04-06",
+    "sp500": 6611.83,
+    "nvda": 177.64,
+    "ionq": 29.24,
+    "risk_score": 49,
+    "event": null
+  },
+  {
+    "date": "2026-04-07",
+    "sp500": 6616.85,
+    "nvda": 178.1,
+    "ionq": 28.49,
+    "risk_score": 55,
+    "event": null
+  },
+  {
+    "date": "2026-04-08",
+    "sp500": 6782.81,
+    "nvda": 182.08,
+    "ionq": 28.99,
+    "risk_score": 36,
+    "event": null
+  },
+  {
+    "date": "2026-04-09",
+    "sp500": 6824.66,
+    "nvda": 183.91,
+    "ionq": 28.08,
+    "risk_score": 30,
+    "event": null
+  },
+  {
+    "date": "2026-04-10",
+    "sp500": 6816.89,
+    "nvda": 188.63,
+    "ionq": 28.79,
+    "risk_score": 29,
+    "event": null
+  },
+  {
+    "date": "2026-04-13",
+    "sp500": 6886.24,
+    "nvda": 189.31,
+    "ionq": 29.76,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2026-04-14",
+    "sp500": 6967.38,
+    "nvda": 196.51,
+    "ionq": 35.76,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2026-04-15",
+    "sp500": 7022.95,
+    "nvda": 198.87,
+    "ionq": 43.25,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2026-04-16",
+    "sp500": 7041.28,
+    "nvda": 198.35,
+    "ionq": 44.68,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2026-04-17",
+    "sp500": 7126.06,
+    "nvda": 201.68,
+    "ionq": 46.09,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2026-04-20",
+    "sp500": 7109.14,
+    "nvda": 202.06,
+    "ionq": 48.32,
+    "risk_score": 27,
+    "event": null
+  },
+  {
+    "date": "2026-04-21",
+    "sp500": 7064.01,
+    "nvda": 199.88,
+    "ionq": 46.28,
+    "risk_score": 30,
+    "event": null
+  },
+  {
+    "date": "2026-04-22",
+    "sp500": 7137.9,
+    "nvda": 202.5,
+    "ionq": 47.36,
+    "risk_score": 28,
+    "event": null
+  },
+  {
+    "date": "2026-04-23",
+    "sp500": 7108.4,
+    "nvda": 199.64,
+    "ionq": 43.63,
+    "risk_score": 29,
+    "event": null
+  },
+  {
+    "date": "2026-04-24",
+    "sp500": 7165.08,
+    "nvda": 208.27,
+    "ionq": 42.69,
+    "risk_score": 27,
+    "event": null
+  },
+  {
+    "date": "2026-04-27",
+    "sp500": 7173.91,
+    "nvda": 216.61,
+    "ionq": 43.84,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2026-04-28",
+    "sp500": 7138.8,
+    "nvda": 213.17,
+    "ionq": 43.08,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2026-04-29",
+    "sp500": 7135.95,
+    "nvda": 209.25,
+    "ionq": 42.11,
+    "risk_score": 27,
+    "event": null
+  },
+  {
+    "date": "2026-04-30",
+    "sp500": 7209.01,
+    "nvda": 199.57,
+    "ionq": 45.12,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2026-05-01",
+    "sp500": 7230.12,
+    "nvda": 198.45,
+    "ionq": 46.2,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2026-05-04",
+    "sp500": 7200.75,
+    "nvda": 198.48,
+    "ionq": 45.75,
+    "risk_score": 25,
+    "event": null
+  },
+  {
+    "date": "2026-05-05",
+    "sp500": 7259.22,
+    "nvda": 196.5,
+    "ionq": 48.0,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2026-05-06",
+    "sp500": 7365.12,
+    "nvda": 207.83,
+    "ionq": 52.57,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2026-05-07",
+    "sp500": 7337.11,
+    "nvda": 211.5,
+    "ionq": 47.68,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2026-05-08",
+    "sp500": 7398.93,
+    "nvda": 215.2,
+    "ionq": 49.24,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2026-05-11",
+    "sp500": 7412.84,
+    "nvda": 219.44,
+    "ionq": 56.89,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2026-05-12",
+    "sp500": 7400.96,
+    "nvda": 220.78,
+    "ionq": 55.87,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2026-05-13",
+    "sp500": 7444.25,
+    "nvda": 225.83,
+    "ionq": 55.26,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2026-05-14",
+    "sp500": 7501.24,
+    "nvda": 235.74,
+    "ionq": 57.47,
+    "risk_score": 21,
+    "event": null
+  },
+  {
+    "date": "2026-05-15",
+    "sp500": 7408.5,
+    "nvda": 225.32,
+    "ionq": 51.95,
+    "risk_score": 26,
+    "event": null
+  },
+  {
+    "date": "2026-05-18",
+    "sp500": 7403.05,
+    "nvda": 222.32,
+    "ionq": 49.31,
+    "risk_score": 23,
+    "event": null
+  },
+  {
+    "date": "2026-05-19",
+    "sp500": 7353.61,
+    "nvda": 220.61,
+    "ionq": 48.44,
+    "risk_score": 24,
+    "event": null
+  },
+  {
+    "date": "2026-05-20",
+    "sp500": 7432.97,
+    "nvda": 223.47,
+    "ionq": 52.47,
+    "risk_score": 22,
+    "event": null
+  },
+  {
+    "date": "2026-05-21",
+    "sp500": 7445.72,
+    "nvda": 219.51,
+    "ionq": 58.89,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2026-05-22",
+    "sp500": 7473.47,
+    "nvda": 215.33,
+    "ionq": 63.64,
+    "risk_score": 19,
+    "event": null
+  },
+  {
+    "date": "2026-05-26",
+    "sp500": 7519.12,
+    "nvda": 214.86,
+    "ionq": 63.62,
+    "risk_score": 20,
+    "event": null
+  },
+  {
+    "date": "2026-05-27",
+    "sp500": 7520.36,
+    "nvda": 212.6,
+    "ionq": 65.4,
+    "risk_score": 17,
+    "event": null
+  },
+  {
+    "date": "2026-05-28",
+    "sp500": 7563.63,
+    "nvda": 214.25,
+    "ionq": 70.14,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2026-05-29",
+    "sp500": 7580.06,
+    "nvda": 211.14,
+    "ionq": 72.07,
+    "risk_score": 13,
+    "event": null
+  },
+  {
+    "date": "2026-06-01",
+    "sp500": 7599.96,
+    "nvda": 224.36,
+    "ionq": 69.28,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2026-06-02",
+    "sp500": 7609.78,
+    "nvda": 222.82,
+    "ionq": 71.4,
+    "risk_score": 15,
+    "event": null
+  },
+  {
+    "date": "2026-06-03",
+    "sp500": 7553.68,
+    "nvda": 214.75,
+    "ionq": 68.23,
+    "risk_score": 16,
+    "event": null
+  },
+  {
+    "date": "2026-06-04",
+    "sp500": 7584.31,
+    "nvda": 218.66,
+    "ionq": 65.66,
+    "risk_score": 14,
+    "event": null
+  }
+]

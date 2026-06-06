@@ -1,0 +1,54 @@
+{
+  "updated_at": "2026-06-02T15:51:00+09:00",
+  "fear_greed": {
+    "value": 59,
+    "status": "Greed"
+  },
+  "buffett_indicator": {
+    "value": 238.3,
+    "status": "Strongly Overvalued"
+  },
+  "sahm_rule": {
+    "value": 0.13,
+    "status": "Normal"
+  },
+  "high_yield_spread": {
+    "value": 2.74,
+    "status": "Normal"
+  },
+  "yield_curve": {
+    "value": 0.42,
+    "status": "Normal"
+  },
+  "vix": {
+    "value": 16.05,
+    "status": "Stable"
+  },
+  "fx": {
+    "dxy": 99.06,
+    "usd_krw": 1519.7,
+    "status": "Normal"
+  },
+  "sectors": [
+    {
+      "ticker": "XLK",
+      "name": "기술 (Technology)",
+      "change_pct": 2.48
+    },
+    {
+      "ticker": "XLE",
+      "name": "에너지 (Energy)",
+      "change_pct": 1.79
+    },
+    {
+      "ticker": "XLF",
+      "name": "금융 (Financials)",
+      "change_pct": -0.29
+    },
+    {
+      "ticker": "XLV",
+      "name": "헬스케어 (Health Care)",
+      "change_pct": -1.09
+    }
+  ]
+}
