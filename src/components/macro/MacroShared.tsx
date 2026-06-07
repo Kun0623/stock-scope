@@ -1,6 +1,58 @@
-import React from "react";
 import { TossAds } from '@apps-in-toss/web-framework';
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+// =======================================================
+// 🚀 글로벌 광고 초기화 매니저 (다중 배너 동시 렌더링 충돌 방지)
+// =======================================================
+let isTossAdsInitialized = false;
+let isInitializing = false;
+let initQueue: Array<{ resolve: () => void, reject: (err: any) => void }> = [];
+
+const initializeTossAds = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    // 1. 이미 초기화가 완료되었다면 즉시 패스
+    if (isTossAdsInitialized) {
+      return resolve();
+    }
+
+    // 2. SDK 존재 여부 및 환경 지원 여부 검증
+    if (typeof TossAds === 'undefined' || !TossAds.initialize) {
+      return reject(new Error("TossAds SDK를 찾을 수 없습니다."));
+    }
+    if (TossAds.initialize.isSupported && !TossAds.initialize.isSupported()) {
+      return reject(new Error("토스 인앱 광고를 지원하지 않는 환경입니다."));
+    }
+
+    // 3. 초기화 진행 중이면 큐에 줄을 세움 (배너가 2~3개 동시에 뜰 때를 대비)
+    initQueue.push({ resolve, reject });
+    if (isInitializing) return;
+    
+    isInitializing = true;
+
+    // 4. 최초 1회 토스 광고 시스템 초기화 (이게 빠져서 그동안 안 떴던 겁니다!)
+    try {
+      TossAds.initialize({
+        callbacks: {
+          onInitialized: () => {
+            isTossAdsInitialized = true;
+            isInitializing = false;
+            initQueue.forEach(p => p.resolve());
+            initQueue = [];
+          },
+          onInitializationFailed: (error: any) => {
+            isInitializing = false;
+            initQueue.forEach(p => p.reject(error));
+            initQueue = [];
+          }
+        }
+      });
+    } catch (err) {
+      isInitializing = false;
+      initQueue.forEach(p => p.reject(err));
+      initQueue = [];
+    }
+  });
+};
 
 // ✨ 툴팁 전용 전역 스타일 (마우스 오버 이벤트 처리를 위해 필수)
 const TooltipStyles = () => (
@@ -237,22 +289,37 @@ export const CustomChartTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
+// =======================================================
+// 🚀 토스 배너 컴포넌트 본체
+// =======================================================
 export function TossBanner({ adGroupId, minHeight = "96px" }: { adGroupId: string, minHeight?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [debugMsg, setDebugMsg] = useState<string>(""); 
 
   useEffect(() => {
-    if (!containerRef.current) return;
     let adInstance: any = null;
 
-    try {
-      adInstance = TossAds.attachBanner(adGroupId, containerRef.current, {
-        theme: 'dark',
-        tone: 'blackAndWhite',
-        variant: 'expanded'
+    // 1. SDK 초기화가 완료될 때까지 기다렸다가...
+    initializeTossAds()
+      .then(() => {
+        if (!containerRef.current) return;
+        
+        // 2. 초기화 성공 시에만 배너 부착!
+        adInstance = TossAds.attachBanner(adGroupId, containerRef.current, {
+          theme: 'dark',
+          tone: 'blackAndWhite',
+          variant: 'expanded',
+          callbacks: {
+            onNoFill: () => setDebugMsg("⚠️ 토스 광고 재고가 없습니다 (No Fill)"),
+            onAdFailedToRender: (err: any) => setDebugMsg(`❌ 렌더링 실패: ${err?.message || '알 수 없는 오류'}`)
+          }
+        });
+        
+        setDebugMsg("");
+      })
+      .catch((err) => {
+        setDebugMsg(`❌ 초기화 실패: ${err.message || err}`);
       });
-    } catch (error) {
-      console.error("광고 로드 실패:", error);
-    }
 
     return () => {
       if (adInstance && typeof adInstance.destroy === 'function') {
@@ -262,16 +329,26 @@ export function TossBanner({ adGroupId, minHeight = "96px" }: { adGroupId: strin
   }, [adGroupId]);
 
   return (
-    // ✨ 변경: width를 100%가 아닌 auto로 두고, margin을 0 16px로 줘서 양옆 여백을 강제합니다.
     <div style={{ 
       margin: "0 16px", 
       minHeight, 
-      borderRadius: "16px", // 피드형에 어울리게 테두리도 더 둥글게(16px) 처리
+      borderRadius: "16px", 
       overflow: "hidden", 
       background: "rgba(255,255,255,0.02)", 
-      border: "1px solid rgba(255,255,255,0.05)"
+      border: "1px solid rgba(255,255,255,0.05)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "10px",
+      textAlign: "center"
     }}>
-      <div ref={containerRef} style={{ width: "100%", height: "100%" }} />
+      {debugMsg ? (
+        <div style={{ color: "#ff4d4d", fontSize: "12px", fontWeight: 600, wordBreak: "keep-all" }}>
+          {debugMsg}
+        </div>
+      ) : (
+        <div ref={containerRef} style={{ width: "100%", height: "100%" }} />
+      )}
     </div>
   );
 }
