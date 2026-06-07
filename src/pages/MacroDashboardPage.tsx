@@ -4,7 +4,7 @@ import { OverviewTab } from "../components/macro/OverviewTab";
 import { NewsTab } from "../components/macro/NewsTab";
 import { IndicatorsTab } from "../components/macro/IndicatorsTab";
 import { BacktestTab } from "../components/macro/BacktestTab";
-import { TabButton } from "../components/macro/MacroShared";
+import { TabButton, DisclaimerTicker } from "../components/macro/MacroShared";
 
 // ==========================================
 // 1. 글로벌 CSS
@@ -113,14 +113,15 @@ export function MacroDashboardPage() {
           </div>
         </div>
         <div style={{ background: "linear-gradient(135deg, #3182ce, #805ad5)", color: "#fff", padding: "6px 12px", borderRadius: 20, fontSize: 11, fontWeight: 800, display: "flex", alignItems: "center", gap: 4 }}>
-          <span>✨</span> 베타 프리패스
+          <span>✨</span> 베타 서비스
         </div>
       </div>
       
       {/* 🚀 분기 처리로 엄청나게 깔끔해진 본문 영역 */}
       <div style={{ flex: 1, overflowY: "auto", overflowX: "hidden" }}>
         {!macroData ? <SkeletonLoadingUI /> : (
-          <div className="fade-in" style={{ paddingBottom: 100 }}>
+          // ✨ 변경: 하단 전광판 높이를 고려하여 paddingBottom을 100 -> 120으로 넉넉하게 늘렸습니다.
+          <div className="fade-in" style={{ paddingBottom: 120 }}>
             {activeTab === "overview" && <OverviewTab data={macroData} isPro={isPro} />}
             {activeTab === "news" && <NewsTab data={macroData} isPro={isPro} />}
             {activeTab === "indicators" && <IndicatorsTab data={macroData} isPro={isPro} />}
@@ -129,12 +130,20 @@ export function MacroDashboardPage() {
         )}
       </div>
 
-      {/* 🚀 하단 탭 바 (공유 컴포넌트 사용) */}
-      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 80, background: "rgba(10, 10, 10, 0.85)", backdropFilter: "blur(16px)", borderTop: "1px solid rgba(255, 255, 255, 0.1)", display: "flex", justifyContent: "space-around", alignItems: "center", paddingBottom: "env(safe-area-inset-bottom)", zIndex: 9999 }}>
-        <TabButton id="overview" icon="🌎" label="오버뷰" activeTab={activeTab} onClick={setActiveTab} />
-        <TabButton id="news" icon="📰" label="AI 뉴스" activeTab={activeTab} onClick={setActiveTab} />
-        <TabButton id="indicators" icon="📊" label="지표상세" activeTab={activeTab} onClick={setActiveTab} />
-        <TabButton id="backtest" icon="⏱️" label="백테스트" activeTab={activeTab} onClick={setActiveTab} />
+      {/* 🚀 하단 탭 바 & 전광판 통합 컨테이너 */}
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 9999 }}>
+        
+        {/* ✨ 신규: 탭 바 바로 위에 부착된 전광판 */}
+        <DisclaimerTicker />
+
+        {/* 기존 네비게이션 영역 (absolute 속성을 빼고 컨테이너 안에 자연스럽게 배치) */}
+        <div style={{ height: 80, background: "rgba(10, 10, 10, 0.85)", backdropFilter: "blur(16px)", borderTop: "1px solid rgba(255, 255, 255, 0.1)", display: "flex", justifyContent: "space-around", alignItems: "center", paddingBottom: "env(safe-area-inset-bottom)" }}>
+          <TabButton id="overview" icon="🌎" label="오버뷰" activeTab={activeTab} onClick={setActiveTab} />
+          <TabButton id="news" icon="📰" label="AI 뉴스" activeTab={activeTab} onClick={setActiveTab} />
+          <TabButton id="indicators" icon="📊" label="지표상세" activeTab={activeTab} onClick={setActiveTab} />
+          <TabButton id="backtest" icon="⏱️" label="백테스트" activeTab={activeTab} onClick={setActiveTab} />
+        </div>
+        
       </div>
     </div>
   );

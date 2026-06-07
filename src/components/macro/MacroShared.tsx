@@ -1,4 +1,6 @@
 import React from "react";
+import { TossAds } from '@apps-in-toss/web-framework';
+import { useEffect, useRef } from "react";
 
 // ✨ 툴팁 전용 전역 스타일 (마우스 오버 이벤트 처리를 위해 필수)
 const TooltipStyles = () => (
@@ -19,12 +21,20 @@ const TooltipStyles = () => (
   `}</style>
 );
 
-export function Tooltip({ label, desc }: { label: string, desc: string }) {
+// ✨ 변경점: Tooltip에 badge 속성 추가 및 렌더링 로직 추가
+export function Tooltip({ label, desc, badge }: { label: string, desc: string, badge?: string }) {
   return (
     <div className="tooltip-wrapper">
       <TooltipStyles />
-      <span style={{ fontSize: "13px", fontWeight: 700, color: "#888", borderBottom: "1px dotted #666" }}>{label}</span>
-      <span style={{ fontSize: "14px", color: "#666" }}>ⓘ</span>
+      <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+        <span style={{ fontSize: "13px", fontWeight: 700, color: "#888", borderBottom: "1px dotted #666" }}>{label}</span>
+        <span style={{ fontSize: "14px", color: "#666" }}>ⓘ</span>
+        {badge && (
+          <span style={{ marginLeft: 2, fontSize: 9, fontWeight: 900, color: "#00d26a", background: "rgba(0, 210, 106, 0.15)", padding: "2px 5px", borderRadius: 4 }}>
+            {badge}
+          </span>
+        )}
+      </div>
       <div className="tooltip-box">{desc}</div>
     </div>
   );
@@ -44,7 +54,8 @@ export function TabButton({ id, icon, label, activeTab, onClick }: any) {
   );
 }
 
-export function GaugeRow({ title, tooltip, value, suffix = "", type = "default" }: any) {
+// ✨ 변경점: GaugeRow에 badge 속성 추가
+export function GaugeRow({ title, tooltip, value, suffix = "", type = "default", badge }: any) {
   if (value === undefined) return null;
   let percent = 50, gradient = "", statusText = "", statusColor = "#fff", leftLabel = "", rightLabel = "";
 
@@ -70,7 +81,7 @@ export function GaugeRow({ title, tooltip, value, suffix = "", type = "default" 
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 16 }}>
-        <Tooltip label={title} desc={tooltip} />
+        <Tooltip label={title} desc={tooltip} badge={badge} />
         <div style={{ textAlign: "right" }}>
           <div style={{ fontSize: 24, fontWeight: 900, color: statusColor, letterSpacing: "-0.5px" }}>{value}{suffix}</div>
           <div style={{ fontSize: 13, fontWeight: 800, color: statusColor, opacity: 0.9, marginTop: 4 }}>{statusText}</div>
@@ -86,7 +97,8 @@ export function GaugeRow({ title, tooltip, value, suffix = "", type = "default" 
   );
 }
 
-export function SeesawRow({ title, tooltip, value }: any) {
+// ✨ 변경점: SeesawRow에 badge 속성 추가
+export function SeesawRow({ title, tooltip, value, badge }: any) {
   if (value === undefined) return null;
   const isInv = value < 0;
   const leftPos = isInv ? `${Math.max(0, 50 + value * 25)}%` : "50%";
@@ -95,7 +107,7 @@ export function SeesawRow({ title, tooltip, value }: any) {
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 16 }}>
-        <Tooltip label={title} desc={tooltip} />
+        <Tooltip label={title} desc={tooltip} badge={badge} />
         <div style={{ textAlign: "right" }}>
            <div style={{ fontSize: 24, fontWeight: 900, color: isInv ? "#ff4d4d" : "#00d26a", letterSpacing: "-0.5px" }}>{value > 0 ? "+" : ""}{value}%p</div>
            <div style={{ fontSize: 13, fontWeight: 800, color: isInv ? "#ff4d4d" : "#00d26a", opacity: 0.9, marginTop: 4 }}>{isInv ? "금리 역전 (침체 경고)" : "정상 구간"}</div>
@@ -112,22 +124,29 @@ export function SeesawRow({ title, tooltip, value }: any) {
   );
 }
 
-export function GridCard({ title, tooltip, value, suffix, threshold }: any) {
+// ✨ 변경점: GridCard에 badge 속성 추가 및 위험(빨간점) 표시 위치 조정
+export function GridCard({ title, tooltip, value, suffix, warningThreshold, dangerThreshold, badge }: any) {
   if (value === undefined) return null;
-  const isDanger = value >= threshold;
+  
+  const isDanger = value >= dangerThreshold;
+  const isWarning = !isDanger && value >= warningThreshold;
+
+  // 상태에 따른 색상 결정
+  const statusColor = isDanger ? "#ff4d4d" : isWarning ? "#ffb800" : "#fff";
+  const dotColor = isDanger ? "#ff4d4d" : isWarning ? "#ffb800" : "transparent";
+
   return (
-    <div className="glass-panel" style={{ padding: "16px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <Tooltip label={title} desc={tooltip} />
-        {isDanger && <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#ff4d4d", boxShadow: "0 0 8px #ff4d4d" }} />}
+    <div className="glass-panel" style={{ padding: "16px", display: "flex", flexDirection: "column", justifyContent: "space-between", border: isWarning || isDanger ? `1px solid ${dotColor}40` : "1px solid rgba(255,255,255,0.05)" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <Tooltip label={title} desc={tooltip} badge={badge} />
+        <div style={{ width: 8, height: 8, borderRadius: "50%", background: dotColor, boxShadow: dotColor !== "transparent" ? `0 0 10px ${dotColor}` : "none", marginTop: 4 }} />
       </div>
-      <div style={{ fontSize: 20, fontWeight: 800, color: isDanger ? "#ff4d4d" : "#fff", marginTop: 12 }}>{value}{suffix}</div>
+      <div style={{ fontSize: 20, fontWeight: 800, color: statusColor, marginTop: 12 }}>{value}{suffix}</div>
     </div>
   );
 }
 
 export function TrendRow({ item }: { item: any }) {
-  // ✨ 데이터가 정상적으로 있는지(null이나 undefined가 아닌지) 먼저 확인합니다.
   const hasData = item.change_pct !== null && item.change_pct !== undefined && !isNaN(item.change_pct);
   const isPos = hasData && item.change_pct >= 0;
   
@@ -143,7 +162,6 @@ export function TrendRow({ item }: { item: any }) {
         </div>
       </div>
       
-      {/* ✨ 값이 있으면 정상적으로 그리고, 값이 없으면 회색으로 처리합니다. */}
       <div style={{ 
         fontSize: 15, fontWeight: 800, 
         color: hasData ? (isPos ? "#ff4d4d" : "#4d94ff") : "#888", 
@@ -218,3 +236,82 @@ export const CustomChartTooltip = ({ active, payload, label }: any) => {
   }
   return null;
 };
+
+export function TossBanner({ adGroupId, minHeight = "96px" }: { adGroupId: string, minHeight?: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    let adInstance: any = null;
+
+    try {
+      adInstance = TossAds.attachBanner(adGroupId, containerRef.current, {
+        theme: 'dark',
+        tone: 'blackAndWhite',
+        variant: 'expanded'
+      });
+    } catch (error) {
+      console.error("광고 로드 실패:", error);
+    }
+
+    return () => {
+      if (adInstance && typeof adInstance.destroy === 'function') {
+        adInstance.destroy();
+      }
+    };
+  }, [adGroupId]);
+
+  return (
+    // ✨ 변경: width를 100%가 아닌 auto로 두고, margin을 0 16px로 줘서 양옆 여백을 강제합니다.
+    <div style={{ 
+      margin: "0 16px", 
+      minHeight, 
+      borderRadius: "16px", // 피드형에 어울리게 테두리도 더 둥글게(16px) 처리
+      overflow: "hidden", 
+      background: "rgba(255,255,255,0.02)", 
+      border: "1px solid rgba(255,255,255,0.05)"
+    }}>
+      <div ref={containerRef} style={{ width: "100%", height: "100%" }} />
+    </div>
+  );
+}
+
+// ✨ 신규: 하단 전광판(Ticker) 면책 조항 컴포넌트
+export const DisclaimerTicker = () => (
+  <div style={{
+    width: "100%",
+    background: "rgba(20, 20, 20, 0.9)",
+    borderTop: "1px solid rgba(255, 184, 0, 0.2)",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.02)",
+    padding: "6px 0",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    display: "flex",
+    alignItems: "center",
+    boxShadow: "0 -4px 10px rgba(0,0,0,0.3)" // 살짝 위로 그림자를 줘서 네비게이션과 구분
+  }}>
+    <style>{`
+      @keyframes ticker-scroll {
+        0% { transform: translateX(100vw); }
+        100% { transform: translateX(-150%); }
+      }
+      .ticker-content {
+        display: inline-block;
+        white-space: nowrap;
+        animation: ticker-scroll 18s linear infinite; /* 18초 속도로 일정하게 무한 반복 */
+        color: #888;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        will-change: transform; /* 모바일 배터리 최적화 및 렌더링 가속 */
+      }
+    `}</style>
+    <div className="ticker-content">
+      <span style={{ color: "#ffb800", marginRight: "6px" }}>⚠️</span>
+      본 대시보드에서 제공하는 모든 매크로 데이터 및 퀀트 분석 정보는 투자 참고용이며, 최종적인 투자 결정과 그 결과에 대한 책임은 전적으로 투자자 본인에게 있습니다.
+      <span style={{ margin: "0 40px", color: "#444" }}>|</span>
+      <span style={{ color: "#ffb800", marginRight: "6px" }}>💡</span>
+      데이터는 기본 15분 단위로 업데이트되며, 시장 상황에 따라 지연될 수 있습니다.
+    </div>
+  </div>
+);
