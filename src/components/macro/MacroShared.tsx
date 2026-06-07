@@ -333,20 +333,29 @@ export function TossBanner({ adGroupId, minHeight = "96px" }: { adGroupId: strin
       margin: "0 16px", 
       minHeight, 
       borderRadius: "16px", 
+      // 🚨 불필요한 이중 여백 및 테두리 제거 완료
       overflow: "hidden", 
-      background: "rgba(255,255,255,0.02)", 
-      border: "1px solid rgba(255,255,255,0.05)",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      padding: "10px",
       textAlign: "center"
     }}>
       {debugMsg ? (
-        <div style={{ color: "#ff4d4d", fontSize: "12px", fontWeight: 600, wordBreak: "keep-all" }}>
+        // 로컬 PC나 에러 시에만 디버깅용 박스 표시
+        <div style={{ 
+          color: "#ff4d4d", 
+          fontSize: "12px", 
+          fontWeight: 600, 
+          wordBreak: "keep-all",
+          padding: "16px",
+          border: "1px dashed rgba(255,255,255,0.2)",
+          borderRadius: "12px",
+          width: "100%"
+        }}>
           {debugMsg}
         </div>
       ) : (
+        // 실제 토스 앱에서는 이 div가 100% 꽉 차게 광고를 품습니다.
         <div ref={containerRef} style={{ width: "100%", height: "100%" }} />
       )}
     </div>
