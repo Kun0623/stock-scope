@@ -28,20 +28,20 @@ jobs:
 
       - name: 🚀 데이터 수집 파이썬 실행
         run: |
-          mkdir -p public   # 👈 [치명적 오류 해결] public 폴더를 강제로 생성하여 FileNotFoundError 방지!
-          python collect_macro.py
-        env: # 👈 보안 처리된 Gemini API 키 주입
+          mkdir -p public
+          python collect_macro.py      # 기존 매크로 데이터 수집
+          python generate_backtest.py  # 👈 2번 파일 실행 추가!
+        env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
-      - name: 🌐 GitHub Gist로 최신 데이터 전송 (디커플링 배포)
+      - name: 🌐 GitHub Gist로 최신 데이터 전송
         run: |
           python -c '
           import json, os, requests
           
-          # 생성된 로컬 파일 읽기
-          with open("public/macro_status.json", "r", encoding="utf-8") as f:
-              content = f.read()
-              
+          # 전송할 파일 목록
+          files_to_upload = ["macro_status.json", "backtest_data.json"]
+          
           gist_id = os.environ["GIST_ID"]
           token = os.environ["GIST_TOKEN"]
           
@@ -49,15 +49,13 @@ jobs:
               "Authorization": f"token {token}",
               "Accept": "application/vnd.github.v3+json"
           }
-          payload = {
-              "files": {
-                  "macro_status.json": {
-                      "content": content
-                  }
-              }
-          }
           
-          # Gist API를 통해 데이터 오버라이트(PATCH)
+          payload = {"files": {}}
+          
+          for filename in files_to_upload:
+              with open(f"public/{filename}", "r", encoding="utf-8") as f:
+                  payload["files"][filename] = {"content": f.read()}
+          
           r = requests.patch(f"https://api.github.com/gists/{gist_id}", json=payload, headers=headers)
           print("📡 Gist 전송 결과 코드:", r.status_code)
           if r.status_code != 200:
