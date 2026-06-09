@@ -125,7 +125,7 @@ export function OverviewTab({ data, isPro }: { data: any, isPro: boolean }) {
       {/* ✨ [정리] 섹션 중간: 리스트형 광고 1개만 유지 (위아래 여백 제거, gap에 정렬 위임) */}
       <div>
         <TossBanner 
-          adGroupId="ait-ad-test-banner-id" // 🚨 중간 리스트형 광고 ID
+          adGroupId="ait.v2.live.9385fff4639c4949" // 🚨 중간 리스트형 광고 ID
           minHeight="72px"
         />
       </div>
@@ -188,7 +188,7 @@ export function OverviewTab({ data, isPro }: { data: any, isPro: boolean }) {
           <span style={{ fontSize: 12, fontWeight: 700, color: "#666" }}>Sponsor</span>
           <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.05)" }} />
         </div>
-        <TossBanner adGroupId="ait-ad-test-native-image-id" minHeight="250px" />
+        <TossBanner adGroupId="ait.v2.live.2a44e2b76a1e4173" minHeight="250px" />
       </div>
 
     </div>

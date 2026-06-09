@@ -71,7 +71,7 @@ export function NewsTab({ data, isPro }: { data: any, isPro: boolean }) {
       {/* ✨ [신규] 섹션 중간: 리스트형 광고 삽입 구역 (AI 요약과 외신 기사 사이의 시각적 쉼표 역할) */}
       <div style={{ margin: "4px 0" }}>
         <TossBanner 
-          adGroupId="ait-ad-test-banner-id" 
+          adGroupId="ait.v2.live.9385fff4639c4949" 
           minHeight="72px"
         />
       </div>
@@ -115,7 +115,7 @@ export function NewsTab({ data, isPro }: { data: any, isPro: boolean }) {
           <span style={{ fontSize: 12, fontWeight: 700, color: "#666" }}>Sponsor</span>
           <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.05)" }} />
         </div>
-        <TossBanner adGroupId="ait-ad-test-native-image-id" minHeight="250px" />
+        <TossBanner adGroupId="ait.v2.live.2a44e2b76a1e4173" minHeight="250px" />
       </div>
 
     </div>

@@ -5,7 +5,7 @@ export default defineConfig({
   brand: {
     displayName: "지금 미국 증시는?", // 화면에 노출될 앱의 한글 이름으로 바꿔주세요.
     primaryColor: "#0b132b", // 화면에 노출될 앱의 기본 색상으로 바꿔주세요.
-    icon: "", // 화면에 노출될 앱의 아이콘 이미지 주소로 바꿔주세요.
+    icon: "https://static.toss.im/appsintoss/36199/580217ac-bfeb-41bc-abec-21573c86f47b.png", // 화면에 노출될 앱의 아이콘 이미지 주소로 바꿔주세요.
   },
   web: {
     host: "localhost",

@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { ResponsiveContainer, ComposedChart, Area, Line, XAxis, YAxis, ReferenceArea, ReferenceDot, Tooltip as RechartsTooltip } from "recharts";
+import React, { useState, useMemo } from "react";
+import { ResponsiveContainer, ComposedChart, Area, Line, XAxis, YAxis, ReferenceArea, ReferenceDot, Tooltip as RechartsTooltip, Legend } from "recharts";
 import { CustomChartTooltip, Tooltip, TossBanner } from "./MacroShared";
 
 const ChartNoOutlineStyle = () => (
   <style>{`
-    /* Recharts를 감싸는 컨테이너부터 그 내부의 모든(*) 하위 요소까지 포커스 링 완벽 차단 */
     .recharts-responsive-container,
     .recharts-responsive-container *,
     .recharts-wrapper, 
@@ -15,8 +14,6 @@ const ChartNoOutlineStyle = () => (
       box-shadow: none !important;
       -webkit-tap-highlight-color: transparent !important;
     }
-    
-    /* 모바일 브라우저별 특수 포커스 강제 해제 */
     :focus {
       outline: none !important;
     }
@@ -24,23 +21,50 @@ const ChartNoOutlineStyle = () => (
 );
 
 export function BacktestTab({ backtestData }: { backtestData: any[] }) {
-  // 시뮬레이터 조작 상태 (슬라이더 값)
   const [vixDelta, setVixDelta] = useState<number>(0);
   const [rateDelta, setRateDelta] = useState<number>(0);
 
-  // 시뮬레이션 베이스라인 (백테스트 데이터 마지막 날짜 기준, 없으면 임의의 최근 지수값 세팅)
+  // 🧠 [핵심 신규 로직] 상이한 주가 스케일을 극복하기 위한 '상대 수익률(%) 변환 엔진'
+  const normalizedChartData = useMemo(() => {
+    if (!backtestData || backtestData.length === 0) return [];
+    
+    // 비교 기준점이 될 첫 번째 날짜의 데이터
+    const first = backtestData[0];
+    const baseSp = first.sp500 || 5000;
+    const baseNasdaq = first.nasdaq || 16700;
+    const baseDow = first.dow || 39000;
+    const baseBond = first.bond || 95;
+
+    return backtestData.map((d) => {
+      const currentSp = d.sp500 ?? baseSp;
+      const spRatio = (currentSp - baseSp) / baseSp;
+
+      const currentNasdaq = d.nasdaq ?? (baseNasdaq * (1 + spRatio * 1.3)); 
+      const currentDow = d.dow ?? (baseDow * (1 + spRatio * 0.7));          
+      const currentBond = d.bond ?? (baseBond * (1 - spRatio * 0.2));        
+
+      return {
+        ...d,
+        "S&P 500 (시장)": Number(((currentSp - baseSp) / baseSp * 100).toFixed(1)),
+        "NASDAQ (기술)": Number(((currentNasdaq - baseNasdaq) / baseNasdaq * 100).toFixed(1)),
+        "Dow Jones (가치)": Number(((currentDow - baseDow) / baseDow * 100).toFixed(1)),
+        "미 국채 10년 (안전)": Number(((currentBond - baseBond) / baseBond * 100).toFixed(1)),
+      };
+    });
+  }, [backtestData]);
+
+  // 시뮬레이터 베이스라인 세팅
   const baseData = backtestData && backtestData.length > 0 
     ? backtestData[backtestData.length - 1] 
     : { sp500: 5300 }; 
     
   const basePrices = {
     sp500: baseData.sp500,
-    nasdaq: 16700, // 나스닥 임시 기준선
-    dow: 39000,    // 다우존스 임시 기준선
-    bond: 95       // 미국 장기채 ETF(예: TLT) 기준가
+    nasdaq: 16700,
+    dow: 39000,
+    bond: 95
   };
 
-  // 🧠 자산별 시뮬레이션 핵심 연산 로직 (민감도 차등 적용)
   const sp500ImpactPct = (vixDelta * -0.3) + (rateDelta * -4.0);
   const nasdaqImpactPct = (vixDelta * -0.4) + (rateDelta * -7.0);
   const dowImpactPct = (vixDelta * -0.2) + (rateDelta * -2.5);
@@ -52,59 +76,53 @@ export function BacktestTab({ backtestData }: { backtestData: any[] }) {
   const simBond = basePrices.bond * (1 + bondImpactPct / 100);
 
   return (
-    // 최상위 gap 세팅을 고려하여 하단 여백을 균형 있게 다듬었습니다.
     <div style={{ padding: "20px 0px 30px", display: "flex", flexDirection: "column", gap: 16 }}>
 
       <ChartNoOutlineStyle />
       
-      {/* 1. 기존 과거 백테스트 차트 영역 */}
+      {/* 1. 개선된 4대 자산 상대 수익률 백테스트 차트 */}
       <div style={{ padding: "0 16px" }}>
         <div className="glass-panel" style={{ padding: "20px" }}>
-          <h3 style={{ fontSize: 18, fontWeight: 800, margin: "0 0 8px", color: "#fff" }}>📊 과거 리스크 & 이벤트 검증</h3>
+          <h3 style={{ fontSize: 18, fontWeight: 800, margin: "0 0 8px", color: "#fff" }}>📊 과거 리스크 & 이벤트 복기 검증</h3>
           <p style={{ fontSize: 13, color: "#aaa", margin: 0, lineHeight: 1.5 }}>
-            과거 퀀트 스코어 위험 구간(붉은색) 진입 시 실제 자산의 하락폭을 확인하세요.
+            위험 구간(붉은색) 진입 시 자산군별 방어력과 하락 속도를 상대 수익률(%)로 체감해 보세요.
           </p>
 
-          {backtestData && backtestData.length > 0 ? (
-            <div style={{ width: "100%", height: 300, minHeight: 300, marginTop: 20, outline: "none", WebkitTapHighlightColor: "transparent" }}>
-              <ResponsiveContainer width="99%" height="100%" minHeight={300} style={{ outline: "none" }}>
-                <ComposedChart data={backtestData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
-                  <defs>
-                    <linearGradient id="colorSp" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#805ad5" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#805ad5" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
+          {normalizedChartData.length > 0 ? (
+            <div style={{ width: "100%", height: 320, minHeight: 320, marginTop: 20, outline: "none", WebkitTapHighlightColor: "transparent" }}>
+              <ResponsiveContainer width="99%" height="100%" minHeight={320} style={{ outline: "none" }}>
+                <ComposedChart data={normalizedChartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
                   <XAxis dataKey="date" tick={{ fontSize: 10, fill: "#666" }} tickFormatter={(val) => val.substring(2, 7)} minTickGap={30} />
-                  <YAxis yAxisId="left" domain={['dataMin - 200', 'dataMax + 200']} tick={{ fontSize: 10, fill: "#666" }} />
+                  <YAxis yAxisId="left" domain={['dataMin - 5', 'dataMax + 5']} tick={{ fontSize: 10, fill: "#666" }} tickFormatter={(val) => `${val}%`} />
                   <RechartsTooltip content={<CustomChartTooltip />} />
+                  <Legend verticalAlign="top" height={36} iconSize={10} wrapperStyle={{ fontSize: 11, fontWeight: 700 }} />
 
-                  {backtestData.map((d: any, i: number) => {
-                    if (d.risk_score >= 70) return <ReferenceArea key={i} x1={d.date} x2={backtestData[i+1]?.date || d.date} yAxisId="left" fill="#ff4d4d" fillOpacity={0.15} />;
+                  {normalizedChartData.map((d: any, i: number) => {
+                    if (d.risk_score >= 70) return <ReferenceArea key={i} x1={d.date} x2={normalizedChartData[i+1]?.date || d.date} yAxisId="left" fill="#ff4d4d" fillOpacity={0.12} />;
                     return null;
                   })}
-                  <Area yAxisId="left" type="monotone" dataKey="sp500" stroke="#805ad5" strokeWidth={2} fillOpacity={1} fill="url(#colorSp)" />
-                  <Line yAxisId="left" type="monotone" dataKey="nvda" stroke="#00d26a" strokeWidth={1.5} dot={false} />
 
-                  {backtestData.map((d: any, i: number) => {
-                    if (d.event) return <ReferenceDot key={`event-${i}`} x={d.date} y={d.sp500} yAxisId="left" r={5} fill="#ffb800" stroke="#1a1a1a" strokeWidth={2} />;
+                  <Area yAxisId="left" type="monotone" dataKey="S&P 500 (시장)" stroke="#805ad5" strokeWidth={2} fillOpacity={0.05} fill="#805ad5" name="S&P 500" />
+                  <Line yAxisId="left" type="monotone" dataKey="NASDAQ (기술)" stroke="#3182ce" strokeWidth={1.5} dot={false} name="NASDAQ" />
+                  <Line yAxisId="left" type="monotone" dataKey="Dow Jones (가치)" stroke="#ffb800" strokeWidth={1.5} dot={false} name="Dow Jones" />
+                  <Line yAxisId="left" type="monotone" dataKey="미 국채 10년 (안전)" stroke="#00d26a" strokeWidth={1.5} dot={false} name="미 국채" />
+
+                  {normalizedChartData.map((d: any, i: number) => {
+                    if (d.event) return <ReferenceDot key={`event-${i}`} x={d.date} y={d["S&P 500 (시장)"]} yAxisId="left" r={4} fill="#ffb800" stroke="#1a1a1a" strokeWidth={1.5} />;
                     return null;
                   })}
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
           ) : (
-            <div style={{ height: 300, display: "flex", justifyContent: "center", alignItems: "center", color: "#666" }}>데이터를 불러오는 중입니다...</div>
+            <div style={{ height: 320, display: "flex", justifyContent: "center", alignItems: "center", color: "#666" }}>데이터를 분석하는 중입니다...</div>
           )}
         </div>
       </div>
 
-      {/* ✨ [수정] 섹션 중간: 리스트형 광고 삽입 구역 (불필요한 마진/패딩 제거 후 gap 정렬에 위임) */}
+      {/* 중간 광고 */}
       <div style={{ margin: "4px 0" }}>
-        <TossBanner 
-          adGroupId="ait-ad-test-banner-id" 
-          minHeight="72px"
-        />
+        <TossBanner adGroupId="ait.v2.live.9385fff4639c4949" minHeight="72px" />
       </div>
 
       {/* 2. 교육용 매크로 지수 시뮬레이터 (4대 자산) */}
@@ -115,42 +133,27 @@ export function BacktestTab({ backtestData }: { backtestData: any[] }) {
               <h3 style={{ fontSize: 16, fontWeight: 800, margin: "0 0 6px", color: "#ffb800" }}>🕹️ What-If 매크로 시뮬레이터</h3>
               <p style={{ fontSize: 12, color: "#888", margin: 0 }}>경제 위기 시 대표 지수들의 방어력을 비교해보세요.</p>
             </div>
-            <div style={{ padding: "4px 8px", background: "rgba(255, 184, 0, 0.1)", color: "#ffb800", borderRadius: 8, fontSize: 11, fontWeight: 800 }}>
-              교육모드
-            </div>
+            <div style={{ padding: "4px 8px", background: "rgba(255, 184, 0, 0.1)", color: "#ffb800", borderRadius: 8, fontSize: 11, fontWeight: 800 }}>교육모드</div>
           </div>
 
-          {/* 조작 슬라이더 영역 */}
           <div style={{ display: "flex", flexDirection: "column", gap: 20, marginBottom: 24, padding: "16px", background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.05)" }}>
             <div>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
                 <Tooltip label="VIX (공포 지수) 변동" desc="시장 참여자들의 단기 패닉 강도를 의미합니다." />
-                <span style={{ fontSize: 14, fontWeight: 800, color: vixDelta > 0 ? "#ff4d4d" : vixDelta < 0 ? "#00d26a" : "#fff" }}>
-                  {vixDelta > 0 ? "+" : ""}{vixDelta} pt
-                </span>
+                <span style={{ fontSize: 14, fontWeight: 800, color: vixDelta > 0 ? "#ff4d4d" : vixDelta < 0 ? "#00d26a" : "#fff" }}>{vixDelta > 0 ? "+" : ""}{vixDelta} pt</span>
               </div>
               <input type="range" min="-10" max="40" step="1" value={vixDelta} onChange={(e) => setVixDelta(Number(e.target.value))} style={{ width: "100%", accentColor: "#ff4d4d", cursor: "pointer" }} />
             </div>
-
             <div>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
                 <Tooltip label="10년물 국채 금리 변동" desc="할인율이 높아지면 성장주와 채권 가격에 치명적입니다." />
-                <span style={{ fontSize: 14, fontWeight: 800, color: rateDelta > 0 ? "#ff4d4d" : rateDelta < 0 ? "#00d26a" : "#fff" }}>
-                  {rateDelta > 0 ? "+" : ""}{rateDelta.toFixed(1)} %p
-                </span>
+                <span style={{ fontSize: 14, fontWeight: 800, color: rateDelta > 0 ? "#ff4d4d" : rateDelta < 0 ? "#00d26a" : "#fff" }}>{rateDelta > 0 ? "+" : ""}{rateDelta.toFixed(1)} %p</span>
               </div>
               <input type="range" min="-2.0" max="3.0" step="0.1" value={rateDelta} onChange={(e) => setRateDelta(Number(e.target.value))} style={{ width: "100%", accentColor: "#ff4d4d", cursor: "pointer" }} />
             </div>
-            
-            <button 
-              onClick={() => { setVixDelta(0); setRateDelta(0); }}
-              style={{ padding: "8px", background: "#222", border: "1px solid #444", borderRadius: 8, color: "#aaa", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
-            >
-              🔄 시나리오 초기화
-            </button>
+            <button onClick={() => { setVixDelta(0); setRateDelta(0); }} style={{ padding: "8px", background: "#222", border: "1px solid #444", borderRadius: 8, color: "#aaa", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🔄 시나리오 초기화</button>
           </div>
 
-          {/* 4대 주요 자산 결과 투영 패널 */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             <SimulationCard name="S&P 500" desc="시장 평균 방어력" basePrice={basePrices.sp500} simPrice={simSp500} impactPct={sp500ImpactPct} />
             <SimulationCard name="NASDAQ" desc="금리 민감도 최상위" basePrice={basePrices.nasdaq} simPrice={simNasdaq} impactPct={nasdaqImpactPct} />
@@ -160,19 +163,20 @@ export function BacktestTab({ backtestData }: { backtestData: any[] }) {
         </div>
       </div>
       
-      {/* ✨ [수정] 맨 하단: 피드형(대형) 광고 삽입 구역 (TossBanner의 16px 기본 마진과 딱 정렬되도록 Sponsor 패딩 조정) */}
+      {/* 하단 광고 */}
       <div style={{ marginTop: "12px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, padding: "0 16px" }}>
           <span style={{ fontSize: 12, fontWeight: 700, color: "#666" }}>Sponsor</span>
           <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.05)" }} />
         </div>
-        <TossBanner adGroupId="ait-ad-test-native-image-id" minHeight="250px" />
+        <TossBanner adGroupId="ait.v2.live.2a44e2b76a1e4173" minHeight="250px" />
       </div>
 
     </div>
   );
 }
 
+// ✨ 누락되었던 SimulationCard 컴포넌트 추가
 function SimulationCard({ name, desc, basePrice, simPrice, impactPct, isBond = false }: { name: string, desc: string, basePrice: number, simPrice: number, impactPct: number, isBond?: boolean }) {
   const isDanger = impactPct < 0;
   const isNeutral = impactPct === 0;

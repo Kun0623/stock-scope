@@ -266,21 +266,62 @@ export function MajorIndexTile({ item }: { item: any }) {
   );
 }
 
+// ✨ 어떤 차트에 붙여도 선의 이름, 색상, 값을 자동으로 읽어오는 만능 툴팁
 export const CustomChartTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
-    const data = payload[0].payload;
+    // 원본 데이터에 리스크 스코어가 있다면 가져옵니다.
+    const riskScore = payload[0].payload.risk_score;
+
     return (
-      <div style={{ background: "rgba(20,20,20,0.95)", border: "1px solid #444", borderRadius: "12px", padding: "12px", boxShadow: "0 4px 20px rgba(0,0,0,0.5)", backdropFilter: "blur(8px)" }}>
-        <div style={{ fontSize: 12, color: "#aaa", marginBottom: 8 }}>{label}</div>
-        <div style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>S&P 500: {data.sp500.toLocaleString()}</div>
-        <div style={{ fontSize: 14, fontWeight: 700, color: "#00d26a", marginTop: 4 }}>NVDA: ${data.nvda}</div>
-        <div style={{ fontSize: 13, fontWeight: 700, color: data.risk_score >= 70 ? "#ff4d4d" : "#ffb800", marginTop: 8 }}>
-          리스크 스코어: {data.risk_score}점
+      <div style={{ 
+        background: "rgba(20, 20, 20, 0.95)", 
+        border: "1px solid rgba(255,255,255,0.1)", 
+        borderRadius: 12, 
+        padding: "16px", 
+        boxShadow: "0 8px 24px rgba(0,0,0,0.8)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)"
+      }}>
+        {/* 상단 날짜 */}
+        <div style={{ fontSize: 13, color: "#aaa", marginBottom: 12, fontWeight: 700, borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: 6 }}>
+          {label}
         </div>
-        {data.event && (
-          <div style={{ marginTop: 12, padding: "8px", background: "rgba(255, 184, 0, 0.1)", borderLeft: "3px solid #ffb800", borderRadius: 4 }}>
-            <div style={{ fontSize: 12, fontWeight: 900, color: "#ffb800", marginBottom: 4 }}>📍 {data.event.title}</div>
-            <div style={{ fontSize: 11, color: "#ddd" }}>{data.event.desc}</div>
+        
+        {/* 차트에 활성화된 선들의 데이터를 동적으로 순회하며 출력 */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          {payload.map((entry: any, index: number) => {
+            // 값이 양수면 '+' 기호 붙이기
+            const isPositive = typeof entry.value === 'number' && entry.value > 0;
+            const displayValue = typeof entry.value === 'number' 
+              ? `${isPositive ? '+' : ''}${entry.value.toFixed(1)}%` 
+              : entry.value;
+
+            return (
+              <div key={index} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                {/* 선 색상과 동일한 동그라미 인디케이터 */}
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: entry.color, boxShadow: `0 0 6px ${entry.color}80` }} />
+                <span style={{ fontSize: 13, color: "#ccc", fontWeight: 600, flex: 1 }}>{entry.name}</span>
+                <span style={{ fontSize: 14, color: "#fff", fontWeight: 800 }}>{displayValue}</span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* 리스크 스코어가 존재할 경우 하단에 강조 표시 */}
+        {riskScore !== undefined && (
+          <div style={{ 
+            marginTop: 12, 
+            paddingTop: 10, 
+            borderTop: "1px dashed rgba(255,255,255,0.1)", 
+            fontSize: 13, 
+            fontWeight: 800, 
+            display: "flex",
+            justifyContent: "space-between"
+          }}>
+            <span style={{ color: "#888" }}>시장 위험도</span>
+            <span style={{ color: riskScore >= 70 ? "#ff4d4d" : riskScore >= 40 ? "#ffb800" : "#00d26a" }}>
+              {riskScore}점
+            </span>
           </div>
         )}
       </div>
