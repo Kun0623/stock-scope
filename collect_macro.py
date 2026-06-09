@@ -12,9 +12,6 @@ import yfinance as yf
 import feedparser
 import google.generativeai as genai
 
-# =======================================================
-# ⚙️ [환경 설정 및 상수]
-# =======================================================
 FRED_API_KEY = "***REMOVED***"
 FRED_BASE = "https://api.stlouisfed.org/fred/series/observations"
 OUTPUT_FILE = "public/macro_status.json"
@@ -32,27 +29,6 @@ HEADERS = {
 
 KST = timezone(timedelta(hours=9))
 
-# =======================================================
-# 💾 [공통] 데이터 Load / Save 유틸리티
-# =======================================================
-def load_existing_data() -> dict:
-    if os.path.exists(OUTPUT_FILE):
-        try:
-            with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception as e:
-            print(f"⚠️ 기존 파일 읽기 오류 (새로 생성합니다): {e}")
-    return {}
-
-def save_final_data(data: dict):
-    data["updated_at"] = datetime.now(KST).isoformat(timespec="seconds")
-    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-
-# =======================================================
-# 📊 [개별 데이터 수집 함수 모음]
-# =======================================================
 def fetch_fred(series_id: str) -> float:
     time.sleep(1) 
     params = {
@@ -124,22 +100,26 @@ def get_vix_index() -> dict:
         pass
     return {"value": None, "status": "Unavailable"}
 
+# ✨ 신규: VVIX 지수 실시간 수집 함수 (yfinance 활용)
 def get_vvix_index() -> dict:
     try:
         vvix = yf.Ticker("^VVIX").history(period="2d")
         if not vvix.empty:
             val = float(vvix['Close'].iloc[-1])
+            # NaN 방어 로직
             if math.isnan(val):
                 return {"value": 85.0} 
             return {"value": round(val, 2)}
     except Exception as e:
         print(f"VVIX 수집 오류: {e}")
         pass
-    return {"value": 85.0}
+    return {"value": 85.0} # 에러 시 기본값 반환
 
+# ✨ 신규: PCR 데이터 플레이스홀더 (추후 CBOE 크롤링 연동 전까지 UI 테스트용)
 def get_pcr_data() -> dict:
     return {"value": 0.85}
 
+# ✨ 신규: COT 리포트 플레이스홀더 (추후 CFTC 매주 토요일 데이터 연동 전까지 UI 테스트용)
 def get_cot_report() -> dict:
     return {
         "value": "Net Short (순매도)",
@@ -169,6 +149,7 @@ def get_major_indices() -> list:
         "^TNX": "미 10년물 국채"
     }
     results = []
+    print("📈 실시간 주요 핵심 지표 수집 시작...")
     for ticker, name in indices.items():
         try:
             hist = yf.Ticker(ticker).history(period="2d")
@@ -231,13 +212,14 @@ def get_ai_news_sentiment(existing_data: dict) -> dict:
         last_timestamp = prev_ai.get("updated_timestamp", 0)
         
         if current_timestamp - last_timestamp < 900:
-            print("⚡ AI 분석 15분 캐시 적용 (비용 절약)")
+            print("⚡ AI 분석 15분 캐시 적용 (Gemini API 호출을 생략하여 비용을 절약합니다)")
             return prev_ai
 
     if not GEMINI_API_KEY:
         print("⚠️ Gemini API 키가 설정되지 않았습니다.")
         return {"sentiment_score": 50, "summary": ["API 키 오류"], "news_sources": [], "updated_timestamp": current_timestamp}
 
+    print("🤖 15분 경과: 글로벌 뉴스 실시간 스크래핑 및 AI 요약 분석 실행 중...")
     try:
         rss_url = "https://news.google.com/rss/search?q=stock+market+OR+technology+OR+economy&hl=en-US&gl=US&ceid=US:en"
         feed = feedparser.parse(rss_url)
@@ -288,106 +270,62 @@ def calculate_quant_risk_score(fg, vix, yc, sahm, hy) -> int:
     if hy and hy.get("value") is not None: score += max(0, min(100, ((hy["value"] - 3.0) / 3.0) * 100)) * 0.15; weight_total += 0.15
     return round(score / weight_total) if weight_total > 0 else 50
 
-
-# =======================================================
-# 🕒 [Track A Execution] 15분 단위 평일 24시간 실시간 수집
-# =======================================================
-def run_track_a_realtime():
-    now_kst = datetime.now(KST)
-    day_of_week = now_kst.isoweekday() # 1: 월요일 ~ 7: 일요일
-    hour = now_kst.hour
-
-    # 🛑 시간 방어막: 일요일 전체, 월요일 오전 8시 이전, 토요일 오전 8시 이후 스킵
-    if day_of_week == 7:
-        return
-    if day_of_week == 1 and hour < 8:
-        return
-    if day_of_week == 6 and hour >= 8:
-        return
-
-    print(f"📡 [{now_kst.strftime('%X')}] Track A: 실시간 금융 시장 데이터 갱신 중...")
-    
-    result_data = load_existing_data()
-
-    # ⚡ 정규장이 아니더라도 변하는 실시간 데이터 업데이트
-    result_data["vix"] = get_vix_index()
-    result_data["vvix"] = get_vvix_index()
-    result_data["fx"] = get_fx_data()
-    result_data["major_indices"] = get_major_indices()
-    result_data["theme_trends"] = get_theme_trends()
-    result_data["sectors"] = get_sector_data()
-    
-    # 리스크 점수 재계산 (기존 무거운 지표 + 최신 VIX 혼합)
-    result_data["quant_risk_score"] = calculate_quant_risk_score(
-        result_data.get("fear_greed", {"value": 50}),
-        result_data["vix"],
-        result_data.get("yield_curve", {"value": 0}),
-        result_data.get("sahm_rule", {"value": 0}),
-        result_data.get("high_yield_spread", {"value": 3.0})
-    )
-
-    save_final_data(result_data)
-    print("✅ Track A 실시간 지표 부분 업데이트 완료!")
-
-
-# =======================================================
-# 📅 [Track B Execution] 하루 1회 거시 정산 (KST 오전 8시)
-# =======================================================
-def run_track_b_daily_close():
-    now_kst = datetime.now(KST)
-    day_of_week = now_kst.isoweekday()
-
-    # 🛑 요일 방어막: KST 화~토 아침에만 실행 (미국 월~금 마감 반영)
-    if day_of_week == 7 or day_of_week == 1:
-        print(f"🛑 [{now_kst.strftime('%X')}] 미국 휴장 정산일입니다. Track B 스킵.")
-        return
-
-    print(f"🤖 [{now_kst.strftime('%X')}] Track B: 거시 정산 및 AI 뉴스 요약 시작...")
-    
-    result_data = load_existing_data()
-
-    # 📅 하루 한 번 혹은 주기적으로 업데이트되는 무거운 배치 지표 수집
-    result_data["sahm_rule"] = get_sahm_rule()          
-    result_data["high_yield_spread"] = get_high_yield_spread() 
-    result_data["yield_curve"] = get_yield_curve()      
-    result_data["buffett_indicator"] = get_buffett_indicator() 
-    result_data["fear_greed"] = get_fear_greed()        
-    
-    result_data["pcr"] = get_pcr_data()
-    result_data["cot"] = get_cot_report()
-
-    # 📰 AI 마켓 센티먼트 업데이트
-    result_data["ai_sentiment"] = get_ai_news_sentiment(result_data)
-
-    # 마감 지표 기준의 메인 리스크 스코어 최종 정산
-    result_data["quant_risk_score"] = calculate_quant_risk_score(
-        result_data["fear_greed"],
-        result_data.get("vix", {"value": 15}),
-        result_data["yield_curve"],
-        result_data["sahm_rule"],
-        result_data["high_yield_spread"]
-    )
-
-    save_final_data(result_data)
-    print(f"🎉 Track B 미국 정규장 마감 경제 지표 동기화 완료! (리스크: {result_data['quant_risk_score']}점)")
-
-
-# =======================================================
-# ⚙️ [메인 진입점] 인자값에 따라 분기 처리
-# =======================================================
 def main():
-    if len(sys.argv) < 2:
-        print("❌ 실행 인자가 부족합니다. (사용법: python main.py [track_a|track_b])")
-        sys.exit(1)
+    print("📡 안안(AnAn) 통합 매크로 엔진 가동 (실시간/캐시 하이브리드)...\n")
+    
+    existing_data = {}
+    if os.path.exists(OUTPUT_FILE):
+        try:
+            with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
+                existing_data = json.load(f)
+        except:
+            pass
+
+    sahm = get_sahm_rule()
+    hy_spread = get_high_yield_spread()
+    yield_curve = get_yield_curve()
+    fear_greed = get_fear_greed()
+    buffett = get_buffett_indicator()
+    vix = get_vix_index()
+    fx = get_fx_data()
+    major_indices = get_major_indices()
+    theme_trends = get_theme_trends()
+    sectors = get_sector_data()
+    
+    # ✨ 신규 지표 수집 호출
+    vvix = get_vvix_index()
+    pcr = get_pcr_data()
+    cot = get_cot_report()
+    
+    ai_sentiment = get_ai_news_sentiment(existing_data)
+    
+    risk_score = calculate_quant_risk_score(fear_greed, vix, yield_curve, sahm, hy_spread)
+    now_kst = datetime.now(KST).isoformat(timespec="seconds")
+
+    result = {
+        "updated_at": now_kst,
+        "quant_risk_score": risk_score, 
+        "fear_greed": fear_greed,
+        "buffett_indicator": buffett,
+        "sahm_rule": sahm,
+        "high_yield_spread": hy_spread,
+        "yield_curve": yield_curve,
+        "vix": vix,
+        "vvix": vvix,   # ✨ JSON에 VVIX 추가
+        "pcr": pcr,     # ✨ JSON에 PCR 추가
+        "cot": cot,     # ✨ JSON에 COT 추가
+        "fx": fx,
+        "major_indices": major_indices, 
+        "theme_trends": theme_trends,
+        "sectors": sectors,
+        "ai_sentiment": ai_sentiment, 
+    }
+
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        json.dump(result, f, ensure_ascii=False, indent=2)
         
-    mode = sys.argv[1].lower()
-    if mode == "track_a":
-        run_track_a_realtime()
-    elif mode == "track_b":
-        run_track_b_daily_close()
-    else:
-        print(f"❌ 알 수 없는 모드입니다: {mode}")
-        sys.exit(1)
+    print(f"\n✅ 데이터 갱신 완료! 리스크 점수: {risk_score}점")
 
 if __name__ == "__main__":
     main()
