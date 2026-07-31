@@ -92,7 +92,8 @@ def get_buffett_indicator() -> dict:
             ratio = (market_cap_millions / 1000 / gdp_billions) * 100
             return {"value": round(ratio, 1), "status": "Overvalued" if ratio >= 180 else "Normal"}
     except Exception as e:
-        print(f"   [버핏지수 에러] {e}")
+        safe_msg = str(e).replace(FRED_API_KEY, "***") if FRED_API_KEY else str(e)
+        print(f"   [버핏지수 에러] {safe_msg}")
     return {"value": None, "status": "Unavailable"}
 
 def get_vix_index() -> dict:
