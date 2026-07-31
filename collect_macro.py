@@ -261,6 +261,27 @@ def get_ai_news_sentiment(existing_data: dict) -> dict:
             return existing_data["ai_sentiment"]
         return {"sentiment_score": 50, "summary": ["데이터 수집 중 오류 발생"], "news_sources": [], "updated_timestamp": 0}
 
+def calculate_quant_risk_score(fg: dict, vix: dict, yc: dict, sahm: dict, hy: dict) -> int:
+    """5개 매크로 지표를 0(안전)~100(고위험) 리스크 점수로 환산해요."""
+    def safe(indicator: dict, default: float) -> float:
+        value = indicator.get("value")
+        return default if value is None else float(value)
+
+    fg_risk = 100 - safe(fg, 50)                              # 공포=고위험, 탐욕=저위험
+    vix_risk = min(safe(vix, 20) / 40 * 100, 100)              # VIX 40 이상 = 만점
+    yc_risk = 100 if safe(yc, 0.5) < 0 else 20                 # 장단기 금리 역전 = 고위험
+    sahm_risk = 100 if safe(sahm, 0) >= 0.5 else 20            # 삼 룰 발동 = 고위험
+    hy_risk = min(safe(hy, 3) / 10 * 100, 100)                 # 하이일드 스프레드 10 이상 = 만점
+
+    score = (
+        fg_risk * 0.2
+        + vix_risk * 0.25
+        + yc_risk * 0.2
+        + sahm_risk * 0.2
+        + hy_risk * 0.15
+    )
+    return round(max(0, min(100, score)))
+
 def main():
     print("📡 안안(AnAn) 통합 매크로 엔진 가동 (실시간/캐시 하이브리드)...\n")
     
