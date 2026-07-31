@@ -33,6 +33,7 @@ jobs:
           python generate_backtest.py  # 👈 2번 파일 실행 추가!
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
 
       - name: 🌐 GitHub Gist로 최신 데이터 전송
         run: |

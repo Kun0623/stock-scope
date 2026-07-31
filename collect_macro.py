@@ -12,7 +12,7 @@ import yfinance as yf
 import feedparser
 import google.generativeai as genai
 
-FRED_API_KEY = "***REMOVED***"
+FRED_API_KEY = os.environ.get("FRED_API_KEY")
 FRED_BASE = "https://api.stlouisfed.org/fred/series/observations"
 OUTPUT_FILE = "public/macro_status.json"
 
@@ -260,15 +260,6 @@ def get_ai_news_sentiment(existing_data: dict) -> dict:
         if existing_data and "ai_sentiment" in existing_data:
             return existing_data["ai_sentiment"]
         return {"sentiment_score": 50, "summary": ["데이터 수집 중 오류 발생"], "news_sources": [], "updated_timestamp": 0}
-
-def calculate_quant_risk_score(fg, vix, yc, sahm, hy) -> int:
-    score = 0; weight_total = 0
-    if fg and fg.get("value") is not None: score += (100 - fg["value"]) * 0.25; weight_total += 0.25
-    if vix and vix.get("value") is not None: score += max(0, min(100, ((vix["value"] - 12) / 23) * 100)) * 0.25; weight_total += 0.25
-    if yc and yc.get("value") is not None: score += max(0, min(100, ((0.4 - yc["value"]) / 0.8) * 100)) * 0.20; weight_total += 0.20
-    if sahm and sahm.get("value") is not None: score += max(0, min(100, (sahm["value"] / 0.6) * 100)) * 0.15; weight_total += 0.15
-    if hy and hy.get("value") is not None: score += max(0, min(100, ((hy["value"] - 3.0) / 3.0) * 100)) * 0.15; weight_total += 0.15
-    return round(score / weight_total) if weight_total > 0 else 50
 
 def main():
     print("📡 안안(AnAn) 통합 매크로 엔진 가동 (실시간/캐시 하이브리드)...\n")
