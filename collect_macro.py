@@ -81,10 +81,11 @@ def get_fear_greed() -> dict:
 
 def get_buffett_indicator() -> dict:
     try:
-        w5000 = yf.Ticker("^W5000").history(period="5d")
+        # yfinance의 ^W5000 티커가 상장폐지되어 FRED 시리즈로 대체 (동일 지표 소스)
+        w5000 = fetch_fred("WILL5000INDFC")
         gdp = fetch_fred("GDP")
-        if not w5000.empty and gdp:
-            ratio = (float(w5000['Close'].iloc[-1]) / gdp) * 100
+        if w5000 and gdp:
+            ratio = (w5000 / gdp) * 100
             return {"value": round(ratio, 1), "status": "Overvalued" if ratio >= 180 else "Normal"}
     except Exception as e:
         pass
