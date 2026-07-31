@@ -199,7 +199,7 @@ export function GridCard({ title, tooltip, value, suffix, warningThreshold, dang
 }
 
 export function TrendRow({ item }: { item: any }) {
-  const hasData = item.change_pct !== null && item.change_pct !== undefined && !isNaN(item.change_pct);
+  const hasData = item.change_pct !== null && item.change_pct !== undefined && !Number.isNaN(item.change_pct);
   const isPos = hasData && item.change_pct >= 0;
   
   return (
@@ -214,21 +214,32 @@ export function TrendRow({ item }: { item: any }) {
         </div>
       </div>
       
+      {/* ✨ 수정: 작대기(-) 대신 예쁜 대기중 뱃지 표시 */}
       <div style={{ 
-        fontSize: 15, fontWeight: 800, 
-        color: hasData ? (isPos ? "#ff4d4d" : "#4d94ff") : "#888", 
+        fontSize: 14, fontWeight: 800, 
+        color: hasData ? (isPos ? "#ff4d4d" : "#4d94ff") : "#aaa", 
         background: hasData ? (isPos ? "rgba(255,77,77,0.1)" : "rgba(77,148,255,0.1)") : "rgba(255,255,255,0.05)", 
-        padding: "6px 12px", borderRadius: 8 
+        padding: "6px 12px", borderRadius: 8,
+        display: "flex", alignItems: "center", gap: 4
       }}>
-        {hasData ? `${isPos ? "+" : ""}${item.change_pct}%` : "-"}
+        {hasData ? (
+          `${isPos ? "+" : ""}${item.change_pct}%`
+        ) : (
+          <>
+            <span style={{ fontSize: 12 }}>⏳</span> 수집중
+          </>
+        )}
       </div>
     </div>
   );
 }
 
 export function SectorTile({ item, rank }: { item: any, rank: number }) {
-  const isPos = item.change_pct >= 0;
+  // ✨ 데이터 유효성 검사 (Null Guard)
+  const hasData = item.change_pct !== null && item.change_pct !== undefined && !Number.isNaN(item.change_pct);
+  const isPos = hasData && item.change_pct >= 0;
   const isTop = rank <= 3;
+  
   return (
     <div style={{ padding: "14px 12px", background: isTop ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.02)", borderRadius: 12, border: isTop ? "1px solid rgba(255,255,255,0.15)" : "1px solid rgba(255,255,255,0.04)", minWidth: 0 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
@@ -236,7 +247,17 @@ export function SectorTile({ item, rank }: { item: any, rank: number }) {
           <span style={{ fontSize: 14, fontWeight: 900, color: isTop ? "#ffb800" : "#888", width: 16 }}>{rank}</span>
           <span style={{ fontSize: 15, fontWeight: 800, color: "#fff" }}>{item.ticker}</span>
         </div>
-        <span style={{ fontSize: 14, fontWeight: 800, color: isPos ? "#ff4d4d" : "#4d94ff" }}>{isPos ? "+" : ""}{item.change_pct}%</span>
+        
+        {/* ✨ 수정: 데이터가 있으면 %를 띄우고, 없으면 대기중 뱃지를 띄움 */}
+        {hasData ? (
+          <span style={{ fontSize: 14, fontWeight: 800, color: isPos ? "#ff4d4d" : "#4d94ff" }}>
+            {isPos ? "+" : ""}{item.change_pct}%
+          </span>
+        ) : (
+          <span style={{ fontSize: 12, fontWeight: 700, color: "#aaa", display: "flex", alignItems: "center", gap: 4 }}>
+            <span>⏳</span> 수집중
+          </span>
+        )}
       </div>
       <div style={{ fontSize: 12, fontWeight: 600, color: "#aaa", paddingLeft: 24, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name}</div>
     </div>
@@ -244,9 +265,12 @@ export function SectorTile({ item, rank }: { item: any, rank: number }) {
 }
 
 export function MajorIndexTile({ item }: { item: any }) {
-  const isPos = item.change_pct >= 0;
+  // 데이터 유효성 검사
+  const hasData = item.value !== null && item.value !== undefined && !Number.isNaN(item.value);
+  const isPos = hasData && item.change_pct >= 0;
+  
   const color = isPos ? "#ff4d4d" : "#4d94ff";
-  const sign = isPos ? "+" : "";
+  const sign = isPos && item.change_pct > 0 ? "+" : "";
   
   const formatValue = (val: any, name: string) => {
     if (typeof val === 'string') return val;
@@ -258,10 +282,29 @@ export function MajorIndexTile({ item }: { item: any }) {
   return (
     <div style={{ padding: "14px 12px", background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.05)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
       <div style={{ fontSize: 12, fontWeight: 700, color: "#aaa", marginBottom: 8 }}>{item.name}</div>
-      <div style={{ fontSize: 18, fontWeight: 800, color: "#fff", marginBottom: 6, letterSpacing: "-0.5px" }}>{formatValue(item.value, item.name)}</div>
-      <div style={{ fontSize: 12, fontWeight: 800, color: color }}>
-        {sign}{item.change} ({sign}{item.change_pct}%)
-      </div>
+      
+      {hasData ? (
+        // 정상적으로 데이터가 있을 때의 UI
+        <>
+          <div style={{ fontSize: 18, fontWeight: 800, color: "#fff", marginBottom: 6, letterSpacing: "-0.5px" }}>
+            {formatValue(item.value, item.name)}
+          </div>
+          <div style={{ fontSize: 12, fontWeight: 800, color: color }}>
+            {sign}{item.change} ({sign}{item.change_pct}%)
+          </div>
+        </>
+      ) : (
+        // ✨ 데이터가 비어있을 때(개장 직후/정산 시간)의 친절한 안내 UI
+        <div style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 4 }}>
+          <div style={{ fontSize: 14, fontWeight: 800, color: "#ffb800", display: "flex", alignItems: "center", gap: 6 }}>
+            <span style={{ fontSize: 14 }}>⏳</span> 
+            <span>지수 집계중</span>
+          </div>
+          <div style={{ fontSize: 11, fontWeight: 600, color: "#666" }}>
+            거래소 롤오버 및 호가 대기
+          </div>
+        </div>
+      )}
     </div>
   );
 }

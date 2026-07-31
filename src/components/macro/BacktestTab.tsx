@@ -93,12 +93,16 @@ export function BacktestTab({ backtestData }: { backtestData: any[] }) {
               <ResponsiveContainer width="99%" height="100%" minHeight={320} style={{ outline: "none" }}>
                 <ComposedChart data={normalizedChartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
                   <XAxis dataKey="date" tick={{ fontSize: 10, fill: "#666" }} tickFormatter={(val) => val.substring(2, 7)} minTickGap={30} />
-                  <YAxis yAxisId="left" domain={['dataMin - 5', 'dataMax + 5']} tick={{ fontSize: 10, fill: "#666" }} tickFormatter={(val) => `${val}%`} />
+                  
+                  {/* ✨ 수정: type="number" 추가로 Y축 뒤죽박죽 정렬 버그 해결 */}
+                  <YAxis yAxisId="left" type="number" domain={['dataMin - 5', 'dataMax + 5']} tick={{ fontSize: 10, fill: "#666" }} tickFormatter={(val) => `${val}%`} />
+                  
                   <RechartsTooltip content={<CustomChartTooltip />} />
                   <Legend verticalAlign="top" height={36} iconSize={10} wrapperStyle={{ fontSize: 11, fontWeight: 700 }} />
 
+                  {/* ✨ 수정: fillOpacity를 0.12 -> 0.25로 올려서 붉은색 구간 시인성 개선 */}
                   {normalizedChartData.map((d: any, i: number) => {
-                    if (d.risk_score >= 70) return <ReferenceArea key={i} x1={d.date} x2={normalizedChartData[i+1]?.date || d.date} yAxisId="left" fill="#ff4d4d" fillOpacity={0.12} />;
+                    if (d.risk_score >= 70) return <ReferenceArea key={i} x1={d.date} x2={normalizedChartData[i+1]?.date || d.date} yAxisId="left" fill="#ff4d4d" fillOpacity={0.25} />;
                     return null;
                   })}
 
@@ -176,7 +180,7 @@ export function BacktestTab({ backtestData }: { backtestData: any[] }) {
   );
 }
 
-// ✨ 누락되었던 SimulationCard 컴포넌트 추가
+// SimulationCard 컴포넌트
 function SimulationCard({ name, desc, basePrice, simPrice, impactPct, isBond = false }: { name: string, desc: string, basePrice: number, simPrice: number, impactPct: number, isBond?: boolean }) {
   const isDanger = impactPct < 0;
   const isNeutral = impactPct === 0;

@@ -4,21 +4,67 @@ import { TossBanner } from "./MacroShared";
 
 export function OverviewTab({ data, isPro }: { data: any, isPro: boolean }) {
   let dangerCount = 0;
-  
-  if (data.fear_greed?.value <= 25) dangerCount++;
-  if (data.sahm_rule?.value >= 0.5) dangerCount++;
-  if (data.high_yield_spread?.value >= 5.0) dangerCount++;
-  if (data.yield_curve?.value < 0) dangerCount++;
-  if (data.vix?.value >= 20) dangerCount++;
 
-  let shield = { title: "안정적 추세 구간", desc: "5대 주요 거시 지표가 장기 평균치에 수렴하는 안정적인 흐름을 보이고 있습니다.", color: "#00d26a", bg: "#00d26a10", level: "green" };
+  // 1. 공포탐욕 지수 (세분화)
+  if (data.fear_greed?.value <= 25) dangerCount += 2;
+  else if (data.fear_greed?.value <= 44) dangerCount += 1;
+
+  // 2. 숌 룰 (경기침체)
+  if (data.sahm_rule?.value >= 0.5) dangerCount += 2;
+  else if (data.sahm_rule?.value >= 0.35) dangerCount += 1;
+
+  // 3. 하이일드 스프레드 (기업 부도 위험)
+  if (data.high_yield_spread?.value >= 5.0) dangerCount += 2;
+  else if (data.high_yield_spread?.value >= 4.0) dangerCount += 1;
+
+  // 4. 장단기 금리차 (경기 침체 전조)
+  if (data.yield_curve?.value < -0.5) dangerCount += 2; // 역전 심화는 더 위험
+  else if (data.yield_curve?.value < 0) dangerCount += 1;
+
+  // 5. VIX 지수 (시장 공포)
+  if (data.vix?.value >= 30) dangerCount += 3; // 패닉 상태
+  else if (data.vix?.value >= 25) dangerCount += 2;
+  else if (data.vix?.value >= 20) dangerCount += 1;
+
+  let shield = { 
+    title: "안정적 추세 구간", 
+    desc: "5대 핵심 거시 지표가 모두 안정권에 머물며, 펀더멘털과 투자 심리가 견고한 흐름을 보이고 있습니다.", // 텍스트 보강
+    color: "#00d26a", bg: "#00d26a10", level: "green" 
+  };
+  
+  // 기준점은 3점으로 유지 (최적의 밸런스)
   if (dangerCount >= 3) {
-    shield = { title: "고변동성 국면 진입", desc: "5대 거시 지표 기준, 마켓 스트레스가 상위 15%에 위치한 고위험 구간입니다.", color: "#ff4d4d", bg: "#ff4d4d10", level: "red" };
+    shield = { 
+      title: "고변동성 국면 진입", 
+      desc: "핵심 지표의 임계치 돌파 또는 복합적인 매크로 충격이 감지된 고위험 구간입니다. 리스크 관리가 필요합니다.", // 텍스트 보강
+      color: "#ff4d4d", bg: "#ff4d4d10", level: "red" 
+    };
   } else if (dangerCount >= 1) {
-    shield = { title: "추세 전환 모니터링", desc: "일부 코어 지표의 디커플링으로 단기 변동성 추세가 관측되는 구간입니다.", color: "#ffb800", bg: "#ffb80010", level: "yellow" };
+    shield = { 
+      title: "추세 전환 모니터링", 
+      desc: "일부 지표에서 경계 신호가 발생했습니다. 단기적인 시장 변동성 확대에 대비한 모니터링 구간입니다.", // 텍스트 보강
+      color: "#ffb800", bg: "#ffb80010", level: "yellow" 
+    };
   }
 
-  const riskScore = data.quant_risk_score ?? 50;
+  const getRiskScore = (count: number) => {
+    // 거시 경제 리스크는 선형이 아니라 계단식으로 증폭됨을 반영
+    const scoreMap: Record<number, number> = {
+      0: 15,  // 완전 평온 (기본 시스템 리스크 15점만 부여)
+      1: 38,  // 주의 시작 (노란불 진입)
+      2: 55,  // 주의 심화
+      3: 72,  // 위험 진입 (빨간불 진입 - VIX 30 도달 시 즉시 이 구간)
+      4: 82,  // 고위험 
+      5: 89,  // 심각한 스트레스
+      6: 94,  // 패닉 전조
+    };
+    
+    if (count >= 7) return 98; // 7점 이상은 극단적 패닉 상태 (98점 고정)
+    return scoreMap[count] ?? 50; 
+  };
+
+  const riskScore = getRiskScore(dangerCount);
+  // 점수 색상 기준은 그대로 유지 (완벽히 호환됨)
   const scoreColor = riskScore >= 65 ? "#ff4d4d" : riskScore >= 35 ? "#ffb800" : "#00d26a";
 
   return (
