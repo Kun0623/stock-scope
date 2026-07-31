@@ -82,14 +82,17 @@ def get_fear_greed() -> dict:
 def get_buffett_indicator() -> dict:
     try:
         # WILL5000INDFC는 2024-06-03 FRED가 Wilshire 지수 전체를 서비스 종료해서 사용 불가.
-        # 연준이 직접 발표하는 시가총액 시리즈(MVEONWMVBSNNCB, 단위 동일 $billions)로 대체.
-        market_cap = fetch_fred("MVEONWMVBSNNCB")
-        gdp = fetch_fred("GDP")
-        if market_cap and gdp:
-            ratio = (market_cap / gdp) * 100
+        # MVEONWMVBSNNCB(비금융 기업 전용)은 범위가 좁아 실제 지수(약 200%대)보다 훨씬 낮게 나옴.
+        # 전체 섹터 합산 시가총액(BOGZ1LM883164105Q, $millions)으로 대체.
+        # ponytail: Z.1 계열은 $millions, GDP는 $billions라 /1000으로 단위를 맞춤.
+        market_cap_millions = fetch_fred("BOGZ1LM883164105Q")
+        gdp_billions = fetch_fred("GDP")
+        print(f"   [버핏지수 원본값] 시가총액: {market_cap_millions}M, GDP: {gdp_billions}B")
+        if market_cap_millions and gdp_billions:
+            ratio = (market_cap_millions / 1000 / gdp_billions) * 100
             return {"value": round(ratio, 1), "status": "Overvalued" if ratio >= 180 else "Normal"}
     except Exception as e:
-        pass
+        print(f"   [버핏지수 에러] {e}")
     return {"value": None, "status": "Unavailable"}
 
 def get_vix_index() -> dict:
