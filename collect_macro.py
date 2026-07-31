@@ -81,11 +81,12 @@ def get_fear_greed() -> dict:
 
 def get_buffett_indicator() -> dict:
     try:
-        # yfinance의 ^W5000 티커가 상장폐지되어 FRED 시리즈로 대체 (동일 지표 소스)
-        w5000 = fetch_fred("WILL5000INDFC")
+        # WILL5000INDFC는 2024-06-03 FRED가 Wilshire 지수 전체를 서비스 종료해서 사용 불가.
+        # 연준이 직접 발표하는 시가총액 시리즈(MVEONWMVBSNNCB, 단위 동일 $billions)로 대체.
+        market_cap = fetch_fred("MVEONWMVBSNNCB")
         gdp = fetch_fred("GDP")
-        if w5000 and gdp:
-            ratio = (w5000 / gdp) * 100
+        if market_cap and gdp:
+            ratio = (market_cap / gdp) * 100
             return {"value": round(ratio, 1), "status": "Overvalued" if ratio >= 180 else "Normal"}
     except Exception as e:
         pass
