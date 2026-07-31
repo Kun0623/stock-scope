@@ -113,7 +113,10 @@ export function MacroDashboardPage() {
     // 백테스트 시계열 데이터 패칭
     const fetchBacktest = async () => {
       try {
-        const res = await fetch(`/backtest_data.json?t=${new Date().getTime()}`);
+        // 앱 번들 정적 파일 대신 macro_status.json과 동일한 Gist에서 실시간으로 가져옴
+        // (앱 재빌드 없이는 정적 파일이 갱신되지 않아 데이터가 멈춰 보이는 문제 수정)
+        const BACKTEST_URL = "https://gist.githubusercontent.com/Kun0623/6ff77031bd5979e9177a21272fac7018/raw/backtest_data.json";
+        const res = await fetch(`${BACKTEST_URL}?t=${new Date().getTime()}`);
         if (res.ok) {
           const data = await res.json();
           setBacktestData(data);
