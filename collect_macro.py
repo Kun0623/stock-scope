@@ -288,16 +288,73 @@ def calculate_quant_risk_score(fg: dict, vix: dict, yc: dict, sahm: dict, hy: di
     )
     return round(max(0, min(100, score)))
 
-def main():
-    print("📡 안안(AnAn) 통합 매크로 엔진 가동 (실시간/캐시 하이브리드)...\n")
-    
-    existing_data = {}
+# 미국장 온도 (0=냉각 ~ 100=과열). 시장 분위기 '정보'이며 매매 신호가 아님.
+# 각 지표를 아래 고정 구간으로 0~100 환산 후 가중 평균. 값이 없는 지표는 빼고 비중을 다시 나눔.
+TEMPERATURE_WEIGHTS = {"fear_greed": 0.4, "vix": 0.2, "high_yield_spread": 0.2, "buffett_indicator": 0.2}
+TEMPERATURE_HISTORY_DAYS = 30
+EXISTING_DATA_URL = "https://gist.githubusercontent.com/Kun0623/6ff77031bd5979e9177a21272fac7018/raw/macro_status.json"
+
+def _scale(value, cold, hot):
+    """cold일 때 0, hot일 때 100이 되도록 선형 환산 (0~100으로 자름)."""
+    return max(0.0, min(100.0, (value - cold) / (hot - cold) * 100))
+
+def temperature_status(value: int) -> str:
+    if value < 20: return "냉각"
+    if value < 40: return "차분"
+    if value < 60: return "보통"
+    if value < 80: return "뜨거움"
+    return "과열"
+
+def calculate_market_temperature(fg: dict, vix: dict, hy: dict, buffett: dict) -> dict:
+    raw = {
+        "fear_greed": fg.get("value"),
+        "vix": vix.get("value"),
+        "high_yield_spread": hy.get("value"),
+        "buffett_indicator": buffett.get("value"),
+    }
+    scaled = {}
+    if raw["fear_greed"] is not None: scaled["fear_greed"] = _scale(float(raw["fear_greed"]), 0, 100)
+    if raw["vix"] is not None: scaled["vix"] = _scale(float(raw["vix"]), 40, 10)                    # VIX 낮을수록 뜨거움
+    if raw["high_yield_spread"] is not None: scaled["high_yield_spread"] = _scale(float(raw["high_yield_spread"]), 8, 2.5)  # 스프레드 좁을수록 뜨거움
+    if raw["buffett_indicator"] is not None: scaled["buffett_indicator"] = _scale(float(raw["buffett_indicator"]), 80, 200)  # 높을수록 뜨거움
+    if not scaled:
+        return {"value": None, "status": "Unavailable", "components": {}}
+    total_w = sum(TEMPERATURE_WEIGHTS[k] for k in scaled)
+    value = round(sum(scaled[k] * TEMPERATURE_WEIGHTS[k] for k in scaled) / total_w)
+    return {
+        "value": value,
+        "status": temperature_status(value),
+        "components": {k: round(v) for k, v in scaled.items()},
+    }
+
+def update_temperature_history(existing_data: dict, temperature: dict, today: str) -> list:
+    """날짜별 1개만 남기고(같은 날은 덮어씀) 최근 30일 유지."""
+    history = [h for h in (existing_data.get("temperature_history") or []) if h.get("date") != today]
+    if temperature.get("value") is not None:
+        history.append({"date": today, "value": temperature["value"], "components": temperature["components"]})
+    history.sort(key=lambda h: h["date"])
+    return history[-TEMPERATURE_HISTORY_DAYS:]
+
+def load_existing_data() -> dict:
+    """Actions에서는 저장소의 예전 파일만 보이므로, Gist에 올라간 최신본을 먼저 읽는다."""
+    try:
+        resp = requests.get(EXISTING_DATA_URL, params={"t": int(time.time())}, timeout=15)
+        resp.raise_for_status()
+        return resp.json()
+    except Exception as e:
+        print(f"   [기존 데이터] Gist 읽기 실패, 로컬 파일 사용: {e}")
     if os.path.exists(OUTPUT_FILE):
         try:
             with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
-                existing_data = json.load(f)
-        except:
+                return json.load(f)
+        except Exception:
             pass
+    return {}
+
+def main():
+    print("📡 안안(AnAn) 통합 매크로 엔진 가동 (실시간/캐시 하이브리드)...\n")
+    
+    existing_data = load_existing_data()
 
     sahm = get_sahm_rule()
     hy_spread = get_high_yield_spread()
@@ -318,11 +375,16 @@ def main():
     ai_sentiment = get_ai_news_sentiment(existing_data)
     
     risk_score = calculate_quant_risk_score(fear_greed, vix, yield_curve, sahm, hy_spread)
-    now_kst = datetime.now(KST).isoformat(timespec="seconds")
+    temperature = calculate_market_temperature(fear_greed, vix, hy_spread, buffett)
+    now = datetime.now(KST)
+    now_kst = now.isoformat(timespec="seconds")
+    temperature_history = update_temperature_history(existing_data, temperature, now.date().isoformat())
 
     result = {
         "updated_at": now_kst,
         "quant_risk_score": risk_score, 
+        "temperature": temperature,
+        "temperature_history": temperature_history,
         "fear_greed": fear_greed,
         "buffett_indicator": buffett,
         "sahm_rule": sahm,
@@ -343,7 +405,7 @@ def main():
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
         
-    print(f"\n✅ 데이터 갱신 완료! 리스크 점수: {risk_score}점")
+    print(f"\n✅ 데이터 갱신 완료! 리스크 점수: {risk_score}점 / 미국장 온도: {temperature['value']}° ({temperature['status']})")
 
 if __name__ == "__main__":
     main()

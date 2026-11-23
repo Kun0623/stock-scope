@@ -4,6 +4,7 @@ import { OverviewTab } from "../components/macro/OverviewTab";
 import { NewsTab } from "../components/macro/NewsTab";
 import { IndicatorsTab } from "../components/macro/IndicatorsTab";
 import { BacktestTab } from "../components/macro/BacktestTab";
+import { TemperatureTab } from "../components/macro/TemperatureTab";
 import { TabButton, DisclaimerTicker } from "../components/macro/MacroShared";
 
 // ==========================================
@@ -48,7 +49,7 @@ function SkeletonLoadingUI() {
 export function MacroDashboardPage() {
   const [macroData, setMacroData] = useState<any>(null);
   const [backtestData, setBacktestData] = useState<any[]>([]); 
-  const [activeTab, setActiveTab] = useState<string>("overview");
+  const [activeTab, setActiveTab] = useState<string>("temperature");
   const [isPro] = useState<boolean>(true); 
   
   const lastUpdateTimeRef = useRef<string>(""); 
@@ -142,6 +143,11 @@ export function MacroDashboardPage() {
     };
   }, []);
 
+  // 3일 넘게 갱신되지 않으면 사용자에게 알림 (주말·휴장 고려해 여유를 둠)
+  const isStale = macroData?.updated_at
+    ? Date.now() - new Date(macroData.updated_at).getTime() > 3 * 24 * 60 * 60 * 1000
+    : false;
+
   const dataDateString = macroData?.updated_at 
     ? new Date(macroData.updated_at).toLocaleString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
     : "로딩중...";
@@ -169,15 +175,18 @@ export function MacroDashboardPage() {
           </div>
         </div>
         
-        <div style={{ background: "linear-gradient(135deg, #3182ce, #805ad5)", color: "#fff", padding: "6px 12px", borderRadius: 20, fontSize: 11, fontWeight: 800, display: "flex", alignItems: "center", gap: 4 }}>
-          <span>✨</span> 베타 서비스
-        </div>
+        {isStale && (
+          <div style={{ background: "rgba(255,184,0,0.12)", color: "#ffb800", padding: "6px 10px", borderRadius: 20, fontSize: 11, fontWeight: 700, whiteSpace: "nowrap", flexShrink: 0 }}>
+            갱신 지연 중
+          </div>
+        )}
       </div>
       
       {/* 🚀 분기 처리로 엄청나게 깔끔해진 본문 영역 */}
       <div style={{ flex: 1, overflowY: "auto", overflowX: "hidden" }}>
         {!macroData ? <SkeletonLoadingUI /> : (
           <div className="fade-in" style={{ paddingBottom: 120 }}>
+            {activeTab === "temperature" && <TemperatureTab data={macroData} onShowDetail={() => setActiveTab("overview")} />}
             {activeTab === "overview" && <OverviewTab data={macroData} isPro={isPro} />}
             {activeTab === "news" && <NewsTab data={macroData} isPro={isPro} />}
             {activeTab === "indicators" && <IndicatorsTab data={macroData} isPro={isPro} />}
@@ -192,6 +201,7 @@ export function MacroDashboardPage() {
         <DisclaimerTicker />
 
         <div style={{ height: 80, background: "rgba(10, 10, 10, 0.85)", backdropFilter: "blur(16px)", borderTop: "1px solid rgba(255, 255, 255, 0.1)", display: "flex", justifyContent: "space-around", alignItems: "center", paddingBottom: "env(safe-area-inset-bottom)" }}>
+          <TabButton id="temperature" icon="🌡️" label="오늘 온도" activeTab={activeTab} onClick={setActiveTab} />
           <TabButton id="overview" icon="🌎" label="오버뷰" activeTab={activeTab} onClick={setActiveTab} />
           <TabButton id="news" icon="📰" label="AI 뉴스" activeTab={activeTab} onClick={setActiveTab} />
           <TabButton id="indicators" icon="📊" label="지표상세" activeTab={activeTab} onClick={setActiveTab} />

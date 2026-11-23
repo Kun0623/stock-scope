@@ -31,24 +31,12 @@ export function BacktestTab({ backtestData }: { backtestData: any[] }) {
     // 비교 기준점이 될 첫 번째 날짜의 데이터
     const first = backtestData[0];
     const baseSp = first.sp500 || 5000;
-    const baseNasdaq = first.nasdaq || 16700;
-    const baseDow = first.dow || 39000;
-    const baseBond = first.bond || 95;
-
+    // 데이터에는 S&P 500 실제 값만 있음. 다른 지수를 비율로 만들어 그리지 않는다.
     return backtestData.map((d) => {
       const currentSp = d.sp500 ?? baseSp;
-      const spRatio = (currentSp - baseSp) / baseSp;
-
-      const currentNasdaq = d.nasdaq ?? (baseNasdaq * (1 + spRatio * 1.3)); 
-      const currentDow = d.dow ?? (baseDow * (1 + spRatio * 0.7));          
-      const currentBond = d.bond ?? (baseBond * (1 - spRatio * 0.2));        
-
       return {
         ...d,
         "S&P 500 (시장)": Number(((currentSp - baseSp) / baseSp * 100).toFixed(1)),
-        "NASDAQ (기술)": Number(((currentNasdaq - baseNasdaq) / baseNasdaq * 100).toFixed(1)),
-        "Dow Jones (가치)": Number(((currentDow - baseDow) / baseDow * 100).toFixed(1)),
-        "미 국채 10년 (안전)": Number(((currentBond - baseBond) / baseBond * 100).toFixed(1)),
       };
     });
   }, [backtestData]);
@@ -59,21 +47,12 @@ export function BacktestTab({ backtestData }: { backtestData: any[] }) {
     : { sp500: 5300 }; 
     
   const basePrices = {
-    sp500: baseData.sp500,
-    nasdaq: 16700,
-    dow: 39000,
-    bond: 95
+    sp500: baseData.sp500
   };
 
   const sp500ImpactPct = (vixDelta * -0.3) + (rateDelta * -4.0);
-  const nasdaqImpactPct = (vixDelta * -0.4) + (rateDelta * -7.0);
-  const dowImpactPct = (vixDelta * -0.2) + (rateDelta * -2.5);
-  const bondImpactPct = (vixDelta * 0.1) + (rateDelta * -7.5);
 
   const simSp500 = basePrices.sp500 * (1 + sp500ImpactPct / 100);
-  const simNasdaq = basePrices.nasdaq * (1 + nasdaqImpactPct / 100);
-  const simDow = basePrices.dow * (1 + dowImpactPct / 100);
-  const simBond = basePrices.bond * (1 + bondImpactPct / 100);
 
   return (
     <div style={{ padding: "20px 0px 30px", display: "flex", flexDirection: "column", gap: 16 }}>
@@ -107,9 +86,6 @@ export function BacktestTab({ backtestData }: { backtestData: any[] }) {
                   })}
 
                   <Area yAxisId="left" type="monotone" dataKey="S&P 500 (시장)" stroke="#805ad5" strokeWidth={2} fillOpacity={0.05} fill="#805ad5" name="S&P 500" />
-                  <Line yAxisId="left" type="monotone" dataKey="NASDAQ (기술)" stroke="#3182ce" strokeWidth={1.5} dot={false} name="NASDAQ" />
-                  <Line yAxisId="left" type="monotone" dataKey="Dow Jones (가치)" stroke="#ffb800" strokeWidth={1.5} dot={false} name="Dow Jones" />
-                  <Line yAxisId="left" type="monotone" dataKey="미 국채 10년 (안전)" stroke="#00d26a" strokeWidth={1.5} dot={false} name="미 국채" />
 
                   {normalizedChartData.map((d: any, i: number) => {
                     if (d.event) return <ReferenceDot key={`event-${i}`} x={d.date} y={d["S&P 500 (시장)"]} yAxisId="left" r={4} fill="#ffb800" stroke="#1a1a1a" strokeWidth={1.5} />;
@@ -158,11 +134,9 @@ export function BacktestTab({ backtestData }: { backtestData: any[] }) {
             <button onClick={() => { setVixDelta(0); setRateDelta(0); }} style={{ padding: "8px", background: "#222", border: "1px solid #444", borderRadius: 8, color: "#aaa", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🔄 시나리오 초기화</button>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 10 }}>
             <SimulationCard name="S&P 500" desc="시장 평균 방어력" basePrice={basePrices.sp500} simPrice={simSp500} impactPct={sp500ImpactPct} />
-            <SimulationCard name="NASDAQ" desc="금리 민감도 최상위" basePrice={basePrices.nasdaq} simPrice={simNasdaq} impactPct={nasdaqImpactPct} />
-            <SimulationCard name="Dow Jones" desc="산업/가치주 방어력" basePrice={basePrices.dow} simPrice={simDow} impactPct={dowImpactPct} />
-            <SimulationCard name="미 채권 10년물" desc="금리 역의 상관관계" basePrice={basePrices.bond} simPrice={simBond} impactPct={bondImpactPct} isBond />
+            <div style={{ fontSize: 12, color: "#888", lineHeight: 1.5, wordBreak: "keep-all" }}>기준값은 최근 S&amp;P 500 종가이고, 변동 폭은 VIX 1pt당 -0.3%, 금리 1%p당 -4%로 단순 가정한 예시 계산이에요. 실제 움직임과 다를 수 있어요.</div>
           </div>
         </div>
       </div>

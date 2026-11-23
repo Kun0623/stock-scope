@@ -92,54 +92,7 @@ export function OverviewTab({ data, isPro }: { data: any, isPro: boolean }) {
         </div>
       </div>
 
-      {/* 2. 리스크 스코어 게이지 */}
-      <div style={{ padding: "0 16px" }}>
-        <div className="paywall-container glass-panel" style={{ minHeight: 140, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-          <div className={!isPro ? "paywall-blur" : ""} style={{ padding: "18px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 6, flex: 1 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <Tooltip label="리스크 스코어" desc="VIX, 숌 룰, 공포탐욕, 하이일드, 장단기 금리차 5종을 연산한 메인 위험 계수입니다." />
-                <div style={{ fontSize: 10, fontWeight: 800, color: scoreColor, background: "rgba(255,255,255,0.1)", padding: "2px 6px", borderRadius: 4 }}>5 Core Metrics</div>
-              </div>
-              <div style={{ fontSize: 12, color: "#888", fontWeight: 500, wordBreak: "keep-all", lineHeight: 1.4 }}>5대 핵심 매크로 기반 종합 위험도</div>
-            </div>
-            {(() => {
-              const markerX = 100 - 80 * Math.cos((riskScore / 100) * Math.PI);
-              const markerY = 100 - 80 * Math.sin((riskScore / 100) * Math.PI);
-              return (
-                <div style={{ position: "relative", width: "140px", height: "90px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", marginRight: "10px" }}>
-                  <svg width="130" height="80" viewBox="0 0 200 120" style={{ overflow: "visible" }}>
-                    <defs>
-                      <linearGradient id="scoreZones" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#00d26a" stopOpacity="0.25" />
-                        <stop offset="27.3%" stopColor="#00d26a" stopOpacity="0.25" />
-                        <stop offset="27.3%" stopColor="#ffb800" stopOpacity="0.25" />
-                        <stop offset="72.7%" stopColor="#ffb800" stopOpacity="0.25" />
-                        <stop offset="72.7%" stopColor="#ff4d4d" stopOpacity="0.25" />
-                        <stop offset="100%" stopColor="#ff4d4d" stopOpacity="0.25" />
-                      </linearGradient>
-                    </defs>
-                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#scoreZones)" strokeWidth="18" strokeLinecap="round" />
-                    <path d="M 67.8 36.8 L 59.6 20.7" fill="none" stroke="#161616" strokeWidth="4" />
-                    <path d="M 132.2 36.8 L 140.4 20.7" fill="none" stroke="#161616" strokeWidth="4" />
-                    <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke={scoreColor} strokeWidth="18" strokeLinecap="round" strokeDasharray={Math.PI * 80} strokeDashoffset={(Math.PI * 80) * (1 - riskScore / 100)} style={{ transition: "stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1)" }} />
-                    <circle cx={markerX} cy={markerY} r="12" fill={scoreColor} opacity="0.4" style={{ transition: "cx 1.5s cubic-bezier(0.4, 0, 0.2, 1), cy 1.5s cubic-bezier(0.4, 0, 0.2, 1)" }} />
-                    <circle cx={markerX} cy={markerY} r="6" fill="#fff" style={{ transition: "cx 1.5s cubic-bezier(0.4, 0, 0.2, 1), cy 1.5s cubic-bezier(0.4, 0, 0.2, 1)" }} />
-                  </svg>
-                  <div style={{ position: "absolute", top: "50%", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                    <span style={{ fontSize: 26, fontWeight: 900, color: scoreColor, lineHeight: 1 }}>{riskScore}</span>
-                  </div>
-                  <div style={{ position: "absolute", bottom: 0, width: "100%", display: "flex", justifyContent: "space-between", padding: "0 5px" }}>
-                    <span style={{ fontSize: 10, color: "#00d26a", fontWeight: 700 }}>안정</span>
-                    <span style={{ fontSize: 10, color: "#ff4d4d", fontWeight: 700 }}>위험</span>
-                  </div>
-                </div>
-              );
-            })()}
-          </div>
-        </div>
-      </div>
-
+      {/* 2. 리스크 스코어 게이지: 첫 화면 온도와 판정이 엇갈려 숨김 (2026-11) */}
       {/* 3. 심화 게이지 지표 */}
       <div style={{ padding: "0 16px" }}>
         <div className="glass-panel" style={{ padding: "24px 20px" }}>

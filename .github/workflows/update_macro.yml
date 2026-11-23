@@ -1,9 +1,10 @@
 name: 매시간 매크로 지표 업데이트
 
 on:
-  # schedule:
-    # 매시간 14분, 29분, 44분, 59분에 실행 (15분 간격 딜레이 방지)
-    # - cron: '14,29,44,59 * * * 1-5'
+  schedule:
+    # 미국장 마감 후 한국 시간 화~토 오전 7시 10분 (UTC 월~금 22:10). 하루 1번이면 온도계에 충분.
+    - cron: '10 22 * * 1-5'
+    # 예전 15분 간격 설정: '14,29,44,59 * * * 1-5'
   repository_dispatch:
     types: [force-macro-update] # 👈 외부 강제 호출(Webhook) 수신 기능 추가!
   workflow_dispatch: # 수동 트리거 허용

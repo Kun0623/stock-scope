@@ -7,11 +7,8 @@ export function NewsTab({ data, isPro }: { data: any, isPro: boolean }) {
   
   // 뉴스 데이터가 배열로 올 경우를 대비한 방어 로직 & 기본 더미 데이터
   const rawNews = data.ai_sentiment?.news_sources || data.ai_sentiment?.news || data.news;
-  const newsSources = (rawNews && rawNews.length > 0) ? rawNews : [
-    { provider: "Bloomberg", title: "기술주 전반에 걸친 선별적 강세 지속", summary: "AI 모멘텀이 시장을 주도하는 가운데 차별화 장세가 펼쳐지고 있습니다." },
-    { provider: "Reuters", title: "스페이스X 초대형 상장 추진... 시장 낙관론 강화", summary: "대어급 IPO 소식이 투자 심리를 긍정적으로 자극하고 있습니다." },
-    { provider: "WSJ", title: "중동 지정학적 긴장 고조, 증시 하방 압력", summary: "거시경제 환경의 리스크가 커지며 단기적인 시장 변동성이 확대될 수 있습니다." }
-  ];
+  // 실제 수집된 뉴스만 보여 준다 (예시 기사를 언론사 이름으로 보여 주지 않음)
+  const newsSources = Array.isArray(rawNews) ? rawNews : [];
 
   return (
     // ✨ 변경: 전체 좌우 패딩을 빼고(0px) gap으로 간격 제어. TossBanner의 내장 마진과 충돌 방지!
@@ -25,7 +22,8 @@ export function NewsTab({ data, isPro }: { data: any, isPro: boolean }) {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <div style={{ width: 28, height: 28, borderRadius: 8, background: "linear-gradient(135deg, #3182ce, #805ad5)", display: "flex", justifyContent: "center", alignItems: "center", fontSize: 14, boxShadow: "0 2px 8px rgba(128, 90, 213, 0.4)" }}>✨</div>
-                <h3 style={{ fontSize: 16, fontWeight: 800, margin: 0, color: "#fff", letterSpacing: "-0.5px" }}>AI 마켓 센티먼트</h3>
+                <h3 style={{ fontSize: 16, fontWeight: 800, margin: 0, color: "#fff", letterSpacing: "-0.5px", whiteSpace: "nowrap" }}>시장 분위기</h3>
+                <span style={{ fontSize: 11, fontWeight: 800, color: "#b197fc", background: "rgba(128,90,213,0.18)", padding: "2px 6px", borderRadius: 4, whiteSpace: "nowrap" }}>AI 요약</span>
               </div>
               
               {/* 센티먼트 원형 게이지 차트 */}
@@ -47,12 +45,13 @@ export function NewsTab({ data, isPro }: { data: any, isPro: boolean }) {
                       </svg>
                       <div style={{ position: "absolute", inset: 0, display: "flex", justifyContent: "center", alignItems: "center", fontSize: 11, fontWeight: 900, color: sColor }}>{sScore}</div>
                     </div>
-                    <span style={{ fontSize: 13, fontWeight: 800, color: "#ccc" }}>투심 {sText}</span>
+                    <span style={{ fontSize: 13, fontWeight: 800, color: "#ccc", whiteSpace: "nowrap" }}>투심 {sText}</span>
                   </div>
                 );
               })()}
             </div>
             
+            <div style={{ fontSize: 12, color: "#999", lineHeight: 1.5, marginBottom: 14, wordBreak: "keep-all" }}>생성형 AI(Google Gemini)가 해외 뉴스 제목을 바탕으로 요약했어요. 사실과 다를 수 있으니 원문을 함께 확인해 주세요.</div>
             {/* AI 3줄 요약 텍스트 */}
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {data.ai_sentiment.summary?.map((line: string, idx: number) => (
@@ -99,7 +98,7 @@ export function NewsTab({ data, isPro }: { data: any, isPro: boolean }) {
                   </div>
                   {news.summary && (
                     <div style={{ fontSize: 12, color: "#888", lineHeight: 1.5, wordBreak: "keep-all" }}>
-                      {news.summary}
+                      <span style={{ color: "#b197fc", fontWeight: 700 }}>AI 요약 · </span>{news.summary}
                     </div>
                   )}
                 </div>
