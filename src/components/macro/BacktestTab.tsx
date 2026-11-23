@@ -62,9 +62,9 @@ export function BacktestTab({ backtestData }: { backtestData: any[] }) {
       {/* 1. 개선된 4대 자산 상대 수익률 백테스트 차트 */}
       <div style={{ padding: "0 16px" }}>
         <div className="glass-panel" style={{ padding: "20px" }}>
-          <h3 style={{ fontSize: 18, fontWeight: 800, margin: "0 0 8px", color: "#fff" }}>📊 과거 리스크 & 이벤트 복기 검증</h3>
+          <h3 style={{ fontSize: 18, fontWeight: 800, margin: "0 0 8px", color: "#fff" }}>과거 위험 구간 돌아보기</h3>
           <p style={{ fontSize: 13, color: "#aaa", margin: 0, lineHeight: 1.5 }}>
-            위험 구간(붉은색) 진입 시 자산군별 방어력과 하락 속도를 상대 수익률(%)로 체감해 보세요.
+            붉은 구간은 위험 점수가 높았던 시기예요. 그때 S&amp;P 500이 얼마나 오르내렸는지(%) 볼 수 있어요.
           </p>
 
           {normalizedChartData.length > 0 ? (
@@ -110,10 +110,10 @@ export function BacktestTab({ backtestData }: { backtestData: any[] }) {
         <div className="glass-panel" style={{ padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
             <div>
-              <h3 style={{ fontSize: 16, fontWeight: 800, margin: "0 0 6px", color: "#ffb800" }}>🕹️ What-If 매크로 시뮬레이터</h3>
-              <p style={{ fontSize: 12, color: "#888", margin: 0 }}>경제 위기 시 대표 지수들의 방어력을 비교해보세요.</p>
+              <h3 style={{ fontSize: 16, fontWeight: 800, margin: "0 0 6px", color: "#ffb800" }}>만약에 계산기</h3>
+              <p style={{ fontSize: 12, color: "#888", margin: 0 }}>공포 지수나 금리가 오르면 S&amp;P 500이 얼마나 움직일지 가정해 봐요</p>
             </div>
-            <div style={{ padding: "4px 8px", background: "rgba(255, 184, 0, 0.1)", color: "#ffb800", borderRadius: 8, fontSize: 11, fontWeight: 800 }}>교육모드</div>
+            <div style={{ padding: "4px 8px", background: "rgba(255, 184, 0, 0.1)", color: "#ffb800", borderRadius: 8, fontSize: 11, fontWeight: 800 }}>예시 계산</div>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 20, marginBottom: 24, padding: "16px", background: "rgba(255,255,255,0.03)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.05)" }}>
@@ -131,11 +131,11 @@ export function BacktestTab({ backtestData }: { backtestData: any[] }) {
               </div>
               <input type="range" min="-2.0" max="3.0" step="0.1" value={rateDelta} onChange={(e) => setRateDelta(Number(e.target.value))} style={{ width: "100%", accentColor: "#ff4d4d", cursor: "pointer" }} />
             </div>
-            <button onClick={() => { setVixDelta(0); setRateDelta(0); }} style={{ padding: "8px", background: "#222", border: "1px solid #444", borderRadius: 8, color: "#aaa", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🔄 시나리오 초기화</button>
+            <button onClick={() => { setVixDelta(0); setRateDelta(0); }} style={{ padding: "8px", background: "#222", border: "1px solid #444", borderRadius: 8, color: "#aaa", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>처음으로</button>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 10 }}>
-            <SimulationCard name="S&P 500" desc="시장 평균 방어력" basePrice={basePrices.sp500} simPrice={simSp500} impactPct={sp500ImpactPct} />
+            <SimulationCard name="S&P 500" desc="미국 대표 500개 기업" basePrice={basePrices.sp500} simPrice={simSp500} impactPct={sp500ImpactPct} />
             <div style={{ fontSize: 12, color: "#888", lineHeight: 1.5, wordBreak: "keep-all" }}>기준값은 최근 S&amp;P 500 종가이고, 변동 폭은 VIX 1pt당 -0.3%, 금리 1%p당 -4%로 단순 가정한 예시 계산이에요. 실제 움직임과 다를 수 있어요.</div>
           </div>
         </div>

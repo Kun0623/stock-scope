@@ -114,12 +114,12 @@ def get_vvix_index() -> dict:
             val = float(vvix['Close'].iloc[-1])
             # NaN 방어 로직
             if math.isnan(val):
-                return {"value": 85.0} 
+                return {"value": None}
             return {"value": round(val, 2)}
     except Exception as e:
         print(f"VVIX 수집 오류: {e}")
         pass
-    return {"value": 85.0} # 에러 시 기본값 반환
+    return {"value": None}  # 실패 시 가짜 기본값 대신 '수집중'으로 표시
 
 # ✨ 신규: PCR 데이터 플레이스홀더 (추후 CBOE 크롤링 연동 전까지 UI 테스트용)
 def get_pcr_data() -> dict:

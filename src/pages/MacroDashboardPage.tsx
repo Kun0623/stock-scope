@@ -202,10 +202,10 @@ export function MacroDashboardPage() {
 
         <div style={{ height: 80, background: "rgba(10, 10, 10, 0.85)", backdropFilter: "blur(16px)", borderTop: "1px solid rgba(255, 255, 255, 0.1)", display: "flex", justifyContent: "space-around", alignItems: "center", paddingBottom: "env(safe-area-inset-bottom)" }}>
           <TabButton id="temperature" icon="🌡️" label="오늘 온도" activeTab={activeTab} onClick={setActiveTab} />
-          <TabButton id="overview" icon="🌎" label="오버뷰" activeTab={activeTab} onClick={setActiveTab} />
+          <TabButton id="overview" icon="🌎" label="경기 신호" activeTab={activeTab} onClick={setActiveTab} />
           <TabButton id="news" icon="📰" label="AI 뉴스" activeTab={activeTab} onClick={setActiveTab} />
-          <TabButton id="indicators" icon="📊" label="지표상세" activeTab={activeTab} onClick={setActiveTab} />
-          <TabButton id="backtest" icon="⏱️" label="백테스트" activeTab={activeTab} onClick={setActiveTab} />
+          <TabButton id="indicators" icon="📊" label="업종·테마" activeTab={activeTab} onClick={setActiveTab} />
+          <TabButton id="backtest" icon="⏱️" label="과거 비교" activeTab={activeTab} onClick={setActiveTab} />
         </div>
         
       </div>

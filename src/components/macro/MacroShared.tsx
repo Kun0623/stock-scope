@@ -180,8 +180,8 @@ export function SeesawRow({ title, tooltip, value, badge }: any) {
 export function GridCard({ title, tooltip, value, suffix, warningThreshold, dangerThreshold, badge }: any) {
   if (value === undefined) return null;
   
-  const isDanger = value >= dangerThreshold;
-  const isWarning = !isDanger && value >= warningThreshold;
+  const isDanger = value !== null && value >= dangerThreshold;
+  const isWarning = value !== null && !isDanger && value >= warningThreshold;
 
   // 상태에 따른 색상 결정
   const statusColor = isDanger ? "#ff4d4d" : isWarning ? "#ffb800" : "#fff";
@@ -193,7 +193,9 @@ export function GridCard({ title, tooltip, value, suffix, warningThreshold, dang
         <Tooltip label={title} desc={tooltip} badge={badge} />
         <div style={{ width: 8, height: 8, borderRadius: "50%", background: dotColor, boxShadow: dotColor !== "transparent" ? `0 0 10px ${dotColor}` : "none", marginTop: 4 }} />
       </div>
-      <div style={{ fontSize: 20, fontWeight: 800, color: statusColor, marginTop: 12 }}>{value}{suffix}</div>
+      {value === null
+        ? <div style={{ fontSize: 13, fontWeight: 600, color: "#666", marginTop: 12 }}>수집 중</div>
+        : <div style={{ fontSize: 20, fontWeight: 800, color: statusColor, marginTop: 12 }}>{value}{suffix}</div>}
     </div>
   );
 }
@@ -450,38 +452,15 @@ export function TossBanner({ adGroupId, minHeight = "96px" }: { adGroupId: strin
 export const DisclaimerTicker = () => (
   <div style={{
     width: "100%",
-    background: "rgba(20, 20, 20, 0.9)",
-    borderTop: "1px solid rgba(255, 184, 0, 0.2)",
-    borderBottom: "1px solid rgba(255, 255, 255, 0.02)",
-    padding: "6px 0",
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    display: "flex",
-    alignItems: "center",
-    boxShadow: "0 -4px 10px rgba(0,0,0,0.3)" // 살짝 위로 그림자를 줘서 네비게이션과 구분
+    background: "rgba(10, 10, 10, 0.92)",
+    borderTop: "1px solid rgba(255, 255, 255, 0.06)",
+    padding: "6px 16px",
+    textAlign: "center",
+    color: "#777",
+    fontSize: 11,
+    lineHeight: 1.4,
+    wordBreak: "keep-all",
   }}>
-    <style>{`
-      @keyframes ticker-scroll {
-        0% { transform: translateX(100vw); }
-        100% { transform: translateX(-150%); }
-      }
-      .ticker-content {
-        display: inline-block;
-        white-space: nowrap;
-        animation: ticker-scroll 18s linear infinite; /* 18초 속도로 일정하게 무한 반복 */
-        color: #888;
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        will-change: transform; /* 모바일 배터리 최적화 및 렌더링 가속 */
-      }
-    `}</style>
-    <div className="ticker-content">
-      <span style={{ color: "#ffb800", marginRight: "6px" }}>⚠️</span>
-      본 대시보드에서 제공하는 모든 매크로 데이터 및 퀀트 분석 정보는 투자 참고용이며, 최종적인 투자 결정과 그 결과에 대한 책임은 전적으로 투자자 본인에게 있습니다.
-      <span style={{ margin: "0 40px", color: "#444" }}>|</span>
-      <span style={{ color: "#ffb800", marginRight: "6px" }}>💡</span>
-      데이터는 기본 15분 단위로 업데이트되며, 시장 상황에 따라 지연될 수 있습니다.
-    </div>
+    투자 참고용 정보예요. 투자 판단과 결과의 책임은 본인에게 있어요. 데이터는 매일 아침 갱신돼요.
   </div>
 );

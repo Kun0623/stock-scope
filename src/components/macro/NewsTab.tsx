@@ -80,8 +80,7 @@ export function NewsTab({ data, isPro }: { data: any, isPro: boolean }) {
         <div style={{ padding: "0 16px" }}>
           <div className="glass-panel" style={{ padding: "20px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-              <span style={{ fontSize: 16 }}>🗞️</span>
-              <h3 style={{ fontSize: 15, fontWeight: 800, color: "#fff", margin: 0 }}>주요 외신 및 근거 자료</h3>
+              <h3 style={{ fontSize: 15, fontWeight: 800, color: "#fff", margin: 0 }}>참고한 해외 뉴스</h3>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {newsSources.map((news: any, idx: number) => (

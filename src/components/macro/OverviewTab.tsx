@@ -77,8 +77,7 @@ export function OverviewTab({ data, isPro }: { data: any, isPro: boolean }) {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div style={{ flex: 1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
-                <div style={{ fontSize: 13, fontWeight: 700, color: shield.color }}>매크로 스트레스 가이드</div>
-                <div style={{ fontSize: 10, fontWeight: 800, color: shield.color, background: "rgba(255,255,255,0.1)", padding: "2px 6px", borderRadius: 4 }}>5 Core Metrics</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: shield.color }}>경기 위험 신호</div>
               </div>
               <h2 style={{ fontSize: 22, fontWeight: 800, margin: "0 0 8px", color: "#fff" }}>{shield.title}</h2>
               <p style={{ fontSize: 14, color: "#aaa", margin: 0, wordBreak: "keep-all", lineHeight: 1.4 }}>{shield.desc}</p>
@@ -96,20 +95,20 @@ export function OverviewTab({ data, isPro }: { data: any, isPro: boolean }) {
       {/* 3. 심화 게이지 지표 */}
       <div style={{ padding: "0 16px" }}>
         <div className="glass-panel" style={{ padding: "24px 20px" }}>
-          <GaugeRow title="공포탐욕 지수" tooltip="시장 참여자들의 심리 상태" value={data.fear_greed?.value} type="fear_greed" badge="Core" />
+          <GaugeRow title="투자 심리 (공포·탐욕)" tooltip="시장 참여자들의 심리 상태" value={data.fear_greed?.value} type="fear_greed" />
           <div style={{ height: 32 }} />
-          <GaugeRow title="버핏 지표" tooltip="GDP 대비 시가총액 (180% 이상 고평가 영역)" value={data.buffett_indicator?.value} suffix="%" type="buffett" />
+          <GaugeRow title="주가 수준 (버핏지수)" tooltip="GDP 대비 시가총액 (180% 이상 고평가 영역)" value={data.buffett_indicator?.value} suffix="%" type="buffett" />
           <div style={{ height: 32 }} />
-          <SeesawRow title="장단기 금리차" tooltip="마이너스 진입 시 경기 침체 통계적 전조" value={data.yield_curve?.value} badge="Core" />
+          <SeesawRow title="경기 전망 (장단기 금리차)" tooltip="마이너스 진입 시 경기 침체 통계적 전조" value={data.yield_curve?.value} />
         </div>
       </div>
 
       {/* 4. 미니 팩터 그리드 (5대 코어) */}
       <div style={{ padding: "0 16px" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-          <GridCard title="숌 룰 지수" tooltip="0.35% 주의, 0.5% 위험" value={data.sahm_rule?.value} suffix="%" warningThreshold={0.35} dangerThreshold={0.5} badge="Core" />
-          <GridCard title="하이일드" tooltip="4.0% 주의, 5.0% 위험" value={data.high_yield_spread?.value} suffix="%" warningThreshold={4.0} dangerThreshold={5.0} badge="Core" />
-          <GridCard title="VIX 지수" tooltip="20 pt 주의, 25 pt 위험" value={data.vix?.value} suffix="" warningThreshold={20} dangerThreshold={25} badge="Core" />
+          <GridCard title="실업 경고" tooltip="삼의 법칙(Sahm rule). 0.35% 주의, 0.5% 위험" value={data.sahm_rule?.value} suffix="%" warningThreshold={0.35} dangerThreshold={0.5} />
+          <GridCard title="회사 빚 위험" tooltip="하이일드 스프레드. 4.0% 주의, 5.0% 위험" value={data.high_yield_spread?.value} suffix="%" warningThreshold={4.0} dangerThreshold={5.0} />
+          <GridCard title="변동성 (VIX)" tooltip="공포 지수. 20 pt 주의, 25 pt 위험" value={data.vix?.value} suffix="" warningThreshold={20} dangerThreshold={25} />
           
           <div className="glass-panel" style={{ padding: "16px", display: "flex", flexDirection: "column", justifyContent: "space-between", border: "1px solid rgba(255,255,255,0.05)" }}>
             <Tooltip label="원/달러 환율" desc="DXY 달러 인덱스 연동 (점수 미포함)" />
@@ -129,56 +128,20 @@ export function OverviewTab({ data, isPro }: { data: any, isPro: boolean }) {
         />
       </div>
 
-      {/* 5. 스마트 머니 선행 지표 패널 */}
+      {/* 5. 시장 불안 신호 (풋/콜 비율·COT는 실제 수집 전까지 자리 채움 값이라 숨김, 2026-11) */}
       <div style={{ padding: "0 16px" }}>
-        
-        {/* 타이틀 영역 */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16, paddingLeft: 4 }}>
-          <span style={{ fontSize: 18 }}>🕵️‍♂️</span>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#ffb800" }}>스마트 머니 선행 지표 (하방 베팅)</h3>
-            <span style={{ fontSize: 11, color: "#888", marginTop: 4 }}>메인 점수와 독립적으로 작동하는 조기 경보 레이더</span>
-          </div>
+        <div style={{ display: "flex", flexDirection: "column", marginBottom: 16, paddingLeft: 4 }}>
+          <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#ffb800" }}>시장 불안 신호</h3>
+          <span style={{ fontSize: 11, color: "#888", marginTop: 4 }}>변동성 지수 자체가 얼마나 출렁이는지 보여 줘요</span>
         </div>
-
-        {/* PCR & VVIX 그리드 */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-          <GridCard 
-            title="풋/콜 비율 (PCR)" 
-            tooltip="0.9 주의, 1.0 위험 (기관의 하방 옵션 매집)" 
-            value={data.pcr?.value ?? 0.85} 
-            suffix="" 
-            warningThreshold={0.9} 
-            dangerThreshold={1.0} 
-          />
-          <GridCard 
-            title="VVIX 지수" 
-            tooltip="95 주의, 110 위험 (변동성 폭발 전조)" 
-            value={data.vvix?.value ?? 82.4} 
-            suffix="" 
-            warningThreshold={95} 
-            dangerThreshold={110} 
-          />
-        </div>
-
-        {/* COT 헤지펀드 포지션 */}
-        <div className="glass-panel" style={{ marginTop: 12, padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", border: "1px solid rgba(255,255,255,0.05)" }}>
-          <div style={{ flex: 1, paddingRight: 12 }}>
-            <div style={{ marginBottom: 4 }}>
-              <Tooltip label="COT 헤지펀드 포지션" desc="S&P 500 선물 시장 내 헤지펀드들의 순매수(Long)/순매도(Short) 포지션 상태" />
-            </div>
-            <div style={{ fontSize: 12, color: "#aaa" }}>최근 CFTC 발표 기준</div>
-          </div>
-          <div style={{ textAlign: "right", flexShrink: 0 }}>
-            <div style={{ fontSize: 16, fontWeight: 900, color: data.cot?.is_short ?? true ? "#ff4d4d" : "#00d26a" }}>
-              {data.cot?.value ?? "Net Short (순매도)"}
-            </div>
-            <div style={{ fontSize: 11, color: data.cot?.is_short ?? true ? "#ff4d4d" : "#00d26a", fontWeight: 700, marginTop: 4 }}>
-              {data.cot?.desc ?? "🚨 하방 압력 뇌관 주의"}
-            </div>
-          </div>
-        </div>
-
+        <GridCard 
+          title="불안 확산 (VVIX)" 
+          tooltip="VIX의 변동성. 95 주의, 110 위험" 
+          value={data.vvix?.value ?? null} 
+          suffix="" 
+          warningThreshold={95} 
+          dangerThreshold={110} 
+        />
       </div>
 
       {/* ✨ 맨 하단: 피드형(대형) 광고 삽입 구역 */}

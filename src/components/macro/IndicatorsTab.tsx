@@ -12,7 +12,7 @@ export function IndicatorsTab({ data, isPro }: { data: any, isPro: boolean }) {
       <div style={{ padding: "0 16px" }}>
         <div className="glass-panel" style={{ padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 16 }}>
-            <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#fff" }}>📈 주요 핵심 지표</h3>
+            <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#fff" }}>주요 지수</h3>
             <span style={{ fontSize: 11, color: "#666" }}>글로벌 자산 동향</span>
           </div>
           
@@ -25,7 +25,7 @@ export function IndicatorsTab({ data, isPro }: { data: any, isPro: boolean }) {
             </div>
           ) : (
             <div style={{ padding: "30px", textAlign: "center", color: "#666", fontSize: 13, background: "rgba(255,255,255,0.02)", borderRadius: 12 }}>
-              ⏳ 글로벌 자산 데이터를 집계하고 있습니다.
+              주요 지수 데이터를 모으고 있어요
             </div>
           )}
         </div>
@@ -36,8 +36,8 @@ export function IndicatorsTab({ data, isPro }: { data: any, isPro: boolean }) {
         <div className="paywall-container glass-panel">
           <div className={!isPro ? "paywall-blur" : ""} style={{ padding: "20px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 20 }}>
-              <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#ffb800" }}>💡 글로벌 테마 매트릭스</h3>
-              <span style={{ fontSize: 11, color: "#666" }}>메가 트렌드 vs 단기 모멘텀</span>
+              <h3 style={{ fontSize: 15, fontWeight: 800, margin: 0, color: "#ffb800" }}>테마별 흐름</h3>
+              <span style={{ fontSize: 11, color: "#666" }}>장기 테마와 단기 흐름</span>
             </div>
             
             {/* ✨ 수정: 테마 데이터가 아예 안 넘어왔을 때 탭 레이아웃이 붕괴되는 것을 방지 */}
@@ -66,7 +66,7 @@ export function IndicatorsTab({ data, isPro }: { data: any, isPro: boolean }) {
               </>
             ) : (
               <div style={{ padding: "30px", textAlign: "center", color: "#666", fontSize: 13, background: "rgba(255,255,255,0.02)", borderRadius: 12 }}>
-                ⏳ 테마 데이터를 집계하고 있습니다.
+                테마 데이터를 모으고 있어요
               </div>
             )}
           </div>
@@ -85,7 +85,7 @@ export function IndicatorsTab({ data, isPro }: { data: any, isPro: boolean }) {
       <div style={{ padding: "0 16px" }}>
         <div className="glass-panel" style={{ padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginBottom: 16 }}>
-            <h3 style={{ fontSize: 14, fontWeight: 700, margin: 0, color: "#fff" }}>🌍 GICS 12개 상세 섹터</h3>
+            <h3 style={{ fontSize: 14, fontWeight: 700, margin: 0, color: "#fff" }}>업종별 등락</h3>
             <span style={{ fontSize: 11, color: "#666" }}>최근 2영업일 기준</span>
           </div>
           
@@ -98,7 +98,7 @@ export function IndicatorsTab({ data, isPro }: { data: any, isPro: boolean }) {
             </div>
           ) : (
              <div style={{ padding: "30px", textAlign: "center", color: "#666", fontSize: 13, background: "rgba(255,255,255,0.02)", borderRadius: 12 }}>
-               ⏳ 섹터 데이터를 집계하고 있습니다.
+               업종 데이터를 모으고 있어요
              </div>
           )}
         </div>
